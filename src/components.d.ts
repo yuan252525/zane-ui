@@ -1868,6 +1868,33 @@ export namespace Components {
     interface ZaneSliderMarker {
         "mark": string | { style: Record<string, any>, label: any};
     }
+    interface ZaneSpace {
+        /**
+          * @default 'center'
+         */
+        "alignment": string;
+        /**
+          * @default 'horizontal'
+         */
+        "direction": 'horizontal' | 'vertical';
+        /**
+          * @default false
+         */
+        "fill": boolean;
+        /**
+          * @default 100
+         */
+        "fillRatio": number;
+        /**
+          * @default 'small'
+         */
+        "size": string;
+        "spacer": string;
+        /**
+          * @default false
+         */
+        "wrap": boolean;
+    }
     interface ZaneSplitter {
         "getContext": () => Promise<ReactiveObject<SplitterRootContext>>;
         /**
@@ -2045,7 +2072,7 @@ export namespace Components {
         /**
           * @default tippy.defaultProps.followCursor
          */
-        "followCursor": boolean | "horizontal" | "vertical" | "initial";
+        "followCursor": boolean | "initial" | "horizontal" | "vertical";
         /**
           * @default tippy.defaultProps.getReferenceClientRect
          */
@@ -2096,7 +2123,7 @@ export namespace Components {
         /**
           * @default tippy.defaultProps.placement
          */
-        "placement": AutoPlacement | BasePlacement | VariationPlacement;
+        "placement": BasePlacement | VariationPlacement | AutoPlacement;
         /**
           * @default tippy.defaultProps.plugins
          */
@@ -3702,6 +3729,12 @@ declare global {
         prototype: HTMLZaneSliderMarkerElement;
         new (): HTMLZaneSliderMarkerElement;
     };
+    interface HTMLZaneSpaceElement extends Components.ZaneSpace, HTMLStencilElement {
+    }
+    var HTMLZaneSpaceElement: {
+        prototype: HTMLZaneSpaceElement;
+        new (): HTMLZaneSpaceElement;
+    };
     interface HTMLZaneSplitterElementEventMap {
         "collapse": {
     index: number;
@@ -4185,6 +4218,7 @@ declare global {
         "zane-slider": HTMLZaneSliderElement;
         "zane-slider-button": HTMLZaneSliderButtonElement;
         "zane-slider-marker": HTMLZaneSliderMarkerElement;
+        "zane-space": HTMLZaneSpaceElement;
         "zane-splitter": HTMLZaneSplitterElement;
         "zane-splitter-bar": HTMLZaneSplitterBarElement;
         "zane-splitter-panel": HTMLZaneSplitterPanelElement;
@@ -6049,6 +6083,33 @@ declare namespace LocalJSX {
     interface ZaneSliderMarker {
         "mark"?: string | { style: Record<string, any>, label: any};
     }
+    interface ZaneSpace {
+        /**
+          * @default 'center'
+         */
+        "alignment"?: string;
+        /**
+          * @default 'horizontal'
+         */
+        "direction"?: 'horizontal' | 'vertical';
+        /**
+          * @default false
+         */
+        "fill"?: boolean;
+        /**
+          * @default 100
+         */
+        "fillRatio"?: number;
+        /**
+          * @default 'small'
+         */
+        "size"?: string;
+        "spacer"?: string;
+        /**
+          * @default false
+         */
+        "wrap"?: boolean;
+    }
     interface ZaneSplitter {
         /**
           * @default "horizontal"
@@ -6241,7 +6302,7 @@ declare namespace LocalJSX {
         /**
           * @default tippy.defaultProps.followCursor
          */
-        "followCursor"?: boolean | "horizontal" | "vertical" | "initial";
+        "followCursor"?: boolean | "initial" | "horizontal" | "vertical";
         /**
           * @default tippy.defaultProps.getReferenceClientRect
          */
@@ -6308,7 +6369,7 @@ declare namespace LocalJSX {
         /**
           * @default tippy.defaultProps.placement
          */
-        "placement"?: AutoPlacement | BasePlacement | VariationPlacement;
+        "placement"?: BasePlacement | VariationPlacement | AutoPlacement;
         /**
           * @default tippy.defaultProps.plugins
          */
@@ -7103,6 +7164,7 @@ declare namespace LocalJSX {
         "zane-slider": ZaneSlider;
         "zane-slider-button": ZaneSliderButton;
         "zane-slider-marker": ZaneSliderMarker;
+        "zane-space": ZaneSpace;
         "zane-splitter": ZaneSplitter;
         "zane-splitter-bar": ZaneSplitterBar;
         "zane-splitter-panel": ZaneSplitterPanel;
@@ -7189,6 +7251,7 @@ declare module "@stencil/core" {
             "zane-slider": LocalJSX.ZaneSlider & JSXBase.HTMLAttributes<HTMLZaneSliderElement>;
             "zane-slider-button": LocalJSX.ZaneSliderButton & JSXBase.HTMLAttributes<HTMLZaneSliderButtonElement>;
             "zane-slider-marker": LocalJSX.ZaneSliderMarker & JSXBase.HTMLAttributes<HTMLZaneSliderMarkerElement>;
+            "zane-space": LocalJSX.ZaneSpace & JSXBase.HTMLAttributes<HTMLZaneSpaceElement>;
             "zane-splitter": LocalJSX.ZaneSplitter & JSXBase.HTMLAttributes<HTMLZaneSplitterElement>;
             "zane-splitter-bar": LocalJSX.ZaneSplitterBar & JSXBase.HTMLAttributes<HTMLZaneSplitterBarElement>;
             "zane-splitter-panel": LocalJSX.ZaneSplitterPanel & JSXBase.HTMLAttributes<HTMLZaneSplitterPanelElement>;

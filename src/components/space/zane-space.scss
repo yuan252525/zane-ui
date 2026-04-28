@@ -1,0 +1,17 @@
+@use '../../styles/mixins/bem' as *;
+
+@include b(space) {
+  vertical-align: top;
+  display: inline-flex;
+
+  @include m(fill) {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+
+    & > * {
+      flex: 1 1 0;
+      min-width: var(--zane-space-fill-ratio, 100%);
+    }
+  }
+}
