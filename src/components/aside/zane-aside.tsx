@@ -9,7 +9,7 @@ const ns = useNamespace('aside');
   tag: 'zane-aside',
 })
 export class ZaneAside {
-  @Prop() width: string;
+  @Prop() width: string | undefined;
 
   render() {
     const style = this.width

@@ -14,14 +14,14 @@ const ns = useNamespace('button');
   tag: 'zane-button-group',
 })
 export class ZaneButtonGroup {
-  @Element() el: HTMLElement;
-  @Prop() size: ComponentSize;
+  @Element() el: HTMLElement | undefined;
+  @Prop() size: ComponentSize | undefined;
 
-  @Prop() type: ButtonType;
+  @Prop() type: ButtonType | undefined;
 
-  @Prop() disabled: boolean;
+  @Prop() disabled: boolean | undefined;
 
-  private context: ReactiveObject<ButtonGroupContext>;
+  private context: ReactiveObject<ButtonGroupContext> | undefined;
 
   componentWillLoad() {
     this.context = new ReactiveObject<ButtonGroupContext>({
@@ -29,28 +29,28 @@ export class ZaneButtonGroup {
       type: this.type,
       disabled: this.disabled,
     });
-    buttonGroupContexts.set(this.el, this.context);
+    buttonGroupContexts.set(this.el!, this.context);
   }
 
   disconnectedCallback() {
-    if (!hasRawParent(this.el)) {
-      buttonGroupContexts.delete(this.el);
+    if (!hasRawParent(this.el!)) {
+      buttonGroupContexts.delete(this.el!);
     }
   }
 
   @Watch('size')
   handleWatchSize() {
-    this.context.value.size = this.size;
+    this.context!.value.size = this.size;
   }
 
   @Watch('type')
   handleWatchType() {
-    this.context.value.type = this.type;
+    this.context!.value.type = this.type;
   }
 
   @Watch('disabled')
   handleWatchDisabled() {
-    this.context.value.disabled = this.disabled;
+    this.context!.value.disabled = this.disabled;
   }
 
   @Method()

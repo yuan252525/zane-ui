@@ -30,7 +30,7 @@ const ns = useNamespace("button");
 export class ZaneButton {
   @Prop() autofocus: boolean = false;
 
-  @Prop() autoInsertSpace: boolean = undefined;
+  @Prop() autoInsertSpace: boolean | undefined = undefined;
 
   @Prop() bg: boolean = false;
 
@@ -39,17 +39,17 @@ export class ZaneButton {
   @Prop() circle: boolean = false;
 
   @Event({ eventName: "zClick", bubbles: false })
-  clickEvent: EventEmitter<MouseEvent>;
+  clickEvent: EventEmitter<MouseEvent> | undefined;
 
-  @Prop() color: string;
+  @Prop() color: string | undefined;
 
   @Prop() dark: boolean = false;
 
-  @Prop() disabled: boolean = undefined;
+  @Prop() disabled: boolean | undefined = undefined;
 
-  @Element() el: HTMLElement;
+  @Element() el: HTMLElement | undefined;
 
-  @Prop() icon: string;
+  @Prop() icon: string | undefined;
 
   @Prop({ reflect: true }) link: boolean = false;
 
@@ -57,39 +57,39 @@ export class ZaneButton {
 
   @Prop() nativeType: ButtonNativeType = "button";
 
-  @Prop() plain: boolean = undefined;
+  @Prop() plain: boolean | undefined = undefined;
 
-  @Prop() round: boolean = undefined;
+  @Prop() round: boolean | undefined = undefined;
 
   @State() shouldAddSpace: boolean = false;
 
-  @Prop() size: ComponentSize;
+  @Prop() size: ComponentSize | undefined;
 
-  @Prop() text: boolean = undefined;
+  @Prop() text: boolean | undefined = undefined;
 
   @Prop() type: ButtonType = "";
 
-  @State() actualDisabled: boolean;
+  @State() actualDisabled: boolean = false;
 
-  @State() actualPlain: boolean;
+  @State() actualPlain: boolean = false;
 
-  @State() actualRound: boolean;
+  @State() actualRound: boolean = false;
 
-  @State() actualSize: string;
+  @State() actualSize: string = "";
 
-  @State() actualText: boolean;
+  @State() actualText: boolean = false;
 
-  @State() actualType: string;
+  @State() actualType: string = "";
 
-  @State() actualAutoInsertSpace: boolean;
+  @State() actualAutoInsertSpace: boolean = false;
 
-  private buttonGroupContext: ReactiveObject<ButtonGroupContext>;
+  private buttonGroupContext: ReactiveObject<ButtonGroupContext> | undefined;
 
-  private configProviderContext: ReactiveObject<ConfigProviderContext>;
+  private configProviderContext: ReactiveObject<ConfigProviderContext> | undefined;
 
   componentWillLoad() {
-    this.buttonGroupContext = getButtonGroupContext(this.el);
-    this.configProviderContext = getConfigProviderContext(this.el);
+    this.buttonGroupContext = getButtonGroupContext(this.el!);
+    this.configProviderContext = getConfigProviderContext(this.el!);
 
     this.updateCustomStyle();
 
@@ -156,7 +156,7 @@ export class ZaneButton {
       false;
 
     if (this.actualAutoInsertSpace) {
-      const slot = this.el.querySelector("span");
+      const slot = this.el?.querySelector("span");
       if (slot) {
         const text = slot.textContent;
         this.shouldAddSpace = /^\p{Unified_Ideograph}{2}$/u.test(text);
@@ -246,23 +246,23 @@ export class ZaneButton {
 
     this.buttonStyle = {
       ...styles,
-      ...this.el.style,
+      ...this.el?.style,
     } as any;
   }
 
   handleClick = (evt: MouseEvent) => {
     if (this.loading || this.actualDisabled) return;
-    this.clickEvent.emit(evt);
+    this.clickEvent?.emit(evt);
   };
 
   render() {
-    const hasContent = findAllLegitChildren(this.el).length > 0;
+    const hasContent = findAllLegitChildren(this.el!).length > 0;
 
     const buttonKls = classNames(
       ns.b(),
       ns.m(this.actualType),
       ns.m(this.actualSize),
-      this.el.className,
+      this.el?.className,
       ns.is("disabled", this.actualDisabled),
       ns.is("loading", this.loading),
       ns.is("plain", this.actualPlain),
@@ -295,7 +295,7 @@ export class ZaneButton {
   }
 
   renderIcon() {
-    const hasIcon = this.icon || this.el.querySelector('[slot="icon"]');
+    const hasIcon = this.icon || this.el?.querySelector('[slot="icon"]');
 
     if (this.loading) {
       return (

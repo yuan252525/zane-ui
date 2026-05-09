@@ -244,7 +244,7 @@ export class ZaneSelect {
   @State() collapseItemWidth: number = 0;
   @State() hoveringIndex: number = -1;
   @State() selectedLabel: string = '';
-  @State() previousQuery: string = null;
+  @State() previousQuery: string | null = null;
   @State() inputHovering: boolean = false;
   @State() menuVisibleOnFocus: boolean = false;
   @State() isBeforeHide: boolean = false;
@@ -1233,8 +1233,8 @@ export class ZaneSelect {
       valueKey: this.valueKey,
       hoveringIndex: this.hoveringIndex,
       remote: this.remote,
-      setSelected: this.setSelected,
-      handleOptionSelect: this.handleOptionSelect,
+      setSelected: this.setSelected.bind(this),
+      handleOptionSelect: this.handleOptionSelect.bind(this),
     });
 
     this.context.change$.subscribe(({ key, value }) => {

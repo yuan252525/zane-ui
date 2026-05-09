@@ -21,9 +21,9 @@ const ns = useNamespace('avatar');
 })
 export class ZaneAvatar {
   @Prop({ attribute: 'alt', reflect: true })
-  alt: string;
+  alt: string | undefined;
 
-  @Element() el: HTMLElement;
+  @Element() el: HTMLElement | undefined;
 
   @Prop({ attribute: 'fit', reflect: true })
   fit: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down' = 'cover';
@@ -31,9 +31,9 @@ export class ZaneAvatar {
   @State() hasLoadError: boolean = false;
 
   @Prop({ attribute: 'icon', reflect: true })
-  icon: string;
+  icon: string | undefined;
 
-  @Event() imgError: EventEmitter<Event>;
+  @Event() imgError: EventEmitter<Event> | undefined;
 
   @Prop({ attribute: 'shape', reflect: true })
   shape: 'circle' | 'square' = 'circle';
@@ -45,7 +45,7 @@ export class ZaneAvatar {
   src: string = '';
 
   @Prop({ attribute: 'srcSet', reflect: true })
-  srcSet: string;
+  srcSet: string | undefined;
 
   get avatarClass(): string {
     const classList = [ns.b()];
@@ -69,7 +69,7 @@ export class ZaneAvatar {
 
   handleError(e: Event) {
     this.hasLoadError = true;
-    this.imgError.emit(e);
+    this.imgError?.emit(e);
   }
 
   render() {
