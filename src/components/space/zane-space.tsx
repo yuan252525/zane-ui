@@ -13,11 +13,17 @@ export class ZaneSpace {
   @Element() el: HTMLElement;
 
   @Prop() alignment: string = 'center';
+
   @Prop({ reflect: true }) direction: 'horizontal' | 'vertical' = 'horizontal';
+
   @Prop() fill: boolean = false;
+
   @Prop() fillRatio: number = 100;
+
   @Prop() size: string = 'small';
+  
   @Prop() spacer: string;
+
   @Prop() wrap: boolean = false;
 
   componentDidRender() {
