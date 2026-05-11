@@ -43,102 +43,102 @@ const SCOPE = 'zane-autocomplete';
 })
 export class ZaneComplete {
 
-  @Prop() ariaLabel: string;
+  @Prop() ariaLabel: string | undefined;
 
   @Prop() autosize: boolean | { maxRows?: number; minRows?: number } = false;
 
   @Event({ eventName: 'zBlur', bubbles: false })
-  blurEvent: EventEmitter<FocusEvent>;
+  blurEvent: EventEmitter<FocusEvent> | undefined;
 
   @Event({ eventName: 'zChange', bubbles: false })
-  changeEvent: EventEmitter<number | string>;
+  changeEvent: EventEmitter<number | string> | undefined;
 
-  @Prop() clearable: boolean;
+  @Prop() clearable: boolean | undefined;
 
   @Event({ eventName: 'zClear', bubbles: false })
-  clearEvent: EventEmitter<void>;
+  clearEvent: EventEmitter<void> | undefined;
 
   @Prop() clearIcon: string = 'close-circle-line';
 
   @Prop() debounce: number = 300;
 
-  @Prop() disabled: boolean = undefined;
+  @Prop() disabled: boolean | undefined = undefined;
 
   @State() dropdownWidth: string = '';
 
-  @Element() el: HTMLElement;
+  @Element() el: HTMLElement | undefined;
 
   @Prop()
   fetchSuggestions: AutocompleteFetchSuggestions = NOOP;
 
-  @Prop() fitInputWidth: boolean;
+  @Prop() fitInputWidth: boolean | undefined;
 
   @Event({ eventName: 'zFocus', bubbles: false })
-  focusEvent: EventEmitter<FocusEvent>;
+  focusEvent: EventEmitter<FocusEvent> | undefined;
 
-  @Prop() form: string;
+  @Prop() form: string | undefined;
 
-  @Prop() formatter: AnyNormalFunction<any, string>;
+  @Prop() formatter: AnyNormalFunction<any, string> | undefined;
 
-  @Prop() hideLoading: boolean;
+  @Prop() hideLoading: boolean | undefined;
 
   @State() highlightedIndex: number = -1;
 
-  @Prop() highlightFirstItem: boolean;
+  @Prop() highlightFirstItem: boolean | undefined;
 
   @Event({ eventName: 'zInput', bubbles: false })
-  inputEvent: EventEmitter<string>;
+  inputEvent: EventEmitter<string> | undefined;
 
   @Prop() inputStyle: Record<string, string> | string = mutable({} as const);
 
   @State() loading: boolean = false;
 
-  @Prop() loadingRender: () => HTMLElement;
+  @Prop() loadingRender: (() => HTMLElement) | undefined;
 
   @Prop() loopNavigation: boolean = true;
 
-  @Prop() max: number;
+  @Prop() max: number | undefined;
 
-  @Prop() maxLength: number | string;
+  @Prop() maxLength: number | string | undefined;
 
-  @Prop() min: number;
+  @Prop() min: number | undefined;
 
-  @Prop() minLength: number | string;
+  @Prop() minLength: number | string | undefined;
 
-  @Prop() name: string;
+  @Prop() name: string | undefined;
 
-  @Prop() parser: AnyNormalFunction<any, any>;
+  @Prop() parser: AnyNormalFunction<any, any> | undefined;
 
-  @Prop() placeholder: string;
+  @Prop() placeholder: string | undefined;
 
   @Prop() placement: 'bottom-start' | 'top-start' = 'bottom-start';
 
   @Prop() popperTheme: string = 'autocomplete';
 
-  @Prop() prefixIcon: string;
+  @Prop() prefixIcon: string | undefined;
 
-  @Prop() resize: 'both' | 'horizontal' | 'none' | 'vertical';
+  @Prop() resize: 'both' | 'horizontal' | 'none' | 'vertical' | undefined;
 
   @Prop() rows: number = 2;
 
   @Event({ eventName: 'zSelect', bubbles: false })
-  selectEvent: EventEmitter<number | string>;
+  selectEvent: EventEmitter<number | string | null | undefined> | undefined;
 
-  @Prop() selectWhenUnmatched: boolean;
+  @Prop() selectWhenUnmatched: boolean | undefined;
 
-  @Prop() showPassword: boolean;
+  @Prop() showPassword: boolean | undefined;
 
-  @Prop() showWordLimit: boolean;
+  @Prop() showWordLimit: boolean | undefined;
 
-  @Prop() size: ComponentSize;
+  @Prop() size: ComponentSize | undefined;
 
-  @Prop() step: number;
+  @Prop() step: number | undefined;
 
-  @Prop() suffixIcon: string;
+  @Prop() suffixIcon: string | undefined;
 
   @State() suggestionDisabled: boolean = false;
 
-  @Prop() suggestionRender: (item: any) => HTMLElement;
+  @Prop() suggestionRender: ((item: any) => HTMLElement) | undefined;
 
   @State() suggestions: AutocompleteData = [];
 
@@ -155,44 +155,44 @@ export class ZaneComplete {
   @Prop() wordLimitPosition: 'inside' | 'outside' = 'inside';
 
   @Prop({ attribute: 'inputmode' }) zInputMode:
-    | 'decimal'
-    | 'email'
-    | 'none'
-    | 'numeric'
-    | 'search'
-    | 'tel'
-    | 'text'
-    | 'url';
+    'decimal' |
+    'email' |
+    'none' |
+    'numeric' |
+    'search' |
+    'tel' |
+    'text' |
+    'url' | undefined;
 
   @Prop({ attribute: 'tabindex' }) zTabindex: number | string = 0;
 
-  private formContext: ReactiveObject<FormContext>;
+  private formContext: ReactiveObject<FormContext> | undefined | null;
 
   private debouncedGetData = debounce(this.getData, this.debounce);
 
   private ignoreFocusEvent: boolean = false;
 
-  private inputRef: HTMLZaneInputElement;
+  private inputRef: HTMLZaneInputElement | undefined;
 
   private listboxId = buildUUID();
 
-  private popperRef: HTMLZaneTippyElement;
+  private popperRef: HTMLZaneTippyElement | undefined;
 
   private readonly: boolean = false;
 
-  private regionRef: HTMLElement;
+  private regionRef: HTMLElement | undefined;
 
   private hasFooter: boolean = false;
 
   private hasHeader: boolean = false;
 
-  private hasAppend: boolean;
+  private hasAppend: boolean | undefined;
 
-  private hasPrefix: boolean;
+  private hasPrefix: boolean | undefined;
 
-  private hasPrepend: boolean;
+  private hasPrepend: boolean | undefined;
 
-  private hasSuffix: boolean;
+  private hasSuffix: boolean | undefined;
 
   @Prop() appendTo: 'parent' | ((ref: Element) => Element) | Element = () =>
     document?.body;
@@ -204,14 +204,14 @@ export class ZaneComplete {
 
   componentWillLoad() {
     // console.log(this.fetchSuggestions);
-    this.hasFooter = !!this.el.querySelector('[slot="footer"]');
-    this.hasHeader = !!this.el.querySelector('[slot="header"]');
-    this.hasAppend = !!this.el.querySelector('[slot="append"]');
-    this.hasPrefix = !!this.el.querySelector('[slot="prefix"]');
-    this.hasPrepend = !!this.el.querySelector('[slot="prepend"]');
-    this.hasSuffix = !!this.el.querySelector('[slot="suffix"]');
+    this.hasFooter = !!this.el?.querySelector('[slot="footer"]');
+    this.hasHeader = !!this.el?.querySelector('[slot="header"]');
+    this.hasAppend = !!this.el?.querySelector('[slot="append"]');
+    this.hasPrefix = !!this.el?.querySelector('[slot="prefix"]');
+    this.hasPrepend = !!this.el?.querySelector('[slot="prepend"]');
+    this.hasSuffix = !!this.el?.querySelector('[slot="suffix"]');
 
-    this.formContext = getFormContext(this.el);
+    this.formContext = getFormContext(this.el!);
   }
 
   @Method()
@@ -240,7 +240,7 @@ export class ZaneComplete {
         queryString,
         cb,
       );
-      if (isArray(result)) cb(result);
+      if (isArray(result)) cb(result!);
     }
   }
 
@@ -257,7 +257,7 @@ export class ZaneComplete {
       this.handleSelect(this.suggestions[this.highlightedIndex]);
     } else {
       if (this.selectWhenUnmatched) {
-        this.selectEvent.emit(this.value);
+        this.selectEvent?.emit(this.value);
         this.suggestions = [];
         this.highlightedIndex = -1;
       }
@@ -267,12 +267,12 @@ export class ZaneComplete {
 
   @Method()
   async handleSelect(item: any) {
-    this.inputEvent.emit(item[this.valueKey]);
+    this.inputEvent?.emit(item[this.valueKey]);
     this.value = item[this.valueKey];
-    this.selectEvent.emit(item);
+    this.selectEvent?.emit(item);
     this.suggestions = [];
     this.highlightedIndex = -1;
-    this.popperRef.hide();
+    this.popperRef?.hide();
   }
 
   @Method()
@@ -291,15 +291,15 @@ export class ZaneComplete {
       index = this.loopNavigation ? 0 : this.suggestions.length - 1;
     }
     const [suggestion, suggestionList] = this.getSuggestionContext();
-    const highlightItem = suggestionList[index];
-    const scrollTop = suggestion.scrollTop;
-    const { offsetTop, scrollHeight } = highlightItem;
+    const highlightItem = suggestionList?.[index];
+    const scrollTop = suggestion?.scrollTop ?? 0;
+    const { offsetTop = 0, scrollHeight = 0 } = highlightItem ?? {};
 
-    if (offsetTop + scrollHeight > scrollTop + suggestion.clientHeight) {
-      suggestion.scrollTop = offsetTop + scrollHeight - suggestion.clientHeight;
+    if (offsetTop + scrollHeight > scrollTop + suggestion!.clientHeight) {
+      suggestion!.scrollTop = offsetTop + scrollHeight - suggestion!.clientHeight;
     }
     if (offsetTop < scrollTop) {
-      suggestion.scrollTop = offsetTop;
+      suggestion!.scrollTop = offsetTop;
     }
     this.highlightedIndex = index;
     this.inputRef?.setAttribute(
@@ -342,7 +342,7 @@ export class ZaneComplete {
             class={{
               [ns.b()]: true,
               [ns.is('loading', !this.hideLoading && this.loading)]: true,
-              [this.el.className]: true,
+              [this.el?.className!]: true,
             }}
             style={{
               outline: 'none',
@@ -470,7 +470,7 @@ export class ZaneComplete {
     const suggestion = this.regionRef?.querySelector(
       `.${ns.be('suggestion', 'wrap')}`,
     );
-    const suggestionList = suggestion.querySelectorAll<HTMLElement>(
+    const suggestionList = suggestion?.querySelectorAll<HTMLElement>(
       `.${ns.be('suggestion', 'list')} li`,
     );
     return [suggestion, suggestionList] as const;
@@ -478,34 +478,34 @@ export class ZaneComplete {
 
   private handleBlur = (e: CustomEvent<FocusEvent>) => {
     nextFrame(() => {
-      this.blurEvent.emit(e.detail);
+      this.blurEvent?.emit(e.detail);
     });
   };
 
   private handleChange = (e: CustomEvent<number | string>) => {
-    this.changeEvent.emit(e.detail);
+    this.changeEvent?.emit(e.detail);
   };
 
   private handleClear = () => {
     this.value = '';
-    this.changeEvent.emit('');
-    this.clearEvent.emit();
+    this.changeEvent?.emit('');
+    this.clearEvent?.emit();
   };
 
   private handleClickOutside = () => {
-    this.popperRef.hide();
+    this.popperRef?.hide();
   };
 
   private handleFocus = (e: CustomEvent<FocusEvent>) => {
     if (this.ignoreFocusEvent) {
       this.ignoreFocusEvent = false;
     } else {
-      this.focusEvent.emit(e.detail);
+      this.focusEvent?.emit(e.detail);
 
       const queryString = this.value ?? '';
       if (this.triggerOnFocus && !this.readonly) {
         this.suggestions = [];
-        this.popperRef.show();
+        this.popperRef?.show();
         this.debouncedGetData(String(queryString));
       }
     }
@@ -518,7 +518,7 @@ export class ZaneComplete {
   private handleInput = (e: CustomEvent<string>) => {
     const value = e.detail;
 
-    this.inputEvent.emit(value);
+    this.inputEvent?.emit(value);
 
     this.suggestionDisabled = false;
 
@@ -528,9 +528,9 @@ export class ZaneComplete {
       return;
     }
 
-    this.popperRef.isVisible().then((v) => {
+    this.popperRef?.isVisible().then((v) => {
       if (!v) {
-        this.popperRef.show();
+        this.popperRef?.show();
       }
     });
     this.debouncedGetData(value);
@@ -591,12 +591,12 @@ export class ZaneComplete {
   private handleKeyEscape = (evt: Event) => {
     evt.preventDefault();
     evt.stopPropagation();
-    this.popperRef.hide();
+    this.popperRef?.hide();
   };
 
   private handleLoadingRender = () => {
     nextFrame(() => {
-      const loadingChildEl = this.loadingRender();
+      const loadingChildEl = this.loadingRender?.();
       const loadingEL = document.querySelector(
         `[id="${this.listboxId}-loading"]`,
       );
@@ -607,7 +607,7 @@ export class ZaneComplete {
   };
 
   private handleShow = () => {
-    this.dropdownWidth = `${this.inputRef.offsetWidth}px`;
+    this.dropdownWidth = `${this.inputRef?.offsetWidth ?? 0}px`;
   };
 
   private handleSuggestionItemRender = (
@@ -615,7 +615,7 @@ export class ZaneComplete {
     index: number,
   ) => {
     nextFrame(() => {
-      const suggestionEL = this.suggestionRender(item);
+      const suggestionEL = this.suggestionRender?.(item);
       const itemEL = document.querySelector(
         `[id="${this.listboxId}-item-${index}"]`,
       );

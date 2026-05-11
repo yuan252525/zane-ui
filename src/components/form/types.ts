@@ -29,10 +29,10 @@ export type FormRules<T extends Record<string, any> | string = string> =
   Partial<Record<T extends string ? T : FieldPath<T>, Arrayable<FormItemRule>>>;
 
 export type FormContext = {
-  disabled: boolean;
-  model: Record<string, any>;
+  disabled: boolean | undefined;
+  model: Record<string, any> | undefined;
   size: ComponentSize;
-  rules: FormRules;
+  rules: FormRules | undefined;
   labelPosition: 'left' | 'right' | 'top';
   requireAsteriskPosition: 'left' | 'right';
   labelWidth: string | number;
@@ -45,7 +45,7 @@ export type FormContext = {
   hideRequiredAsterisk: boolean;
   scrollToError: boolean;
   scrollIntoViewOptions: ScrollIntoViewOptions | boolean;
-  validateEvent: EventEmitter<{prop: FormItemProp, isValid: boolean, message: string}>;
+  validateEvent: EventEmitter<{prop: FormItemProp, isValid: boolean, message: string}> | undefined;
   autoLabelWidth: string;
   registerLabelWidth: (val: number, oldVal: number) => void;
   deregisterLabelWidth: (val: number) => void;
@@ -62,15 +62,15 @@ export type FormContext = {
   
 export type FormItemContext = {
   formItemRef?: HTMLDivElement | undefined;
-  label: string;
-  labelWidth: string | number;
+  label: string | undefined;
+  labelWidth: string | number | undefined;
   labelPosition: 'left' | 'right' | 'top' | '';
-  prop: FormItemProp;
-  required: boolean;
-  rules: Arrayable<FormItemRule>;
-  error: string;
+  prop: FormItemProp | undefined;
+  required: boolean | undefined;
+  rules: Arrayable<FormItemRule> | undefined;
+  error: string | undefined;
   validateStatus: FormItemValidateState;
-  for: string;
+  for: string | undefined;
   inlineMessage?: boolean;
   showMessage: boolean;
   size: ComponentSize;

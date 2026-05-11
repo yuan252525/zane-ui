@@ -35,15 +35,15 @@ const COMPONENT_NAME = "zane-form";
   tag: "zane-form",
 })
 export class ZaneForm {
-  @Prop() disabled: boolean;
+  @Prop() disabled: boolean | undefined;
 
-  @Element() el: HTMLElement;
+  @Element() el: HTMLElement | undefined;
 
-  @Prop() hideRequiredAsterisk: boolean;
+  @Prop() hideRequiredAsterisk: boolean = false;
 
-  @Prop() inline: boolean;
+  @Prop() inline: boolean = false;
 
-  @Prop() inlineMessage: boolean;
+  @Prop() inlineMessage: boolean = false;
 
   @Prop() labelPosition: "left" | "right" | "top" = "right";
 
@@ -51,21 +51,21 @@ export class ZaneForm {
 
   @Prop() labelWidth: number | string = "";
 
-  @Prop() model: Record<string, any>;
+  @Prop() model: Record<string, any> | undefined;
 
   @Prop() requireAsteriskPosition: "left" | "right" = "left";
 
-  @Prop() rules: FormRules;
+  @Prop() rules: FormRules | undefined;
 
   @Prop() scrollIntoViewOptions: boolean | ScrollIntoViewOptions = true;
 
-  @Prop() scrollToError: boolean;
+  @Prop() scrollToError: boolean = false;
 
   @Prop() showMessage: boolean = true;
 
-  @Prop() size: ComponentSize;
+  @Prop() size: ComponentSize = '';
 
-  @Prop() statusIcon: boolean;
+  @Prop() statusIcon: boolean = false;
 
   @Prop() validateOnRuleChange: boolean = true;
 
@@ -78,11 +78,11 @@ export class ZaneForm {
     prop: FormItemProp;
     isValid: boolean;
     message: string;
-  }>;
+  }> | undefined;
 
-  private formRef: HTMLFormElement;
+  private formRef: HTMLFormElement | undefined;
 
-  private context: ReactiveObject<FormContext>;
+  private context: ReactiveObject<FormContext> | undefined;
 
   private getLabelWidthIndex = (width: number) => {
     const index = this.potentialLabelWidthArr.indexOf(width);
@@ -108,30 +108,30 @@ export class ZaneForm {
     }
   };
 
-  private resetFields = (properties = []) => {
+  private resetFields = (props: Arrayable<FormItemProp> = []) => {
     if (!this.model) {
       debugWarn(COMPONENT_NAME, "model is required for resetFields to work.");
       return;
     }
-    filterFields(this.fields, properties).forEach((field) =>
+    filterFields(this.fields, props).forEach((field) =>
       field.value.resetField()
     );
   };
 
-  private clearValidate = (props = []) => {
+  private clearValidate = (props: Arrayable<FormItemProp> = []) => {
     filterFields(this.fields, props).forEach((field) => field.value.clearValidate());
   };
 
-  private getField = (prop) => {
+  private getField = (prop: FormItemProp) => {
     return filterFields(this.fields, [prop])[0];
   };
 
-  private addField = (field) => {
+  private addField = (field: ReactiveObject<FormItemContext>) => {
     this.fields.push(field);
   };
 
-  private removeField = (field) => {
-    if (field.prop) {
+  private removeField = (field: ReactiveObject<FormItemContext>) => {
+    if (field.value.prop) {
       this.fields.splice(this.fields.indexOf(field), 1);
     }
   };
@@ -166,13 +166,13 @@ export class ZaneForm {
       removeField: this.removeField,
     });
 
-    formContexts.set(this.el, this.context);
+    formContexts.set(this.el!, this.context);
   }
 
   disconnectedCallback() {
-    if (!hasRawParent(this.el)) {
-      formContexts.delete(this.el);
-      this.context = null;
+    if (!hasRawParent(this.el!)) {
+      formContexts.delete(this.el!);
+      this.context = undefined;
     }
   }
 
@@ -195,7 +195,7 @@ export class ZaneForm {
 
   @Method()
   async validateField(
-    modelProps?: string | string[] | undefined,
+    modelProps?: Arrayable<FormItemProp> | undefined,
     callback?: FormValidateCallback
   ) {
     let result = false;

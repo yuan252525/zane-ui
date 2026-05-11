@@ -10,7 +10,7 @@ const ns = useNamespace('badge');
   shadow: false,
 })
 export class ZaneBadge {
-  @Element() el: HTMLElement;
+  @Element() el: HTMLElement | undefined;
   @Prop() value: string | number = '';
 
   @Prop() max: number = 99;
@@ -48,8 +48,8 @@ export class ZaneBadge {
 
   private updateSlotValue() {
     const content = this.getDisplayContent();
-    const slotted = this.el.querySelectorAll('[slot="content"]');
-    slotted.forEach((root) => {
+    const slotted = this.el?.querySelectorAll('[slot="content"]');
+    slotted?.forEach((root) => {
       root
         .querySelectorAll('[data-badge-value]')
         .forEach((el) => {

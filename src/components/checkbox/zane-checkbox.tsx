@@ -18,10 +18,9 @@ import { getFormContext, getFormItemContext } from "../form/utils";
 import { getCheckboxGroupContext } from "./utils";
 import { useNamespace } from "../../hooks";
 import { isPropAbsent } from "../../utils/is/isPropAbsent";
-import { nextTick } from "@zanejs/utils";
 import classNames from "classnames";
 import state from "../../global/store";
-import { isBoolean, type ReactiveObject } from "../../utils";
+import { isBoolean, nextFrame, type ReactiveObject } from "../../utils";
 
 const ns = useNamespace("checkbox");
 
@@ -30,70 +29,70 @@ const ns = useNamespace("checkbox");
   tag: "zane-checkbox",
 })
 export class ZaneCheckbox {
-  @Element() el: HTMLElement;
+  @Element() el: HTMLElement | undefined;
 
-  @Prop({ mutable: true }) value: number | string | boolean;
+  @Prop({ mutable: true }) value?: number | string | boolean;
 
   @Prop() label: any;
 
-  @Prop() indeterminate: boolean;
+  @Prop() indeterminate?: boolean;
 
-  @Prop() disabled: boolean = undefined;
+  @Prop() disabled?: boolean = undefined;
 
-  @Prop() checked: boolean;
+  @Prop() checked?: boolean;
 
-  @Prop() name: string;
+  @Prop() name?: string;
 
-  @Prop() trueValue: string | number = undefined;
+  @Prop() trueValue?: string | number = undefined;
 
-  @Prop() falseValue: string | number = undefined;
+  @Prop() falseValue?: string | number = undefined;
 
-  @Prop() trueLabel: string | number = undefined;
+  @Prop() trueLabel?: string | number = undefined;
 
-  @Prop() falseLabel: string | number = undefined;
+  @Prop() falseLabel?: string | number = undefined;
 
-  @Prop({ attribute: "id", mutable: true }) zId: string;
+  @Prop({ attribute: "id", mutable: true }) zId?: string;
 
-  @Prop() border: boolean;
+  @Prop() border?: boolean;
 
-  @Prop() size: ComponentSize;
+  @Prop() size?: ComponentSize;
 
-  @Prop({ attribute: "tabindex" }) zTabIndex: number;
+  @Prop({ attribute: "tabindex" }) zTabIndex?: number;
 
   @Prop() validateEvent: boolean = true;
 
-  @Prop() ariaLabel: string;
+  @Prop() ariaLabel?: string;
 
-  @Prop() ariaControls: string;
+  @Prop() ariaControls?: string;
 
   @Event({ eventName: "zChange", bubbles: false })
-  changeEvent: EventEmitter<string | number | boolean>;
+  changeEvent?: EventEmitter<string | number | boolean>;
 
   @State() isFocused: boolean = false;
 
-  @State() isChecked: boolean;
+  @State() isChecked: boolean = false;
 
-  @State() actualValue: string | number | boolean;
+  @State() actualValue?: string | number | boolean;
 
-  @State() isDisabled: boolean;
+  @State() isDisabled: boolean = false;
 
-  @State() isLimitDisabled: boolean;
+  @State() isLimitDisabled: boolean = false;
 
-  @State() isLabeledByFormItem: boolean;
+  @State() isLabeledByFormItem: boolean = false;
 
-  @State() hasOwnLabel: boolean;
+  @State() hasOwnLabel: boolean = false;
 
-  @State() checkboxSize: ComponentSize;
+  @State() checkboxSize?: ComponentSize;
 
   private hasDefaultSlot = false;
 
-  private formContext: ReactiveObject<FormContext>;
+  private formContext?: ReactiveObject<FormContext>;
 
-  private formItemContext: ReactiveObject<FormItemContext>;
+  private formItemContext?: ReactiveObject<FormItemContext>;
 
-  private checkboxGroupContext: ReactiveObject<CheckboxGroupContext>;
+  private checkboxGroupContext?: ReactiveObject<CheckboxGroupContext>;
 
-  private configProviderContext: ReactiveObject<ConfigProviderContext>;
+  private configProviderContext?: ReactiveObject<ConfigProviderContext>;
 
   @Watch('isLimitDisabled')
   handleIsLimitDisabledChange() {
@@ -119,13 +118,13 @@ export class ZaneCheckbox {
   }
 
   componentWillLoad() {
-    this.configProviderContext = getConfigProviderContext(this.el);
-    this.formContext = getFormContext(this.el);
-    this.formItemContext = getFormItemContext(this.el);
-    this.checkboxGroupContext = getCheckboxGroupContext(this.el);
-    this.hasDefaultSlot = Array.from(this.el.childNodes).some((node) => {
+    this.configProviderContext = getConfigProviderContext(this.el!);
+    this.formContext = getFormContext(this.el!);
+    this.formItemContext = getFormItemContext(this.el!);
+    this.checkboxGroupContext = getCheckboxGroupContext(this.el!);
+    this.hasDefaultSlot = Array.from(this.el!.childNodes).some((node) => {
       if (node.nodeType === Node.TEXT_NODE) {
-        return node.textContent?.trim().length > 0;
+        return (node.textContent?.trim().length ?? 0) > 0;
       }
       if (node.nodeType === Node.ELEMENT_NODE) {
         return true;
@@ -257,8 +256,9 @@ export class ZaneCheckbox {
         this.value = this.getLabeledValue(
           [false, this.falseValue, this.falseLabel].includes(this.value)
         );
-        await nextTick()
-        this.changeEvent.emit(this.value);
+        nextFrame(() => {
+          this.changeEvent?.emit(this.value);
+        })
       }
     }
   };
@@ -283,7 +283,7 @@ export class ZaneCheckbox {
     } else {
       this.value = v;
     }
-    this.changeEvent.emit(v);
+    this.changeEvent?.emit(v);
   };
 
   render() {
@@ -313,8 +313,8 @@ export class ZaneCheckbox {
       onClick={this.onClickRoot}
     >
       <Tag
-        htmlFor={forValue}
-        ariaControls={this.indeterminate ? this.ariaControls : null}
+        htmlFor={forValue || undefined}
+        ariaControls={this.indeterminate ? (this.ariaControls ?? '') : ''}
         ariaChecked={this.indeterminate ? 'mixed' : undefined}
         ariaLabel={this.ariaLabel}
         class={ns.b()}

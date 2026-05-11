@@ -59,6 +59,13 @@
       </zane-empty>
     </div>
     <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); display:flex;gap:40px">
+      <zane-avatar-group
+        shape="circle"
+        max-collapse-avatars="3"
+        collapse-avatars
+        collapse-avatars-tooltip></zane-avatar-group>
+    </div>
+    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); display:flex;gap:40px">
       <zane-badge is-dot type="primary">query</zane-badge>
       <zane-badge type="primary" value="200" max="99">
         <zane-button type="success" >测试</zane-button>
@@ -76,9 +83,9 @@
     </div>
     <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); width: 400px">
       <zane-space fill fill-ratio="70" direction="vertical" style="width: 100%">
-        <button>按钮1</button>
-        <button>按钮2</button>
-        <button>按钮3</button>
+        <zane-button>按钮1</zane-button>
+        <zane-button>按钮2</zane-button>
+        <zane-button>按钮3</zane-button>
       </zane-space>
     </div>
     <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
@@ -371,6 +378,17 @@
       if (treeSelect01) {
         treeSelect01.data = createData(4, 30, 40);
         treeSelect01.props = props;
+      }
+
+      // ---- start avatar group ------------------
+      var avatarGroupEl = document.querySelector('zane-avatar-group');
+      if (avatarGroupEl) {
+        avatarGroupEl.avatars = [
+          'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png|img',
+          'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png|img',
+          'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png|img',
+          'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png|img',
+        ];
       }
     </script>
   </body>

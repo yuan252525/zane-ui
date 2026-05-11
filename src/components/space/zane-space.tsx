@@ -10,7 +10,7 @@ const SIZE_MAP = { small: 8, default: 12, large: 16 };
   shadow: false,
 })
 export class ZaneSpace {
-  @Element() el: HTMLElement;
+  @Element() el: HTMLElement | undefined;
 
   @Prop() alignment: string = 'center';
 
@@ -22,13 +22,13 @@ export class ZaneSpace {
 
   @Prop() size: string = 'small';
   
-  @Prop() spacer: string;
+  @Prop() spacer: string | undefined;
 
   @Prop() wrap: boolean = false;
 
   componentDidRender() {
     const { hGap, vGap } = this.getGapValues();
-    const style = this.el.style;
+    const style = this.el!.style;
     if (this.fill) {
       style.setProperty('--zane-space-fill-ratio', `${this.fillRatio}%`);
     } else {
@@ -52,15 +52,15 @@ export class ZaneSpace {
   componentDidLoad() {
     requestAnimationFrame(() => {
       // Move children out of <slot> to be direct children of host
-      const slot = this.el.querySelector('slot');
+      const slot = this.el!.querySelector('slot');
       if (slot && slot.children.length > 0) {
         while (slot.firstChild) {
-          this.el.appendChild(slot.firstChild);
+          this.el!.appendChild(slot.firstChild);
         }
         slot.remove();
       }
 
-      const children = Array.from(this.el.children) as HTMLElement[];
+      const children = Array.from(this.el!.children) as HTMLElement[];
       if (children.length === 0) return;
 
       const fragment = document.createDocumentFragment();
@@ -86,10 +86,10 @@ export class ZaneSpace {
         }
       });
 
-      while (this.el.firstChild) {
-        this.el.removeChild(this.el.firstChild);
+      while (this.el!.firstChild) {
+        this.el!.removeChild(this.el!.firstChild);
       }
-      this.el.appendChild(fragment);
+      this.el!.appendChild(fragment);
     });
   }
 
