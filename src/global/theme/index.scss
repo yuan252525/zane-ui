@@ -41,5 +41,8 @@
 
   // common component size
   @include set-component-css-var('component-size', $common-component-size);
+
+  // Empty
+  @include set-component-css-var('empty', $empty);
 }
 
