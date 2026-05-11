@@ -853,6 +853,17 @@ export namespace Components {
          */
         "direction": 'horizontal' | 'vertical';
     }
+    interface ZaneEmpty {
+        /**
+          * @default ''
+         */
+        "description": string;
+        /**
+          * @default ''
+         */
+        "image": string;
+        "imageSize": number;
+    }
     interface ZaneFocusTrap {
         /**
           * @default 'first'
@@ -998,6 +1009,8 @@ export namespace Components {
         "spin": boolean;
         "styles": object;
         "zPrefix": string;
+    }
+    interface ZaneImgEmpty {
     }
     interface ZaneInput {
         /**
@@ -3459,6 +3472,12 @@ declare global {
         prototype: HTMLZaneDividerElement;
         new (): HTMLZaneDividerElement;
     };
+    interface HTMLZaneEmptyElement extends Components.ZaneEmpty, HTMLStencilElement {
+    }
+    var HTMLZaneEmptyElement: {
+        prototype: HTMLZaneEmptyElement;
+        new (): HTMLZaneEmptyElement;
+    };
     interface HTMLZaneFocusTrapElementEventMap {
         "zFocusAfterReleased": Event;
         "zFocusAfterTrapped": Event;
@@ -3533,6 +3552,12 @@ declare global {
     var HTMLZaneIconElement: {
         prototype: HTMLZaneIconElement;
         new (): HTMLZaneIconElement;
+    };
+    interface HTMLZaneImgEmptyElement extends Components.ZaneImgEmpty, HTMLStencilElement {
+    }
+    var HTMLZaneImgEmptyElement: {
+        prototype: HTMLZaneImgEmptyElement;
+        new (): HTMLZaneImgEmptyElement;
     };
     interface HTMLZaneInputElementEventMap {
         "zBlur": FocusEvent;
@@ -4389,6 +4414,7 @@ declare global {
         "zane-config-provider": HTMLZaneConfigProviderElement;
         "zane-container": HTMLZaneContainerElement;
         "zane-divider": HTMLZaneDividerElement;
+        "zane-empty": HTMLZaneEmptyElement;
         "zane-focus-trap": HTMLZaneFocusTrapElement;
         "zane-footer": HTMLZaneFooterElement;
         "zane-form": HTMLZaneFormElement;
@@ -4397,6 +4423,7 @@ declare global {
         "zane-forward-ref": HTMLZaneForwardRefElement;
         "zane-header": HTMLZaneHeaderElement;
         "zane-icon": HTMLZaneIconElement;
+        "zane-img-empty": HTMLZaneImgEmptyElement;
         "zane-input": HTMLZaneInputElement;
         "zane-input-number": HTMLZaneInputNumberElement;
         "zane-input-tag": HTMLZaneInputTagElement;
@@ -5235,6 +5262,17 @@ declare namespace LocalJSX {
          */
         "direction"?: 'horizontal' | 'vertical';
     }
+    interface ZaneEmpty {
+        /**
+          * @default ''
+         */
+        "description"?: string;
+        /**
+          * @default ''
+         */
+        "image"?: string;
+        "imageSize"?: number;
+    }
     interface ZaneFocusTrap {
         /**
           * @default 'first'
@@ -5378,6 +5416,8 @@ declare namespace LocalJSX {
         "spin"?: boolean;
         "styles"?: object;
         "zPrefix"?: string;
+    }
+    interface ZaneImgEmpty {
     }
     interface ZaneInput {
         /**
@@ -7528,6 +7568,7 @@ declare namespace LocalJSX {
         "zane-config-provider": ZaneConfigProvider;
         "zane-container": ZaneContainer;
         "zane-divider": ZaneDivider;
+        "zane-empty": ZaneEmpty;
         "zane-focus-trap": ZaneFocusTrap;
         "zane-footer": ZaneFooter;
         "zane-form": ZaneForm;
@@ -7536,6 +7577,7 @@ declare namespace LocalJSX {
         "zane-forward-ref": ZaneForwardRef;
         "zane-header": ZaneHeader;
         "zane-icon": ZaneIcon;
+        "zane-img-empty": ZaneImgEmpty;
         "zane-input": ZaneInput;
         "zane-input-number": ZaneInputNumber;
         "zane-input-tag": ZaneInputTag;
@@ -7617,6 +7659,7 @@ declare module "@stencil/core" {
             "zane-config-provider": LocalJSX.ZaneConfigProvider & JSXBase.HTMLAttributes<HTMLZaneConfigProviderElement>;
             "zane-container": LocalJSX.ZaneContainer & JSXBase.HTMLAttributes<HTMLZaneContainerElement>;
             "zane-divider": LocalJSX.ZaneDivider & JSXBase.HTMLAttributes<HTMLZaneDividerElement>;
+            "zane-empty": LocalJSX.ZaneEmpty & JSXBase.HTMLAttributes<HTMLZaneEmptyElement>;
             "zane-focus-trap": LocalJSX.ZaneFocusTrap & JSXBase.HTMLAttributes<HTMLZaneFocusTrapElement>;
             "zane-footer": LocalJSX.ZaneFooter & JSXBase.HTMLAttributes<HTMLZaneFooterElement>;
             "zane-form": LocalJSX.ZaneForm & JSXBase.HTMLAttributes<HTMLZaneFormElement>;
@@ -7625,6 +7668,7 @@ declare module "@stencil/core" {
             "zane-forward-ref": LocalJSX.ZaneForwardRef & JSXBase.HTMLAttributes<HTMLZaneForwardRefElement>;
             "zane-header": LocalJSX.ZaneHeader & JSXBase.HTMLAttributes<HTMLZaneHeaderElement>;
             "zane-icon": LocalJSX.ZaneIcon & JSXBase.HTMLAttributes<HTMLZaneIconElement>;
+            "zane-img-empty": LocalJSX.ZaneImgEmpty & JSXBase.HTMLAttributes<HTMLZaneImgEmptyElement>;
             "zane-input": LocalJSX.ZaneInput & JSXBase.HTMLAttributes<HTMLZaneInputElement>;
             "zane-input-number": LocalJSX.ZaneInputNumber & JSXBase.HTMLAttributes<HTMLZaneInputNumberElement>;
             "zane-input-tag": LocalJSX.ZaneInputTag & JSXBase.HTMLAttributes<HTMLZaneInputTagElement>;
