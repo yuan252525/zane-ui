@@ -2,9 +2,9 @@ import type { ReactiveObject } from "../../utils/reactive/ReactiveObject";
 import type { CollapseContext } from "./types";
 import { collapseContexts } from "./constants";
 
-export const getCollapseContext = (el: HTMLElement): ReactiveObject<CollapseContext> | null => {
+export const getCollapseContext = (el: HTMLElement): ReactiveObject<CollapseContext> | undefined => {
   let parent: any = el.parentElement;
-  let context = null;
+  let context = undefined;
   while (parent) {
     if (parent.tagName === 'ZANE-COLLAPSE') {
       context = collapseContexts.get(parent);

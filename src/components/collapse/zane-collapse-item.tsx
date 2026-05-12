@@ -12,9 +12,9 @@ const ns = useNamespace('collapse');
   tag: 'zane-collapse-item',
 })
 export class ZaneCollapseItem {
-  @Prop() disabled: boolean;
+  @Prop() disabled: boolean = false;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @State() focusing = false;
 
@@ -28,23 +28,23 @@ export class ZaneCollapseItem {
 
   @Prop() name?: CollapseActiveName;
 
-  @State() wrapperRef: HTMLElement;
+  @State() wrapperRef?: HTMLElement;
 
-  @State() collapseItemName: CollapseActiveName;
+  @State() collapseItemName?: CollapseActiveName;
 
-  private id: number;
+  private id?: number;
 
-  private collapseContext: ReactiveObject<CollapseContext>;
+  private collapseContext?: ReactiveObject<CollapseContext>;
 
   @Watch('name')
   handleNameChange() {
     this.collapseItemName = this.name ?? `${ns.namespace}-id-${state.idInjection.prefix}-${this.id}`;
   }
   
-  private wrapperHeight: string;
+  private wrapperHeight?: string;
 
   componentDidLoad() {
-    const bodyStyle = getComputedStyle(this.wrapperRef);
+    const bodyStyle = getComputedStyle(this.wrapperRef!);
     this.wrapperHeight = bodyStyle.height;
     this.isActive ? this.handleShow() : this.handleHidden();
   }
@@ -56,7 +56,7 @@ export class ZaneCollapseItem {
 
     this.collapseContext?.change$.subscribe((change) => {
       if (change.key === 'activeNames') {
-        this.isActive = this.collapseContext.value.activeNames.includes(this.name);
+        this.isActive = !!this.collapseContext?.value.activeNames.includes(this.name!);
       }
     });
   }
@@ -65,7 +65,7 @@ export class ZaneCollapseItem {
     const target = e.target as HTMLElement;
     if (target?.closest('input, textarea, select')) return;
     e.preventDefault();
-    this.collapseContext?.value.handleItemClick(this.collapseItemName);
+    this.collapseContext?.value.handleItemClick(this.collapseItemName!);
   }
 
   handleFocus() {
@@ -82,7 +82,7 @@ export class ZaneCollapseItem {
     if (this.disabled) return;
     const target = e.target as HTMLElement;
     if (target?.closest('input, textarea, select')) return;
-    this.collapseContext?.value.handleItemClick(this.collapseItemName);
+    this.collapseContext?.value.handleItemClick(this.collapseItemName!);
     this.focusing = false;
     this.isClick = true;
   };
@@ -92,7 +92,7 @@ export class ZaneCollapseItem {
       const { timeout } = getTransitionInfo(this.wrapperRef, 'transition');
       this.wrapperRef.style.height = '0';
       whenTransitionEnds(this.wrapperRef, 'transition', timeout, () => {
-        this.wrapperRef.style.display = 'none';
+        this.wrapperRef!.style.display = 'none';
       });
     }
   }
@@ -101,7 +101,7 @@ export class ZaneCollapseItem {
     if (this.wrapperRef) {
       this.wrapperRef.style.display = '';
       nextFrame(() => {
-        this.wrapperRef.style.height = this.wrapperHeight;
+        this.wrapperRef!.style.height = this.wrapperHeight ?? '';
       });
     }
   }
