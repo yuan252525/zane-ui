@@ -1813,7 +1813,7 @@ export namespace Components {
         "hoveringIndex": number;
         "isItemDisabled": (value: any, selected: any) => Promise<boolean>;
         "isItemHovering": (target: any) => Promise<boolean>;
-        "isItemSelected": (value: any, target: any) => Promise<boolean>;
+        "isItemSelected": (value: any, target: any) => Promise<any>;
         "loading": boolean;
         "resetScrollTop": () => Promise<void>;
         "width": number;
@@ -2237,7 +2237,7 @@ export namespace Components {
         /**
           * @default tippy.defaultProps.arrow
          */
-        "arrow": string | boolean | SVGElement | DocumentFragment;
+        "arrow": string | boolean | DocumentFragment | SVGElement;
         /**
           * @default ''
          */
@@ -6698,7 +6698,7 @@ declare namespace LocalJSX {
         /**
           * @default tippy.defaultProps.arrow
          */
-        "arrow"?: string | boolean | SVGElement | DocumentFragment;
+        "arrow"?: string | boolean | DocumentFragment | SVGElement;
         /**
           * @default ''
          */
