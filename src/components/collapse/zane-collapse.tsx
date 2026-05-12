@@ -41,25 +41,25 @@ const SCOPE = 'zane-collapse';
   tag: 'zane-collapse',
 })
 export class ZaneCollapse {
-  @Prop() accordion: boolean;
+  @Prop() accordion: boolean = false;
 
-  @Prop() beforeCollapse: (name: CollapseActiveName) => Awaitable<boolean>;
+  @Prop() beforeCollapse?: (name: CollapseActiveName) => Awaitable<boolean>;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @Prop() expandIconPosition: CollapseIconPositionType = 'right';
 
   @Prop() value: CollapseModelValue = [];
 
   @Event({ eventName: 'zChange', bubbles: false })
-  zaneChange: EventEmitter<(number | string)[] | number | string>;
+  zaneChange?: EventEmitter<(number | string)[] | number | string>;
 
   @Event({ eventName: 'zUpdate', bubbles: false })
-  zaneUpdate: EventEmitter<(number | string)[] | number | string>;
+  zaneUpdate?: EventEmitter<(number | string)[] | number | string>;
 
-  @State() activeNames: (number | string)[];
+  @State() activeNames: (number | string)[] = [];
 
-  private context: ReactiveObject<CollapseContext>;
+  private context?: ReactiveObject<CollapseContext>;
 
   @Method()
   async getContext() {
@@ -70,10 +70,10 @@ export class ZaneCollapse {
   async setActiveNames(_activeNames: CollapseActiveName[]) {
     this.activeNames = _activeNames;
     const value = this.accordion ? this.activeNames[0] : this.activeNames;
-    this.zaneUpdate.emit(value);
-    this.zaneChange.emit(value);
+    this.zaneUpdate?.emit(value);
+    this.zaneChange?.emit(value);
 
-    this.context.value.activeNames = this.activeNames;
+    this.context!.value.activeNames = this.activeNames;
   }
 
   componentWillLoad() {
@@ -90,7 +90,7 @@ export class ZaneCollapse {
   disconnectedCallback() {
     if (!hasRawParent(this.el)) {
       collapseContexts.delete(this.el);
-      this.context = null;
+      this.context = undefined;
     }
   }
 
@@ -146,7 +146,7 @@ export class ZaneCollapse {
   @Watch('value')
   onModelValueChange() {
     this.activeNames = castArray(this.value);
-    this.context.value.activeNames = this.activeNames;
+    this.context!.value.activeNames = this.activeNames;
   }
 
   render() {

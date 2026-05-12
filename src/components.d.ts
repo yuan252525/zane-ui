@@ -860,8 +860,11 @@ export namespace Components {
         "xs": ColSize;
     }
     interface ZaneCollapse {
+        /**
+          * @default false
+         */
         "accordion": boolean;
-        "beforeCollapse": (name: CollapseActiveName) => Awaitable<boolean>;
+        "beforeCollapse"?: (name: CollapseActiveName) => Awaitable<boolean>;
         /**
           * @default 'right'
          */
@@ -874,6 +877,9 @@ export namespace Components {
         "value": CollapseModelValue;
     }
     interface ZaneCollapseItem {
+        /**
+          * @default false
+         */
         "disabled": boolean;
         /**
           * @default 'arrow-right'
@@ -898,6 +904,69 @@ export namespace Components {
     }
     interface ZaneContainer {
         "direction": string;
+    }
+    interface ZaneDescriptions {
+        /**
+          * @default false
+         */
+        "border": boolean;
+        /**
+          * @default 3
+         */
+        "column": number;
+        /**
+          * @default 'horizontal'
+         */
+        "direction": 'horizontal' | 'vertical';
+        /**
+          * @default ''
+         */
+        "extra": string;
+        "labelWidth"?: string | number;
+        "size"?: ComponentSize;
+        /**
+          * @default ''
+         */
+        "zTitle": string;
+    }
+    interface ZaneDescriptionsItem {
+        /**
+          * @default 'left'
+         */
+        "align": 'left' | 'center' | 'right';
+        /**
+          * @default ''
+         */
+        "contentClassName": string;
+        /**
+          * @default ''
+         */
+        "label": string;
+        /**
+          * @default 'left'
+         */
+        "labelAlign": 'left' | 'center' | 'right';
+        /**
+          * @default ''
+         */
+        "labelClassName": string;
+        "labelWidth"?: string | number;
+        /**
+          * @default ''
+         */
+        "minWidth": string | number;
+        /**
+          * @default 1
+         */
+        "rowspan": number;
+        /**
+          * @default 1
+         */
+        "span": number;
+        /**
+          * @default ''
+         */
+        "width": string | number;
     }
     interface ZaneDivider {
         /**
@@ -3556,6 +3625,18 @@ declare global {
         prototype: HTMLZaneContainerElement;
         new (): HTMLZaneContainerElement;
     };
+    interface HTMLZaneDescriptionsElement extends Components.ZaneDescriptions, HTMLStencilElement {
+    }
+    var HTMLZaneDescriptionsElement: {
+        prototype: HTMLZaneDescriptionsElement;
+        new (): HTMLZaneDescriptionsElement;
+    };
+    interface HTMLZaneDescriptionsItemElement extends Components.ZaneDescriptionsItem, HTMLStencilElement {
+    }
+    var HTMLZaneDescriptionsItemElement: {
+        prototype: HTMLZaneDescriptionsItemElement;
+        new (): HTMLZaneDescriptionsItemElement;
+    };
     interface HTMLZaneDividerElement extends Components.ZaneDivider, HTMLStencilElement {
     }
     var HTMLZaneDividerElement: {
@@ -4505,6 +4586,8 @@ declare global {
         "zane-collapse-item": HTMLZaneCollapseItemElement;
         "zane-config-provider": HTMLZaneConfigProviderElement;
         "zane-container": HTMLZaneContainerElement;
+        "zane-descriptions": HTMLZaneDescriptionsElement;
+        "zane-descriptions-item": HTMLZaneDescriptionsItemElement;
         "zane-divider": HTMLZaneDividerElement;
         "zane-empty": HTMLZaneEmptyElement;
         "zane-focus-trap": HTMLZaneFocusTrapElement;
@@ -5359,6 +5442,9 @@ declare namespace LocalJSX {
         "xs"?: ColSize;
     }
     interface ZaneCollapse {
+        /**
+          * @default false
+         */
         "accordion"?: boolean;
         "beforeCollapse"?: (name: CollapseActiveName) => Awaitable<boolean>;
         /**
@@ -5373,6 +5459,9 @@ declare namespace LocalJSX {
         "value"?: CollapseModelValue;
     }
     interface ZaneCollapseItem {
+        /**
+          * @default false
+         */
         "disabled"?: boolean;
         /**
           * @default 'arrow-right'
@@ -5396,6 +5485,69 @@ declare namespace LocalJSX {
     }
     interface ZaneContainer {
         "direction"?: string;
+    }
+    interface ZaneDescriptions {
+        /**
+          * @default false
+         */
+        "border"?: boolean;
+        /**
+          * @default 3
+         */
+        "column"?: number;
+        /**
+          * @default 'horizontal'
+         */
+        "direction"?: 'horizontal' | 'vertical';
+        /**
+          * @default ''
+         */
+        "extra"?: string;
+        "labelWidth"?: string | number;
+        "size"?: ComponentSize;
+        /**
+          * @default ''
+         */
+        "zTitle"?: string;
+    }
+    interface ZaneDescriptionsItem {
+        /**
+          * @default 'left'
+         */
+        "align"?: 'left' | 'center' | 'right';
+        /**
+          * @default ''
+         */
+        "contentClassName"?: string;
+        /**
+          * @default ''
+         */
+        "label"?: string;
+        /**
+          * @default 'left'
+         */
+        "labelAlign"?: 'left' | 'center' | 'right';
+        /**
+          * @default ''
+         */
+        "labelClassName"?: string;
+        "labelWidth"?: string | number;
+        /**
+          * @default ''
+         */
+        "minWidth"?: string | number;
+        /**
+          * @default 1
+         */
+        "rowspan"?: number;
+        /**
+          * @default 1
+         */
+        "span"?: number;
+        /**
+          * @default ''
+         */
+        "width"?: string | number;
     }
     interface ZaneDivider {
         /**
@@ -7721,6 +7873,8 @@ declare namespace LocalJSX {
         "zane-collapse-item": ZaneCollapseItem;
         "zane-config-provider": ZaneConfigProvider;
         "zane-container": ZaneContainer;
+        "zane-descriptions": ZaneDescriptions;
+        "zane-descriptions-item": ZaneDescriptionsItem;
         "zane-divider": ZaneDivider;
         "zane-empty": ZaneEmpty;
         "zane-focus-trap": ZaneFocusTrap;
@@ -7814,6 +7968,8 @@ declare module "@stencil/core" {
             "zane-collapse-item": LocalJSX.ZaneCollapseItem & JSXBase.HTMLAttributes<HTMLZaneCollapseItemElement>;
             "zane-config-provider": LocalJSX.ZaneConfigProvider & JSXBase.HTMLAttributes<HTMLZaneConfigProviderElement>;
             "zane-container": LocalJSX.ZaneContainer & JSXBase.HTMLAttributes<HTMLZaneContainerElement>;
+            "zane-descriptions": LocalJSX.ZaneDescriptions & JSXBase.HTMLAttributes<HTMLZaneDescriptionsElement>;
+            "zane-descriptions-item": LocalJSX.ZaneDescriptionsItem & JSXBase.HTMLAttributes<HTMLZaneDescriptionsItemElement>;
             "zane-divider": LocalJSX.ZaneDivider & JSXBase.HTMLAttributes<HTMLZaneDividerElement>;
             "zane-empty": LocalJSX.ZaneEmpty & JSXBase.HTMLAttributes<HTMLZaneEmptyElement>;
             "zane-focus-trap": LocalJSX.ZaneFocusTrap & JSXBase.HTMLAttributes<HTMLZaneFocusTrapElement>;
