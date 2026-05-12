@@ -24,6 +24,7 @@ import { ForwardRefContext, ForwardRefSetter } from "./components/forward-ref/ty
 import { InputAutoSize, InputMode, InputModelModifiers, InputType } from "./components/input/types";
 import { MentionOption, MentionOptionProps } from "./components/mention/types";
 import { Instance, Props } from "tippy.js";
+import { MenuMode, MenuTrigger } from "./components/menu/types";
 import { RadioGroupContext, RadioOption, RadioOptionProp } from "./components/radio/types";
 import { RowAlignType, RowContext, RowJustifyType } from "./components/row/types";
 import { ScrollbarDirection } from "./components/scrollbar/types";
@@ -35,6 +36,7 @@ import { SplitterRootContext } from "./components/splitter/types";
 import { TransferDataItem, TransferDirection, TransferFormat, TransferKey, TransferPropsAlias } from "./components/transfer/types";
 import { CheckedInfo, FilterMethod, TreeContext, TreeData, TreeKey, TreeNode, TreeNodeData, TreeOptionProps } from "./components/tree/types";
 import { FilterMethod as FilterMethod1, TagTooltipProps as TagTooltipProps1, TreeData as TreeData1, TreeKey as TreeKey1, TreeNode as TreeNode1, TreeNodeData as TreeNodeData1, TreeSelectOptionProps, TreeSelectOptionValue } from "./components/tree-select/types";
+import { UploadChangeOptions, UploadFile, UploadListType, UploadRequestOptions } from "./components/upload/types";
 import { Alignment, GridItemKeyGetter, Indices, ItemSize } from "./components/virtual-list/types";
 export { AutocompleteData, AutocompleteFetchFunc, AutocompleteFetchSuggestions } from "./components/autocomplete/types";
 export { AnyNormalFunction, Arrayable, Awaitable, ComponentSize } from "./types";
@@ -55,6 +57,7 @@ export { ForwardRefContext, ForwardRefSetter } from "./components/forward-ref/ty
 export { InputAutoSize, InputMode, InputModelModifiers, InputType } from "./components/input/types";
 export { MentionOption, MentionOptionProps } from "./components/mention/types";
 export { Instance, Props } from "tippy.js";
+export { MenuMode, MenuTrigger } from "./components/menu/types";
 export { RadioGroupContext, RadioOption, RadioOptionProp } from "./components/radio/types";
 export { RowAlignType, RowContext, RowJustifyType } from "./components/row/types";
 export { ScrollbarDirection } from "./components/scrollbar/types";
@@ -66,6 +69,7 @@ export { SplitterRootContext } from "./components/splitter/types";
 export { TransferDataItem, TransferDirection, TransferFormat, TransferKey, TransferPropsAlias } from "./components/transfer/types";
 export { CheckedInfo, FilterMethod, TreeContext, TreeData, TreeKey, TreeNode, TreeNodeData, TreeOptionProps } from "./components/tree/types";
 export { FilterMethod as FilterMethod1, TagTooltipProps as TagTooltipProps1, TreeData as TreeData1, TreeKey as TreeKey1, TreeNode as TreeNode1, TreeNodeData as TreeNodeData1, TreeSelectOptionProps, TreeSelectOptionValue } from "./components/tree-select/types";
+export { UploadChangeOptions, UploadFile, UploadListType, UploadRequestOptions } from "./components/upload/types";
 export { Alignment, GridItemKeyGetter, Indices, ItemSize } from "./components/virtual-list/types";
 export namespace Components {
     interface ZaneA2ui {
@@ -1232,6 +1236,64 @@ export namespace Components {
         "options": MentionOption[];
         "selectHoverOption": () => Promise<void>;
     }
+    interface ZaneMenu {
+        /**
+          * @default ''
+         */
+        "activeTextColor": string;
+        /**
+          * @default ''
+         */
+        "backgroundColor": string;
+        /**
+          * @default false
+         */
+        "collapse": boolean;
+        /**
+          * @default ''
+         */
+        "defaultActive": string;
+        /**
+          * @default []
+         */
+        "defaultOpeneds": string[];
+        /**
+          * @default false
+         */
+        "ellipsis": boolean;
+        /**
+          * @default 'click'
+         */
+        "menuTrigger": MenuTrigger;
+        /**
+          * @default 'vertical'
+         */
+        "mode": MenuMode;
+        /**
+          * @default ''
+         */
+        "textColor": string;
+        /**
+          * @default false
+         */
+        "uniqueOpened": boolean;
+    }
+    interface ZaneMenuItem {
+        /**
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * @default ''
+         */
+        "index": string;
+    }
+    interface ZaneMenuItemGroup {
+        /**
+          * @default ''
+         */
+        "groupTitle": string;
+    }
     interface ZaneOnlyChild {
         /**
           * 是否启用调试模式，启用后会输出警告信息
@@ -1893,6 +1955,28 @@ export namespace Components {
         "size": number | string;
         "uuid": string;
     }
+    interface ZaneSubMenu {
+        /**
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * @default 300
+         */
+        "hideTimeout": number;
+        /**
+          * @default ''
+         */
+        "index": string;
+        /**
+          * @default ''
+         */
+        "popperClass": string;
+        /**
+          * @default 300
+         */
+        "showTimeout": number;
+    }
     interface ZaneSwitch {
         "activeActionIcon": string;
         "activeIcon": string;
@@ -2149,6 +2233,16 @@ export namespace Components {
           * @default tippy.defaultProps.zIndex
          */
         "zIndex": number;
+    }
+    interface ZaneTodoList {
+        /**
+          * @default false
+         */
+        "open": boolean;
+        /**
+          * @default ""
+         */
+        "showText": string;
     }
     interface ZaneTransfer {
         /**
@@ -2531,6 +2625,67 @@ export namespace Components {
          */
         "zTabIndex": number;
     }
+    interface ZaneUpload {
+        "abort": (file?: UploadFile) => Promise<void>;
+        /**
+          * @default ""
+         */
+        "accept": string;
+        /**
+          * @default "#"
+         */
+        "action": string;
+        /**
+          * @default true
+         */
+        "autoUpload": boolean;
+        "beforeRemove": (file: UploadFile, fileList: UploadFile[]) => boolean | Promise<boolean> | Promise<void>;
+        "beforeUpload": (file: File) => boolean | Promise<void>;
+        "clearFiles": () => Promise<void>;
+        /**
+          * @default {}
+         */
+        "data": Record<string, unknown>;
+        /**
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * @default false
+         */
+        "drag": boolean;
+        /**
+          * @default {}
+         */
+        "headers": Record<string, string>;
+        "httpRequest": (options: UploadRequestOptions) => void | Promise<void>;
+        "limit": number;
+        /**
+          * @default "text"
+         */
+        "listType": UploadListType;
+        /**
+          * @default "post"
+         */
+        "method": string;
+        /**
+          * @default false
+         */
+        "multiple": boolean;
+        /**
+          * @default "file"
+         */
+        "name": string;
+        /**
+          * @default true
+         */
+        "showFileList": boolean;
+        "submit": () => Promise<void>;
+        /**
+          * @default false
+         */
+        "withCredentials": boolean;
+    }
     interface ZaneVirtualGrid {
         /**
           * @default 2
@@ -2809,6 +2964,10 @@ export interface ZaneMentionDropdownCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLZaneMentionDropdownElement;
 }
+export interface ZaneMenuCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLZaneMenuElement;
+}
 export interface ZaneRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLZaneRadioElement;
@@ -2869,6 +3028,10 @@ export interface ZaneTippyCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLZaneTippyElement;
 }
+export interface ZaneTodoListCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLZaneTodoListElement;
+}
 export interface ZaneTransferCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLZaneTransferElement;
@@ -2888,6 +3051,10 @@ export interface ZaneTreeNodeCustomEvent<T> extends CustomEvent<T> {
 export interface ZaneTreeSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLZaneTreeSelectElement;
+}
+export interface ZaneUploadCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLZaneUploadElement;
 }
 export interface ZaneVirtualGridCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -3453,6 +3620,37 @@ declare global {
         prototype: HTMLZaneMentionDropdownElement;
         new (): HTMLZaneMentionDropdownElement;
     };
+    interface HTMLZaneMenuElementEventMap {
+        "zSelect": { index: string; indexPath: string[] };
+        "zOpen": { index: string; indexPath: string[] };
+        "zClose": { index: string; indexPath: string[] };
+    }
+    interface HTMLZaneMenuElement extends Components.ZaneMenu, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLZaneMenuElementEventMap>(type: K, listener: (this: HTMLZaneMenuElement, ev: ZaneMenuCustomEvent<HTMLZaneMenuElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLZaneMenuElementEventMap>(type: K, listener: (this: HTMLZaneMenuElement, ev: ZaneMenuCustomEvent<HTMLZaneMenuElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLZaneMenuElement: {
+        prototype: HTMLZaneMenuElement;
+        new (): HTMLZaneMenuElement;
+    };
+    interface HTMLZaneMenuItemElement extends Components.ZaneMenuItem, HTMLStencilElement {
+    }
+    var HTMLZaneMenuItemElement: {
+        prototype: HTMLZaneMenuItemElement;
+        new (): HTMLZaneMenuItemElement;
+    };
+    interface HTMLZaneMenuItemGroupElement extends Components.ZaneMenuItemGroup, HTMLStencilElement {
+    }
+    var HTMLZaneMenuItemGroupElement: {
+        prototype: HTMLZaneMenuItemGroupElement;
+        new (): HTMLZaneMenuItemGroupElement;
+    };
     interface HTMLZaneOnlyChildElement extends Components.ZaneOnlyChild, HTMLStencilElement {
     }
     var HTMLZaneOnlyChildElement: {
@@ -3758,6 +3956,12 @@ declare global {
         prototype: HTMLZaneSplitterPanelElement;
         new (): HTMLZaneSplitterPanelElement;
     };
+    interface HTMLZaneSubMenuElement extends Components.ZaneSubMenu, HTMLStencilElement {
+    }
+    var HTMLZaneSubMenuElement: {
+        prototype: HTMLZaneSubMenuElement;
+        new (): HTMLZaneSubMenuElement;
+    };
     interface HTMLZaneSwitchElementEventMap {
         "zChange": boolean | string | number;
         "zInput": boolean | string | number;
@@ -3840,6 +4044,23 @@ declare global {
     var HTMLZaneTippyElement: {
         prototype: HTMLZaneTippyElement;
         new (): HTMLZaneTippyElement;
+    };
+    interface HTMLZaneTodoListElementEventMap {
+        "zaneClick": void;
+    }
+    interface HTMLZaneTodoListElement extends Components.ZaneTodoList, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLZaneTodoListElementEventMap>(type: K, listener: (this: HTMLZaneTodoListElement, ev: ZaneTodoListCustomEvent<HTMLZaneTodoListElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLZaneTodoListElementEventMap>(type: K, listener: (this: HTMLZaneTodoListElement, ev: ZaneTodoListCustomEvent<HTMLZaneTodoListElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLZaneTodoListElement: {
+        prototype: HTMLZaneTodoListElement;
+        new (): HTMLZaneTodoListElement;
     };
     interface HTMLZaneTransferElementEventMap {
         "zChange": {
@@ -4039,6 +4260,29 @@ declare global {
         prototype: HTMLZaneTreeSelectElement;
         new (): HTMLZaneTreeSelectElement;
     };
+    interface HTMLZaneUploadElementEventMap {
+        "zChange": UploadChangeOptions;
+        "zSuccess": { response: any; file: UploadFile };
+        "zError": { error: Error; file: UploadFile };
+        "zProgress": { percent: number; file: UploadFile };
+        "zRemove": UploadFile;
+        "zExceed": { files: File[]; fileList: UploadFile[] };
+        "zPreview": UploadFile;
+    }
+    interface HTMLZaneUploadElement extends Components.ZaneUpload, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLZaneUploadElementEventMap>(type: K, listener: (this: HTMLZaneUploadElement, ev: ZaneUploadCustomEvent<HTMLZaneUploadElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLZaneUploadElementEventMap>(type: K, listener: (this: HTMLZaneUploadElement, ev: ZaneUploadCustomEvent<HTMLZaneUploadElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLZaneUploadElement: {
+        prototype: HTMLZaneUploadElement;
+        new (): HTMLZaneUploadElement;
+    };
     interface HTMLZaneVirtualGridElementEventMap {
         "zItemRendered": {
     columnCacheStart: number;
@@ -4166,6 +4410,9 @@ declare global {
         "zane-main": HTMLZaneMainElement;
         "zane-mention": HTMLZaneMentionElement;
         "zane-mention-dropdown": HTMLZaneMentionDropdownElement;
+        "zane-menu": HTMLZaneMenuElement;
+        "zane-menu-item": HTMLZaneMenuItemElement;
+        "zane-menu-item-group": HTMLZaneMenuItemGroupElement;
         "zane-only-child": HTMLZaneOnlyChildElement;
         "zane-radio": HTMLZaneRadioElement;
         "zane-radio-button": HTMLZaneRadioButtonElement;
@@ -4188,17 +4435,20 @@ declare global {
         "zane-splitter": HTMLZaneSplitterElement;
         "zane-splitter-bar": HTMLZaneSplitterBarElement;
         "zane-splitter-panel": HTMLZaneSplitterPanelElement;
+        "zane-sub-menu": HTMLZaneSubMenuElement;
         "zane-switch": HTMLZaneSwitchElement;
         "zane-tag": HTMLZaneTagElement;
         "zane-text": HTMLZaneTextElement;
         "zane-thumb": HTMLZaneThumbElement;
         "zane-tippy": HTMLZaneTippyElement;
+        "zane-todo-list": HTMLZaneTodoListElement;
         "zane-transfer": HTMLZaneTransferElement;
         "zane-transfer-panel": HTMLZaneTransferPanelElement;
         "zane-tree": HTMLZaneTreeElement;
         "zane-tree-node": HTMLZaneTreeNodeElement;
         "zane-tree-node-content": HTMLZaneTreeNodeContentElement;
         "zane-tree-select": HTMLZaneTreeSelectElement;
+        "zane-upload": HTMLZaneUploadElement;
         "zane-virtual-grid": HTMLZaneVirtualGridElement;
         "zane-virtual-list": HTMLZaneVirtualListElement;
         "zane-virtual-scrollbar": HTMLZaneVirtualScrollbarElement;
@@ -5411,6 +5661,67 @@ declare namespace LocalJSX {
          */
         "options"?: MentionOption[];
     }
+    interface ZaneMenu {
+        /**
+          * @default ''
+         */
+        "activeTextColor"?: string;
+        /**
+          * @default ''
+         */
+        "backgroundColor"?: string;
+        /**
+          * @default false
+         */
+        "collapse"?: boolean;
+        /**
+          * @default ''
+         */
+        "defaultActive"?: string;
+        /**
+          * @default []
+         */
+        "defaultOpeneds"?: string[];
+        /**
+          * @default false
+         */
+        "ellipsis"?: boolean;
+        /**
+          * @default 'click'
+         */
+        "menuTrigger"?: MenuTrigger;
+        /**
+          * @default 'vertical'
+         */
+        "mode"?: MenuMode;
+        "onZClose"?: (event: ZaneMenuCustomEvent<{ index: string; indexPath: string[] }>) => void;
+        "onZOpen"?: (event: ZaneMenuCustomEvent<{ index: string; indexPath: string[] }>) => void;
+        "onZSelect"?: (event: ZaneMenuCustomEvent<{ index: string; indexPath: string[] }>) => void;
+        /**
+          * @default ''
+         */
+        "textColor"?: string;
+        /**
+          * @default false
+         */
+        "uniqueOpened"?: boolean;
+    }
+    interface ZaneMenuItem {
+        /**
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * @default ''
+         */
+        "index"?: string;
+    }
+    interface ZaneMenuItemGroup {
+        /**
+          * @default ''
+         */
+        "groupTitle"?: string;
+    }
     interface ZaneOnlyChild {
         /**
           * 是否启用调试模式，启用后会输出警告信息
@@ -6090,6 +6401,28 @@ declare namespace LocalJSX {
         "size"?: number | string;
         "uuid"?: string;
     }
+    interface ZaneSubMenu {
+        /**
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * @default 300
+         */
+        "hideTimeout"?: number;
+        /**
+          * @default ''
+         */
+        "index"?: string;
+        /**
+          * @default ''
+         */
+        "popperClass"?: string;
+        /**
+          * @default 300
+         */
+        "showTimeout"?: number;
+    }
     interface ZaneSwitch {
         "activeActionIcon"?: string;
         "activeIcon"?: string;
@@ -6358,6 +6691,17 @@ declare namespace LocalJSX {
           * @default tippy.defaultProps.zIndex
          */
         "zIndex"?: number;
+    }
+    interface ZaneTodoList {
+        "onZaneClick"?: (event: ZaneTodoListCustomEvent<void>) => void;
+        /**
+          * @default false
+         */
+        "open"?: boolean;
+        /**
+          * @default ""
+         */
+        "showText"?: string;
     }
     interface ZaneTransfer {
         /**
@@ -6829,6 +7173,71 @@ declare namespace LocalJSX {
          */
         "zTabIndex"?: number;
     }
+    interface ZaneUpload {
+        /**
+          * @default ""
+         */
+        "accept"?: string;
+        /**
+          * @default "#"
+         */
+        "action"?: string;
+        /**
+          * @default true
+         */
+        "autoUpload"?: boolean;
+        "beforeRemove"?: (file: UploadFile, fileList: UploadFile[]) => boolean | Promise<boolean> | Promise<void>;
+        "beforeUpload"?: (file: File) => boolean | Promise<void>;
+        /**
+          * @default {}
+         */
+        "data"?: Record<string, unknown>;
+        /**
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * @default false
+         */
+        "drag"?: boolean;
+        /**
+          * @default {}
+         */
+        "headers"?: Record<string, string>;
+        "httpRequest"?: (options: UploadRequestOptions) => void | Promise<void>;
+        "limit"?: number;
+        /**
+          * @default "text"
+         */
+        "listType"?: UploadListType;
+        /**
+          * @default "post"
+         */
+        "method"?: string;
+        /**
+          * @default false
+         */
+        "multiple"?: boolean;
+        /**
+          * @default "file"
+         */
+        "name"?: string;
+        "onZChange"?: (event: ZaneUploadCustomEvent<UploadChangeOptions>) => void;
+        "onZError"?: (event: ZaneUploadCustomEvent<{ error: Error; file: UploadFile }>) => void;
+        "onZExceed"?: (event: ZaneUploadCustomEvent<{ files: File[]; fileList: UploadFile[] }>) => void;
+        "onZPreview"?: (event: ZaneUploadCustomEvent<UploadFile>) => void;
+        "onZProgress"?: (event: ZaneUploadCustomEvent<{ percent: number; file: UploadFile }>) => void;
+        "onZRemove"?: (event: ZaneUploadCustomEvent<UploadFile>) => void;
+        "onZSuccess"?: (event: ZaneUploadCustomEvent<{ response: any; file: UploadFile }>) => void;
+        /**
+          * @default true
+         */
+        "showFileList"?: boolean;
+        /**
+          * @default false
+         */
+        "withCredentials"?: boolean;
+    }
     interface ZaneVirtualGrid {
         /**
           * @default 2
@@ -7084,6 +7493,9 @@ declare namespace LocalJSX {
         "zane-main": ZaneMain;
         "zane-mention": ZaneMention;
         "zane-mention-dropdown": ZaneMentionDropdown;
+        "zane-menu": ZaneMenu;
+        "zane-menu-item": ZaneMenuItem;
+        "zane-menu-item-group": ZaneMenuItemGroup;
         "zane-only-child": ZaneOnlyChild;
         "zane-radio": ZaneRadio;
         "zane-radio-button": ZaneRadioButton;
@@ -7106,17 +7518,20 @@ declare namespace LocalJSX {
         "zane-splitter": ZaneSplitter;
         "zane-splitter-bar": ZaneSplitterBar;
         "zane-splitter-panel": ZaneSplitterPanel;
+        "zane-sub-menu": ZaneSubMenu;
         "zane-switch": ZaneSwitch;
         "zane-tag": ZaneTag;
         "zane-text": ZaneText;
         "zane-thumb": ZaneThumb;
         "zane-tippy": ZaneTippy;
+        "zane-todo-list": ZaneTodoList;
         "zane-transfer": ZaneTransfer;
         "zane-transfer-panel": ZaneTransferPanel;
         "zane-tree": ZaneTree;
         "zane-tree-node": ZaneTreeNode;
         "zane-tree-node-content": ZaneTreeNodeContent;
         "zane-tree-select": ZaneTreeSelect;
+        "zane-upload": ZaneUpload;
         "zane-virtual-grid": ZaneVirtualGrid;
         "zane-virtual-list": ZaneVirtualList;
         "zane-virtual-scrollbar": ZaneVirtualScrollbar;
@@ -7170,6 +7585,9 @@ declare module "@stencil/core" {
             "zane-main": LocalJSX.ZaneMain & JSXBase.HTMLAttributes<HTMLZaneMainElement>;
             "zane-mention": LocalJSX.ZaneMention & JSXBase.HTMLAttributes<HTMLZaneMentionElement>;
             "zane-mention-dropdown": LocalJSX.ZaneMentionDropdown & JSXBase.HTMLAttributes<HTMLZaneMentionDropdownElement>;
+            "zane-menu": LocalJSX.ZaneMenu & JSXBase.HTMLAttributes<HTMLZaneMenuElement>;
+            "zane-menu-item": LocalJSX.ZaneMenuItem & JSXBase.HTMLAttributes<HTMLZaneMenuItemElement>;
+            "zane-menu-item-group": LocalJSX.ZaneMenuItemGroup & JSXBase.HTMLAttributes<HTMLZaneMenuItemGroupElement>;
             "zane-only-child": LocalJSX.ZaneOnlyChild & JSXBase.HTMLAttributes<HTMLZaneOnlyChildElement>;
             "zane-radio": LocalJSX.ZaneRadio & JSXBase.HTMLAttributes<HTMLZaneRadioElement>;
             "zane-radio-button": LocalJSX.ZaneRadioButton & JSXBase.HTMLAttributes<HTMLZaneRadioButtonElement>;
@@ -7192,17 +7610,20 @@ declare module "@stencil/core" {
             "zane-splitter": LocalJSX.ZaneSplitter & JSXBase.HTMLAttributes<HTMLZaneSplitterElement>;
             "zane-splitter-bar": LocalJSX.ZaneSplitterBar & JSXBase.HTMLAttributes<HTMLZaneSplitterBarElement>;
             "zane-splitter-panel": LocalJSX.ZaneSplitterPanel & JSXBase.HTMLAttributes<HTMLZaneSplitterPanelElement>;
+            "zane-sub-menu": LocalJSX.ZaneSubMenu & JSXBase.HTMLAttributes<HTMLZaneSubMenuElement>;
             "zane-switch": LocalJSX.ZaneSwitch & JSXBase.HTMLAttributes<HTMLZaneSwitchElement>;
             "zane-tag": LocalJSX.ZaneTag & JSXBase.HTMLAttributes<HTMLZaneTagElement>;
             "zane-text": LocalJSX.ZaneText & JSXBase.HTMLAttributes<HTMLZaneTextElement>;
             "zane-thumb": LocalJSX.ZaneThumb & JSXBase.HTMLAttributes<HTMLZaneThumbElement>;
             "zane-tippy": LocalJSX.ZaneTippy & JSXBase.HTMLAttributes<HTMLZaneTippyElement>;
+            "zane-todo-list": LocalJSX.ZaneTodoList & JSXBase.HTMLAttributes<HTMLZaneTodoListElement>;
             "zane-transfer": LocalJSX.ZaneTransfer & JSXBase.HTMLAttributes<HTMLZaneTransferElement>;
             "zane-transfer-panel": LocalJSX.ZaneTransferPanel & JSXBase.HTMLAttributes<HTMLZaneTransferPanelElement>;
             "zane-tree": LocalJSX.ZaneTree & JSXBase.HTMLAttributes<HTMLZaneTreeElement>;
             "zane-tree-node": LocalJSX.ZaneTreeNode & JSXBase.HTMLAttributes<HTMLZaneTreeNodeElement>;
             "zane-tree-node-content": LocalJSX.ZaneTreeNodeContent & JSXBase.HTMLAttributes<HTMLZaneTreeNodeContentElement>;
             "zane-tree-select": LocalJSX.ZaneTreeSelect & JSXBase.HTMLAttributes<HTMLZaneTreeSelectElement>;
+            "zane-upload": LocalJSX.ZaneUpload & JSXBase.HTMLAttributes<HTMLZaneUploadElement>;
             "zane-virtual-grid": LocalJSX.ZaneVirtualGrid & JSXBase.HTMLAttributes<HTMLZaneVirtualGridElement>;
             "zane-virtual-list": LocalJSX.ZaneVirtualList & JSXBase.HTMLAttributes<HTMLZaneVirtualListElement>;
             "zane-virtual-scrollbar": LocalJSX.ZaneVirtualScrollbar & JSXBase.HTMLAttributes<HTMLZaneVirtualScrollbarElement>;

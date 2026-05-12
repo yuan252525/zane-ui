@@ -64,6 +64,16 @@ Type: `Promise<CascaderNode[]>`
 
 
 
+### `getContext() => Promise<ReactiveObject<CascaderPanelContext>>`
+
+
+
+#### Returns
+
+Type: `Promise<ReactiveObject<CascaderPanelContext>>`
+
+
+
 ### `getFlattedNodes(leafOnly: boolean) => Promise<CascaderNode[]>`
 
 

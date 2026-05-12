@@ -31,6 +31,19 @@
 | `zChange` |             | `CustomEvent<boolean \| number \| string>` |
 
 
+## Methods
+
+### `getContext() => Promise<ReactiveObject<RadioGroupContext>>`
+
+
+
+#### Returns
+
+Type: `Promise<ReactiveObject<RadioGroupContext>>`
+
+
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
