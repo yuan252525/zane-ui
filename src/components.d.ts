@@ -220,10 +220,6 @@ export namespace Components {
         "collapseClass": string | undefined;
         "collapseStyle": Record<string, any> | undefined;
         /**
-          * @default 'light'
-         */
-        "effect": 'dark' | 'light';
-        /**
           * @default 1
          */
         "maxCollapseAvatars": number;
@@ -384,6 +380,70 @@ export namespace Components {
          */
         "headerClass": string;
         "shadow"?: 'always' | 'hover' | 'never';
+    }
+    interface ZaneCarousel {
+        /**
+          * @default 'hover'
+         */
+        "arrow": 'always' | 'hover' | 'never';
+        /**
+          * @default true
+         */
+        "autoplay": boolean;
+        /**
+          * @default 0.83
+         */
+        "cardScale": number;
+        /**
+          * @default 'horizontal'
+         */
+        "direction": 'horizontal' | 'vertical';
+        /**
+          * @default ''
+         */
+        "height": string;
+        /**
+          * @default ''
+         */
+        "indicatorPosition": '' | 'none' | 'outside';
+        /**
+          * @default 0
+         */
+        "initialIndex": number;
+        /**
+          * @default 3000
+         */
+        "interval": number;
+        /**
+          * @default true
+         */
+        "loop": boolean;
+        /**
+          * @default true
+         */
+        "pauseOnHover": boolean;
+        /**
+          * @default 'hover'
+         */
+        "trigger": 'hover' | 'click';
+        /**
+          * @default ''
+         */
+        "type": '' | 'card';
+    }
+    interface ZaneCarouselItem {
+        "getActive": () => Promise<boolean>;
+        "getInStage": () => Promise<boolean>;
+        /**
+          * @default ''
+         */
+        "label": string | number;
+        /**
+          * @default ''
+         */
+        "name": string;
+        "setHover": (hover: boolean) => Promise<void>;
+        "translateItem": (index: number, activeIndex: number, oldIndex?: number) => Promise<void>;
     }
     interface ZaneCascader {
         /**
@@ -998,17 +1058,20 @@ export namespace Components {
         "height": string;
     }
     interface ZaneIcon {
-        "color": string;
+        "color"?: string;
         /**
           * @default ''
          */
         "iconClass": string;
-        "name": string;
-        "rotate": number;
-        "size": string;
+        "name"?: string;
+        "rotate"?: number;
+        "size"?: string;
+        /**
+          * @default false
+         */
         "spin": boolean;
-        "styles": object;
-        "zPrefix": string;
+        "styles"?: object;
+        "zPrefix"?: string;
     }
     interface ZaneImgEmpty {
     }
@@ -2976,6 +3039,10 @@ export interface ZaneButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLZaneButtonElement;
 }
+export interface ZaneCarouselCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLZaneCarouselElement;
+}
 export interface ZaneCascaderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLZaneCascaderElement;
@@ -3234,6 +3301,29 @@ declare global {
     var HTMLZaneCardElement: {
         prototype: HTMLZaneCardElement;
         new (): HTMLZaneCardElement;
+    };
+    interface HTMLZaneCarouselElementEventMap {
+        "zChange": { current: number; prev: number };
+    }
+    interface HTMLZaneCarouselElement extends Components.ZaneCarousel, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLZaneCarouselElementEventMap>(type: K, listener: (this: HTMLZaneCarouselElement, ev: ZaneCarouselCustomEvent<HTMLZaneCarouselElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLZaneCarouselElementEventMap>(type: K, listener: (this: HTMLZaneCarouselElement, ev: ZaneCarouselCustomEvent<HTMLZaneCarouselElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLZaneCarouselElement: {
+        prototype: HTMLZaneCarouselElement;
+        new (): HTMLZaneCarouselElement;
+    };
+    interface HTMLZaneCarouselItemElement extends Components.ZaneCarouselItem, HTMLStencilElement {
+    }
+    var HTMLZaneCarouselItemElement: {
+        prototype: HTMLZaneCarouselItemElement;
+        new (): HTMLZaneCarouselItemElement;
     };
     interface HTMLZaneCascaderElementEventMap {
         "zFocus": FocusEvent;
@@ -4393,6 +4483,8 @@ declare global {
         "zane-button": HTMLZaneButtonElement;
         "zane-button-group": HTMLZaneButtonGroupElement;
         "zane-card": HTMLZaneCardElement;
+        "zane-carousel": HTMLZaneCarouselElement;
+        "zane-carousel-item": HTMLZaneCarouselItemElement;
         "zane-cascader": HTMLZaneCascaderElement;
         "zane-cascader-menu": HTMLZaneCascaderMenuElement;
         "zane-cascader-node": HTMLZaneCascaderNodeElement;
@@ -4623,10 +4715,6 @@ declare namespace LocalJSX {
         "collapseClass"?: string | undefined;
         "collapseStyle"?: Record<string, any> | undefined;
         /**
-          * @default 'light'
-         */
-        "effect"?: 'dark' | 'light';
-        /**
           * @default 1
          */
         "maxCollapseAvatars"?: number;
@@ -4785,6 +4873,67 @@ declare namespace LocalJSX {
          */
         "headerClass"?: string;
         "shadow"?: 'always' | 'hover' | 'never';
+    }
+    interface ZaneCarousel {
+        /**
+          * @default 'hover'
+         */
+        "arrow"?: 'always' | 'hover' | 'never';
+        /**
+          * @default true
+         */
+        "autoplay"?: boolean;
+        /**
+          * @default 0.83
+         */
+        "cardScale"?: number;
+        /**
+          * @default 'horizontal'
+         */
+        "direction"?: 'horizontal' | 'vertical';
+        /**
+          * @default ''
+         */
+        "height"?: string;
+        /**
+          * @default ''
+         */
+        "indicatorPosition"?: '' | 'none' | 'outside';
+        /**
+          * @default 0
+         */
+        "initialIndex"?: number;
+        /**
+          * @default 3000
+         */
+        "interval"?: number;
+        /**
+          * @default true
+         */
+        "loop"?: boolean;
+        "onZChange"?: (event: ZaneCarouselCustomEvent<{ current: number; prev: number }>) => void;
+        /**
+          * @default true
+         */
+        "pauseOnHover"?: boolean;
+        /**
+          * @default 'hover'
+         */
+        "trigger"?: 'hover' | 'click';
+        /**
+          * @default ''
+         */
+        "type"?: '' | 'card';
+    }
+    interface ZaneCarouselItem {
+        /**
+          * @default ''
+         */
+        "label"?: string | number;
+        /**
+          * @default ''
+         */
+        "name"?: string;
     }
     interface ZaneCascader {
         /**
@@ -5413,6 +5562,9 @@ declare namespace LocalJSX {
         "name"?: string;
         "rotate"?: number;
         "size"?: string;
+        /**
+          * @default false
+         */
         "spin"?: boolean;
         "styles"?: object;
         "zPrefix"?: string;
@@ -7547,6 +7699,8 @@ declare namespace LocalJSX {
         "zane-button": ZaneButton;
         "zane-button-group": ZaneButtonGroup;
         "zane-card": ZaneCard;
+        "zane-carousel": ZaneCarousel;
+        "zane-carousel-item": ZaneCarouselItem;
         "zane-cascader": ZaneCascader;
         "zane-cascader-menu": ZaneCascaderMenu;
         "zane-cascader-node": ZaneCascaderNode;
@@ -7638,6 +7792,8 @@ declare module "@stencil/core" {
             "zane-button": LocalJSX.ZaneButton & JSXBase.HTMLAttributes<HTMLZaneButtonElement>;
             "zane-button-group": LocalJSX.ZaneButtonGroup & JSXBase.HTMLAttributes<HTMLZaneButtonGroupElement>;
             "zane-card": LocalJSX.ZaneCard & JSXBase.HTMLAttributes<HTMLZaneCardElement>;
+            "zane-carousel": LocalJSX.ZaneCarousel & JSXBase.HTMLAttributes<HTMLZaneCarouselElement>;
+            "zane-carousel-item": LocalJSX.ZaneCarouselItem & JSXBase.HTMLAttributes<HTMLZaneCarouselItemElement>;
             "zane-cascader": LocalJSX.ZaneCascader & JSXBase.HTMLAttributes<HTMLZaneCascaderElement>;
             "zane-cascader-menu": LocalJSX.ZaneCascaderMenu & JSXBase.HTMLAttributes<HTMLZaneCascaderMenuElement>;
             "zane-cascader-node": LocalJSX.ZaneCascaderNode & JSXBase.HTMLAttributes<HTMLZaneCascaderNodeElement>;

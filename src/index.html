@@ -51,6 +51,16 @@
   </head>
   <body>
     <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+      <zane-carousel arrow-display motion-blur>
+        <zane-carousel-item>
+          <div class="demo-panel" style="background-color: #f56c6c; color: #fff">1</div>
+        </zane-carousel-item>
+        <zane-carousel-item>
+          <div class="demo-panel" style="background-color: #67c23a; color: #fff">2</div>
+        </zane-carousel-item>
+      </zane-carousel>
+    </div>
+    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
       <zane-empty>
         <div slot="description" style="color: #909399; font-size: 14px">
           <p>Line 1 of custom description</p>
@@ -58,10 +68,10 @@
         </div>
       </zane-empty>
     </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); display:flex;gap:40px">
+    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
       <zane-cascader></zane-cascader>
     </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); display:flex;gap:40px">
+    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
       <zane-avatar-group
         shape="circle"
         max-collapse-avatars="3"
@@ -428,8 +438,8 @@
       if (avatarGroupEl) {
         avatarGroupEl.avatars = [
           'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png|img',
+          'account-circle-line|icon',
           'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png|img',
-          'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png|img',
           'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png|img',
         ];
       }
