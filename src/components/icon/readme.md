@@ -7,15 +7,16 @@
 
 ## Properties
 
-| Property     | Attribute     | Description | Type      | Default     |
-| ------------ | ------------- | ----------- | --------- | ----------- |
-| `classNames` | `class-names` |             | `string`  | `''`        |
-| `color`      | `color`       |             | `string`  | `undefined` |
-| `name`       | `name`        |             | `string`  | `undefined` |
-| `rotate`     | `rotate`      |             | `number`  | `undefined` |
-| `size`       | `size`        |             | `string`  | `undefined` |
-| `spin`       | `spin`        |             | `boolean` | `undefined` |
-| `styles`     | --            |             | `object`  | `undefined` |
+| Property    | Attribute    | Description | Type      | Default     |
+| ----------- | ------------ | ----------- | --------- | ----------- |
+| `color`     | `color`      |             | `string`  | `undefined` |
+| `iconClass` | `icon-class` |             | `string`  | `''`        |
+| `name`      | `name`       |             | `string`  | `undefined` |
+| `rotate`    | `rotate`     |             | `number`  | `undefined` |
+| `size`      | `size`       |             | `string`  | `undefined` |
+| `spin`      | `spin`       |             | `boolean` | `undefined` |
+| `styles`    | --           |             | `object`  | `undefined` |
+| `zPrefix`   | `prefix`     |             | `string`  | `undefined` |
 
 
 ## Dependencies
@@ -30,9 +31,17 @@
  - [zane-cascader-node](../cascader)
  - [zane-collapse-item](../collapse)
  - [zane-input](../input)
+ - [zane-input-number](../input-number)
+ - [zane-input-tag](../input-tag)
  - [zane-link](../link)
+ - [zane-rate](../rate)
+ - [zane-select](../select)
+ - [zane-select-virtual](../select-virtual)
  - [zane-splitter-bar](../splitter)
+ - [zane-switch](../switch)
  - [zane-tag](../tag)
+ - [zane-transfer](../transfer)
+ - [zane-tree-node](../tree)
 
 ### Graph
 ```mermaid
@@ -45,9 +54,17 @@ graph TD;
   zane-cascader-node --> zane-icon
   zane-collapse-item --> zane-icon
   zane-input --> zane-icon
+  zane-input-number --> zane-icon
+  zane-input-tag --> zane-icon
   zane-link --> zane-icon
+  zane-rate --> zane-icon
+  zane-select --> zane-icon
+  zane-select-virtual --> zane-icon
   zane-splitter-bar --> zane-icon
+  zane-switch --> zane-icon
   zane-tag --> zane-icon
+  zane-transfer --> zane-icon
+  zane-tree-node --> zane-icon
   style zane-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

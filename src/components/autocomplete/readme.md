@@ -12,7 +12,7 @@
 | `appendTo`            | `append-to`             |             | `"parent" \| ((ref: Element) => Element) \| Element`                                                                        | `() =>     document?.body` |
 | `ariaLabel`           | `aria-label`            |             | `string`                                                                                                                    | `undefined`                |
 | `autosize`            | `autosize`              |             | `boolean \| { maxRows?: number; minRows?: number; }`                                                                        | `false`                    |
-| `clearIcon`           | `clear-icon`            |             | `string`                                                                                                                    | `'circle-close'`           |
+| `clearIcon`           | `clear-icon`            |             | `string`                                                                                                                    | `'close-circle-line'`      |
 | `clearable`           | `clearable`             |             | `boolean`                                                                                                                   | `undefined`                |
 | `debounce`            | `debounce`              |             | `number`                                                                                                                    | `300`                      |
 | `disabled`            | `disabled`              |             | `boolean`                                                                                                                   | `undefined`                |
@@ -56,14 +56,14 @@
 
 ## Events
 
-| Event     | Description | Type                            |
-| --------- | ----------- | ------------------------------- |
-| `zBlur`   |             | `CustomEvent<FocusEvent>`       |
-| `zChange` |             | `CustomEvent<number \| string>` |
-| `zClear`  |             | `CustomEvent<void>`             |
-| `zFocus`  |             | `CustomEvent<FocusEvent>`       |
-| `zInput`  |             | `CustomEvent<string>`           |
-| `zSelect` |             | `CustomEvent<number \| string>` |
+| Event     | Description | Type               |
+| --------- | ----------- | ------------------ |
+| `zBlur`   |             | `CustomEvent<any>` |
+| `zChange` |             | `CustomEvent<any>` |
+| `zClear`  |             | `CustomEvent<any>` |
+| `zFocus`  |             | `CustomEvent<any>` |
+| `zInput`  |             | `CustomEvent<any>` |
+| `zSelect` |             | `CustomEvent<any>` |
 
 
 ## Methods
@@ -161,7 +161,7 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [zane-tooltip](../tooltip)
+- [zane-tippy](../tippy)
 - [zane-input](../input)
 - [zane-scrollbar](../scrollbar)
 - [zane-icon](../icon)
@@ -169,7 +169,7 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
-  zane-autocomplete --> zane-tooltip
+  zane-autocomplete --> zane-tippy
   zane-autocomplete --> zane-input
   zane-autocomplete --> zane-scrollbar
   zane-autocomplete --> zane-icon

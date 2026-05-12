@@ -93,7 +93,13 @@ export class ZaneAvatar {
     }
 
     if (this.icon) {
-      return <zane-icon name={this.icon}></zane-icon>;
+      const sizeDict: Record<string, string> = {
+        'large': '56px',
+        'default': '40px',
+        'small': '24px',
+      }
+      const size = isString(this.size) ? (sizeDict[this.size as string] ?? '40px') : `${this.size}px`;
+      return <zane-icon name={this.icon} size={size} style={{display: 'flex'}}></zane-icon>;
     }
 
     return <slot />;

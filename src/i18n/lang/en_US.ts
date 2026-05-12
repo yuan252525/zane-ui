@@ -39,5 +39,10 @@ export const en_US: I18nResource = {
   },
   tree: {
     emptyText: 'No Data'
-  }
+  },
+  carousel: {
+    leftArrow: 'Carousel arrow left',
+    rightArrow: 'Carousel arrow right',
+    indicator: 'Carousel switch to index {index}',
+  },
 };

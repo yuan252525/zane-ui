@@ -66,7 +66,7 @@ export type SelectContext = {
   multiple: boolean;
   multipleLimit: number;
   fitInputWidth: boolean;
-  selectRef: HTMLDivElement;
+  selectRef?: HTMLDivElement;
   options: Option[]
   optionsArray: Option[];
   optionValues: SelectOptionValue[];

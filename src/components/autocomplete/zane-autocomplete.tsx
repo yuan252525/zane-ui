@@ -194,9 +194,6 @@ export class ZaneComplete {
 
   private hasSuffix: boolean | undefined;
 
-  @Prop() appendTo: 'parent' | ((ref: Element) => Element) | Element = () =>
-    document?.body;
-
   @Method()
   async close() {
     this.popperRef?.hide();
@@ -322,7 +319,7 @@ export class ZaneComplete {
     return (
       <Host>
         <zane-tippy
-          appendTo={this.appendTo}
+          appendTo={document.body}
           arrow={false}
           hideOnClick={false}
           interactive={true}

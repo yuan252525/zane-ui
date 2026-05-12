@@ -31,6 +31,9 @@
 ### Used by
 
  - [zane-cascader](../cascader)
+ - [zane-input-tag](../input-tag)
+ - [zane-select](../select)
+ - [zane-select-virtual](../select-virtual)
 
 ### Depends on
 
@@ -41,6 +44,9 @@
 graph TD;
   zane-tag --> zane-icon
   zane-cascader --> zane-tag
+  zane-input-tag --> zane-tag
+  zane-select --> zane-tag
+  zane-select-virtual --> zane-tag
   style zane-tag fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -16,7 +16,7 @@ const ns = useNamespace('col');
   tag: 'zane-col',
 })
 export class ZaneRow {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @State() gutter: number = 0;
 
@@ -26,19 +26,19 @@ export class ZaneRow {
   @Prop()
   md: ColSize = mutable({} as const);
 
-  @Prop({ attribute: 'offset', reflect: true })
+  @Prop()
   offset: number = 0;
 
-  @Prop({ attribute: 'pull', reflect: true })
+  @Prop()
   pull: number = 0;
 
-  @Prop({ attribute: 'push', reflect: true })
+  @Prop()
   push: number = 0;
 
   @Prop()
   sm: ColSize = mutable({} as const);
 
-  @Prop({ attribute: 'span', reflect: true })
+  @Prop()
   span: number = 24;
 
   @Prop()
@@ -47,7 +47,7 @@ export class ZaneRow {
   @Prop()
   xs: ColSize = mutable({} as const);
 
-  private rowContext: ReactiveObject<RowContext>;
+  private rowContext?: ReactiveObject<RowContext>;
 
   componentWillLoad() {
     this.rowContext = getRowContext(this.el);

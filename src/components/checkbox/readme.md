@@ -28,10 +28,36 @@
 
 ## Events
 
-| Event     | Description | Type               |
-| --------- | ----------- | ------------------ |
-| `zChange` |             | `CustomEvent<any>` |
+| Event     | Description | Type                                |
+| --------- | ----------- | ----------------------------------- |
+| `zChange` |             | `CustomEvent<(string \| number)[]>` |
 
+
+## Methods
+
+### `getContext() => Promise<ReactiveObject<CheckboxGroupContext>>`
+
+
+
+#### Returns
+
+Type: `Promise<ReactiveObject<CheckboxGroupContext>>`
+
+
+
+
+## Dependencies
+
+### Used by
+
+ - [zane-transfer-panel](../transfer)
+
+### Graph
+```mermaid
+graph TD;
+  zane-transfer-panel --> zane-checkbox-group
+  style zane-checkbox-group fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property      | Attribute       | Description | Type      | Default     |
-| ------------- | --------------- | ----------- | --------- | ----------- |
-| `isAutoWidth` | `is-auto-width` |             | `boolean` | `undefined` |
-| `updateAll`   | `update-all`    |             | `boolean` | `undefined` |
+| Property      | Attribute       | Description | Type      | Default |
+| ------------- | --------------- | ----------- | --------- | ------- |
+| `isAutoWidth` | `is-auto-width` |             | `boolean` | `false` |
+| `updateAll`   | `update-all`    |             | `boolean` | `false` |
 
 
 ----------------------------------------------

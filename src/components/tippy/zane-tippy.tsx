@@ -18,9 +18,9 @@ import { setElementStyleValue } from '../../utils/dom/style/setElementStyleValue
 })
 export class ZaneTippy {
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop() to: string | 'parent' | HTMLElement;
+  @Prop() to?: string | 'parent' | HTMLElement;
 
   @Prop() tag: string = 'span';
 
@@ -28,11 +28,11 @@ export class ZaneTippy {
 
   @Prop() boxClass: string = '';
 
-  @Prop() boxStyle: Record<string, any> = undefined;
+  @Prop() boxStyle?: Record<string, any> = undefined;
 
   @Prop() contentClass: string = '';
 
-  @Prop() contentStyle: Record<string, any> = undefined;
+  @Prop() contentStyle?: Record<string, any> = undefined;
 
   @Prop() disabled: boolean = false;
 
@@ -103,48 +103,48 @@ export class ZaneTippy {
   /**
    * 内容支持字符串（直接作为 HTML 或文本）
    */
-  @Prop() content: string;
+  @Prop() content?: string;
 
   @State() internalContent: HTMLElement | string = '';
 
   @Event({ eventName: 'afterUpdate', bubbles: false })
-  afterUpdateEvent: EventEmitter<[Instance<Props>, Partial<Props>]>
+  afterUpdateEvent?: EventEmitter<[Instance<Props>, Partial<Props>]>
 
   @Event({ eventName: 'beforeUpdate', bubbles: false })
-  beforeUpdateEvent: EventEmitter<[Instance<Props>, Partial<Props>]>
+  beforeUpdateEvent?: EventEmitter<[Instance<Props>, Partial<Props>]>
 
   @Event({ eventName: 'create', bubbles: false })
-  createEvent: EventEmitter<Instance<Props>>
+  createEvent?: EventEmitter<Instance<Props>>
 
   @Event({ eventName: 'destroy', bubbles: false })
-  destroyEvent: EventEmitter<Instance<Props>>
+  destroyEvent?: EventEmitter<Instance<Props>>
 
   @Event({ eventName: 'hidden', bubbles: false })
-  hiddenEvent: EventEmitter<Instance<Props>>
+  hiddenEvent?: EventEmitter<Instance<Props>>
 
   @Event({ eventName: 'zHide', bubbles: false })
-  hideEvent: EventEmitter<Instance<Props>>
+  hideEvent?: EventEmitter<Instance<Props>>
 
   @Event({ eventName: 'mount', bubbles: false })
-  mountEvent: EventEmitter<Instance<Props>>
+  mountEvent?: EventEmitter<Instance<Props>>
 
   @Event({ eventName: 'zShow', bubbles: false })
-  showEvent: EventEmitter<Instance<Props>>
+  showEvent?: EventEmitter<Instance<Props>>
 
   @Event({ eventName: 'shown', bubbles: false })
-  shownEvent: EventEmitter<Instance<Props>>
+  shownEvent?: EventEmitter<Instance<Props>>
 
   @Event({ eventName: 'trigger', bubbles: false })
-  triggerEvent: EventEmitter<[Instance<Props>, Event]>
+  triggerEvent?: EventEmitter<[Instance<Props>, Event]>
 
   @Event({ eventName: 'untrigger', bubbles: false })
-  untriggerEvent: EventEmitter<[Instance<Props>, Event]>
+  untriggerEvent?: EventEmitter<[Instance<Props>, Event]>
 
   @Event({ eventName: 'clickOutside', bubbles: false })
-  clickOutsideEvent: EventEmitter<[Instance<Props>, Event]>
+  clickOutsideEvent?: EventEmitter<[Instance<Props>, Event]>
 
   @Event({ eventName: 'state', bubbles: false })
-  stateEvent: EventEmitter<{
+  stateEvent?: EventEmitter<{
     isEnabled: boolean
     isVisible: boolean
     isDestroyed: boolean
@@ -154,9 +154,9 @@ export class ZaneTippy {
 
   private hasContentSlot: boolean = false;
 
-  private tippyInstance: Instance;
+  private tippyInstance?: Instance;
 
-  private contentEl: HTMLElement;
+  private contentEl?: HTMLElement;
 
   private state = {
     isEnabled: false,
@@ -245,7 +245,7 @@ export class ZaneTippy {
     this.updateDisabled();
   }
 
-  private getTargetElement = (): HTMLElement | Element => {
+  private getTargetElement = (): HTMLElement | Element | null => {
     if (this.to === 'parent') {
       return this.el.parentElement;
     } else if (this.to instanceof HTMLElement) {
@@ -321,40 +321,40 @@ export class ZaneTippy {
       theme: this.theme,
       zIndex: this.zIndex,
       onAfterUpdate: (instance, partialProps) => {
-        this.afterUpdateEvent.emit([instance, partialProps]);
+        this.afterUpdateEvent?.emit([instance, partialProps]);
       },
       onBeforeUpdate: (instance, partialProps) => {
-        this.beforeUpdateEvent.emit([instance, partialProps]);
+        this.beforeUpdateEvent?.emit([instance, partialProps]);
       },
       onCreate: (instance) => {
-        this.createEvent.emit(instance);
+        this.createEvent?.emit(instance);
       },
       onDestroy: (instance) => {
-        this.destroyEvent.emit(instance);
+        this.destroyEvent?.emit(instance);
       },
       onHidden: (instance) => {
-        this.hiddenEvent.emit(instance);
+        this.hiddenEvent?.emit(instance);
       },
       onHide: (instance) => {
-        this.hideEvent.emit(instance);
+        this.hideEvent?.emit(instance);
       },
       onMount: (instance) => {
-        this.mountEvent.emit(instance);
+        this.mountEvent?.emit(instance);
       },
       onShow: (instance) => {
-        this.showEvent.emit(instance);
+        this.showEvent?.emit(instance);
       },
       onShown: (instance) => {
-        this.shownEvent.emit(instance);
+        this.shownEvent?.emit(instance);
       },
       onTrigger: (instance, event) => {
-        this.triggerEvent.emit([instance, event]);
+        this.triggerEvent?.emit([instance, event]);
       },
       onUntrigger: (instance, event) => {
-        this.untriggerEvent.emit([instance, event]);
+        this.untriggerEvent?.emit([instance, event]);
       },
       onClickOutside: (instance, event) => {
-        this.clickOutsideEvent.emit([instance, event]);
+        this.clickOutsideEvent?.emit([instance, event]);
       }
     };
 
@@ -526,34 +526,34 @@ export class ZaneTippy {
           fn: () => ({
             onCreate: () => {
               this.state.isEnabled = true;
-              this.stateEvent.emit(this.state);
+              this.stateEvent?.emit(this.state);
             },
             onMount: () => {
               this.state.isMounted = true;
-              this.stateEvent.emit(this.state);
+              this.stateEvent?.emit(this.state);
             },
             onShow: () => {
               this.state.isMounted = true;
               this.state.isVisible = true;
-              this.stateEvent.emit(this.state);
+              this.stateEvent?.emit(this.state);
             },
             onShown: () => {
               this.state.isShown = true;
-              this.stateEvent.emit(this.state);
+              this.stateEvent?.emit(this.state);
             },
             onHide: () => {
               this.state.isMounted = false;
               this.state.isVisible = false;
-              this.stateEvent.emit(this.state);
+              this.stateEvent?.emit(this.state);
             },
             onHidden: () => {
               this.state.isShown = false;
-              this.stateEvent.emit(this.state);
+              this.stateEvent?.emit(this.state);
             },
             onDestroy: () => {
               this.state.isMounted = false;
               this.state.isDestroyed = true;
-              this.stateEvent.emit(this.state);
+              this.stateEvent?.emit(this.state);
             }
           })
         }
@@ -601,7 +601,7 @@ export class ZaneTippy {
 
   @Method()
   async isFocusInsideContent(event?: FocusEvent) {
-    const popperContent: HTMLElement | undefined = this.tippyInstance.popper;
+    const popperContent: HTMLElement | undefined = this.tippyInstance?.popper;
     const activeElement =
       (event?.relatedTarget as Node) || document.activeElement;
     return popperContent?.contains(activeElement);
@@ -609,7 +609,7 @@ export class ZaneTippy {
 
   @Method()
   async isVisible() {
-    return this.tippyInstance.state.isVisible;
+    return this.tippyInstance?.state.isVisible;
   }
 
   private initializeTippy = () => {
@@ -623,7 +623,7 @@ export class ZaneTippy {
   private destroyTippy = () => {
     if (this.tippyInstance) {
       this.tippyInstance.destroy();
-      this.tippyInstance = null;
+      this.tippyInstance = undefined;
     }
   }
 

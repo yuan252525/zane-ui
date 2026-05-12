@@ -24,60 +24,60 @@ const ns = useNamespace("cascader-node");
   tag: "zane-cascader-node",
 })
 export class ZaneCascaderNode {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop() node: CascaderNode;
+  @Prop() node?: CascaderNode;
 
-  @Prop() menuId: string;
+  @Prop() menuId?: string;
 
   @Event({ eventName: "zExpand", bubbles: false })
-  expandEvent: EventEmitter<Event>;
+  expandEvent?: EventEmitter<Event>;
 
-  @State() multiple: boolean = undefined;
+  @State() multiple?: boolean = undefined;
 
-  @State() isHoverMenu: boolean = undefined;
+  @State() isHoverMenu?: boolean = undefined;
 
-  @State() checkStrictly: boolean = undefined;
+  @State() checkStrictly?: boolean = undefined;
 
-  @State() showPrefix: boolean = undefined;
+  @State() showPrefix?: boolean = undefined;
 
-  @State() checkOnClickNode: boolean = undefined;
+  @State() checkOnClickNode?: boolean = undefined;
 
-  @State() checkOnClickLeaf: boolean = undefined;
+  @State() checkOnClickLeaf?: boolean = undefined;
 
-  @State() expandTrigger: ExpandTrigger = undefined;
+  @State() expandTrigger?: ExpandTrigger = undefined;
 
-  @State() checkedNodes: CascaderNode[] = undefined;
+  @State() checkedNodes?: CascaderNode[] = undefined;
 
-  @State() expandingNode: CascaderNode = undefined;
+  @State() expandingNode?: CascaderNode = undefined;
 
-  @State() checkedNodeId: number = undefined;
+  @State() checkedNodeId?: number = undefined;
 
-  @State() expandable: boolean = undefined;
+  @State() expandable?: boolean = undefined;
 
-  @State() inExpandingPath: boolean = undefined;
+  @State() inExpandingPath?: boolean = undefined;
 
-  @State() inCheckedPath: boolean = undefined;
+  @State() inCheckedPath?: boolean = undefined;
 
-  private cascaderPanelContext: ReactiveObject<CascaderPanelContext>;
+  private cascaderPanelContext?: ReactiveObject<CascaderPanelContext>;
 
   @Watch("checkStrictly")
   @Watch("node")
   updateExpandable() {
     this.expandable =
-      (this.checkStrictly && !this.node.isLeaf) || !this.node.isDisabled;
+      (this.checkStrictly && !this.node?.isLeaf) || !this.node?.isDisabled;
   }
 
   @Watch("expandingNode")
   handleWatchExpandingNode() {
-    this.inExpandingPath = this.isInPath(this.expandingNode);
+    this.inExpandingPath = this.isInPath(this.expandingNode!);
   }
 
   @Watch("checkedNodes")
   @Watch("checkStrictly")
   handleUpdateInCheckedPath() {
     this.inCheckedPath =
-      this.checkStrictly && this.checkedNodes.some(this.isInPath);
+      this.checkStrictly && this.checkedNodes?.some(this.isInPath);
   }
 
   componentWillLoad() {
@@ -109,13 +109,13 @@ export class ZaneCascaderNode {
     this.checkedNodeId = this.checkedNodeId ?? this.checkedNodes?.[0]?.uid;
     this.expandable =
       this.expandable ??
-      ((this.checkStrictly && !this.node.isLeaf) || !this.node.isDisabled);
+      ((this.checkStrictly && !this.node?.isLeaf) || !this.node?.isDisabled);
 
     this.inExpandingPath =
-      this.inExpandingPath ?? this.isInPath(this.expandingNode);
+      this.inExpandingPath ?? this.isInPath(this.expandingNode!);
     this.inCheckedPath =
       this.inCheckedPath ??
-      (this.checkStrictly && this.checkedNodes.some(this.isInPath));
+      (this.checkStrictly && this.checkedNodes?.some(this.isInPath));
 
     this.cascaderPanelContext?.change$.subscribe(({ key, value }) => {
       if (key === "config") {
@@ -142,16 +142,16 @@ export class ZaneCascaderNode {
   render() {
     return (
       <Host
-        id={`${this.menuId}-${this.node.uid}`}
+        id={`${this.menuId}-${this.node?.uid ?? ""}`}
         role="menuitem"
-        ariaHaspopup={!this.node.isLeaf}
-        ariaOwns={this.node.isLeaf ? undefined : this.menuId}
+        ariaHaspopup={!this.node?.isLeaf}
+        ariaOwns={this.node?.isLeaf ? undefined : this.menuId}
         ariaExpanded={this.inExpandingPath}
         tabIndex={this.expandable ? -1 : undefined}
         class={classNames(
           ns.b(),
           ns.is("selectable", this.checkStrictly),
-          ns.is("active", this.node.checked),
+          ns.is("active", this.node?.checked),
           ns.is("disabled", !this.expandable),
           this.inExpandingPath && "in-active-path",
           this.inCheckedPath && "in-checked-path"
@@ -162,25 +162,25 @@ export class ZaneCascaderNode {
       >
         {this.multiple && this.showPrefix ? (
           <zane-checkbox
-            value={this.node.checked}
-            indeterminate={this.node.indeterminate}
-            disabled={this.node.isDisabled}
+            value={this.node?.checked}
+            indeterminate={this.node?.indeterminate}
+            disabled={this.node?.isDisabled}
             onClick={(e) => e.stopPropagation()}
             onZChange={(e) => this.handleSelectCheck(e.detail)}
           ></zane-checkbox>
         ) : this.checkStrictly && this.showPrefix ? (
           <zane-radio
             value={this.checkedNodeId}
-            label={this.node.uid}
-            disabled={this.node.isDisabled}
+            label={this.node?.uid}
+            disabled={this.node?.isDisabled}
             onClick={(e) => e.stopPropagation()}
             onZChange={(e) => this.handleSelectCheck(e.detail)}
           >
             <span></span>
           </zane-radio>
         ) : (
-          this.node.isLeaf &&
-          this.node.checked && (
+          this.node?.isLeaf &&
+          this.node?.checked && (
             <zane-icon name="check-line" class={ns.e("prefix")}></zane-icon>
           )
         )}
@@ -189,8 +189,8 @@ export class ZaneCascaderNode {
           node={this.node}
         ></zane-cascader-node-content>
 
-        {!this.node.isLeaf &&
-          (this.node.loading ? (
+        {!this.node?.isLeaf &&
+          (this.node?.loading ? (
             <zane-icon
               class={classNames(ns.is("loading"), ns.e("postfix"))}
               name="loader-2-line"
@@ -206,7 +206,7 @@ export class ZaneCascaderNode {
   }
 
   private isInPath = (node: CascaderNode) => {
-    const { level, uid } = this.node;
+    const { level, uid } = this.node!;
     return node?.pathNodes[level - 1]?.uid === uid;
   };
 
@@ -214,19 +214,19 @@ export class ZaneCascaderNode {
     if (this.inExpandingPath) {
       return;
     }
-    this.cascaderPanelContext?.value.expandNode?.(this.node);
+    this.cascaderPanelContext?.value.expandNode?.(this.node!);
   };
 
   private doCheck = (checked: boolean) => {
-    if (checked === this.node.checked) {
+    if (checked === this.node?.checked) {
       return;
     }
-    this.cascaderPanelContext?.value.handleCheckChange(this.node, checked);
+    this.cascaderPanelContext?.value.handleCheckChange(this.node!, checked);
   };
 
   private doLoad = () => {
-    this.cascaderPanelContext?.value.lazyLoad?.(this.node, () => {
-      if (!this.node.isLeaf) {
+    this.cascaderPanelContext?.value.lazyLoad?.(this.node!, () => {
+      if (!this.node?.isLeaf) {
         this.doExpand();
       }
     });
@@ -237,18 +237,18 @@ export class ZaneCascaderNode {
       return;
     }
     this.handleExpand();
-    !this.node.isLeaf && this.expandEvent.emit(e);
+    !this.node?.isLeaf && this.expandEvent?.emit(e);
   };
 
   private handleExpand = () => {
-    if (!this.expandable || this.node.loading) {
+    if (!this.expandable || this.node?.loading) {
       return;
     }
-    this.node.loaded ? this.doExpand() : this.doLoad();
+    this.node?.loaded ? this.doExpand() : this.doLoad();
   };
 
   private handleClick = () => {
-    const { isLeaf, isDisabled, checked } = this.node;
+    const { isLeaf, isDisabled, checked } = this.node!;
     if (isLeaf && !isDisabled && !this.checkStrictly && !this.multiple) {
       this.handleCheck(true);
     } else if (
@@ -265,7 +265,7 @@ export class ZaneCascaderNode {
   private handleSelectCheck = (checked: CheckboxValueType | undefined) => {
     if (this.checkStrictly) {
       this.doCheck(checked as boolean);
-      if (this.node.loaded) {
+      if (this.node?.loaded) {
         this.doExpand();
       }
     } else {
@@ -274,7 +274,7 @@ export class ZaneCascaderNode {
   };
 
   private handleCheck = (checked: boolean) => {
-    if (!this.node.loaded) {
+    if (!this.node?.loaded) {
       this.doLoad();
     } else {
       this.doCheck(checked);

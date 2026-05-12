@@ -12,15 +12,15 @@ const ns = useNamespace('cascader-node')
   tag: 'zane-cascader-node-content',
 })
 export class ZaneCascaderNodeContent {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
   
-  @Prop() node: CascaderNode;
+  @Prop() node?: CascaderNode;
 
-  @State() renderLabelFn: RenderLabel;
+  @State() renderLabelFn?: RenderLabel;
 
-  private cascaderPanelContext: ReactiveObject<CascaderPanelContext>;
+  private cascaderPanelContext?: ReactiveObject<CascaderPanelContext>;
 
-  private contentRef: HTMLSpanElement;
+  private contentRef?: HTMLSpanElement;
 
   componentWillLoad() {
     this.cascaderPanelContext = getCascaderPanelContext(this.el);
@@ -34,12 +34,12 @@ export class ZaneCascaderNodeContent {
   }
 
   private renderLabel = () => {
-    const renderEl = this.renderLabelFn?.({ node: this.node, data: this.node.data });
+    const renderEl = this.renderLabelFn?.({ node: this.node, data: this.node?.data });
     if (renderEl) {
-      this.contentRef.appendChild(renderEl);
+      this.contentRef?.appendChild(renderEl);
       return;
     }
-    return this.node.label;
+    return this.node?.label;
   }
   
   render() {
