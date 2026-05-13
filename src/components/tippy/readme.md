@@ -181,6 +181,7 @@ Type: `Promise<void>`
 ### Used by
 
  - [zane-autocomplete](../autocomplete)
+ - [zane-avatar-group](../avatar)
  - [zane-cascader](../cascader)
  - [zane-input-tag](../input-tag)
  - [zane-mention](../mention)
@@ -192,6 +193,7 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   zane-autocomplete --> zane-tippy
+  zane-avatar-group --> zane-tippy
   zane-cascader --> zane-tippy
   zane-input-tag --> zane-tippy
   zane-mention --> zane-tippy

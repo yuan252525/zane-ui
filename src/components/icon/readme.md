@@ -34,6 +34,7 @@
  - [zane-input-number](../input-number)
  - [zane-input-tag](../input-tag)
  - [zane-link](../link)
+ - [zane-pagination](../pagination)
  - [zane-rate](../rate)
  - [zane-select](../select)
  - [zane-select-virtual](../select-virtual)
@@ -59,6 +60,7 @@ graph TD;
   zane-input-number --> zane-icon
   zane-input-tag --> zane-icon
   zane-link --> zane-icon
+  zane-pagination --> zane-icon
   zane-rate --> zane-icon
   zane-select --> zane-icon
   zane-select-virtual --> zane-icon

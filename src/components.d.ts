@@ -7,11 +7,12 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AutocompleteData, AutocompleteFetchFunc, AutocompleteFetchSuggestions } from "./components/autocomplete/types";
 import { AnyNormalFunction, Arrayable, Awaitable, ComponentSize } from "./types";
-import { Element, Event, VNode } from "@stencil/core";
+import { Instance, Props } from "tippy.js";
 import { ButtonGroupContext, ButtonNativeType, ButtonType } from "./components/button/types";
 import { ReactiveObject } from "./utils";
 import { CascaderNode } from "./components/cascader/node";
 import { CascaderNodePathValue, CascaderNodeValue, CascaderOption, CascaderPanelContext, CascaderProps, CascaderValue, RenderLabel, Tag } from "./components/cascader/types";
+import { Element, Event, VNode } from "@stencil/core";
 import { ReactiveObject as ReactiveObject1 } from "./utils/reactive/ReactiveObject";
 import { ChatBodyThemes, ChatBubbleThemes, ChatContext, ChatFooterThemes, ChatHeaderThemes, ChatInputThemes, ThemeTokens } from "./components/chat/types";
 import { CheckboxGroupContext, CheckboxGroupValueType, CheckboxOption, CheckboxOptionProps, CheckboxValueType } from "./components/checkbox/types";
@@ -23,8 +24,8 @@ import { ValidateFieldsError } from "async-validator";
 import { ForwardRefContext, ForwardRefSetter } from "./components/forward-ref/types";
 import { InputAutoSize, InputMode, InputModelModifiers, InputType } from "./components/input/types";
 import { MentionOption, MentionOptionProps } from "./components/mention/types";
-import { Instance, Props } from "tippy.js";
 import { MenuMode, MenuTrigger } from "./components/menu/types";
+import { PaginationPageSize } from "./components/pagination/types";
 import { RadioGroupContext, RadioOption, RadioOptionProp } from "./components/radio/types";
 import { RowAlignType, RowContext, RowJustifyType } from "./components/row/types";
 import { ScrollbarDirection } from "./components/scrollbar/types";
@@ -40,11 +41,12 @@ import { UploadChangeOptions, UploadFile, UploadListType, UploadRequestOptions }
 import { Alignment, GridItemKeyGetter, Indices, ItemSize } from "./components/virtual-list/types";
 export { AutocompleteData, AutocompleteFetchFunc, AutocompleteFetchSuggestions } from "./components/autocomplete/types";
 export { AnyNormalFunction, Arrayable, Awaitable, ComponentSize } from "./types";
-export { Element, Event, VNode } from "@stencil/core";
+export { Instance, Props } from "tippy.js";
 export { ButtonGroupContext, ButtonNativeType, ButtonType } from "./components/button/types";
 export { ReactiveObject } from "./utils";
 export { CascaderNode } from "./components/cascader/node";
 export { CascaderNodePathValue, CascaderNodeValue, CascaderOption, CascaderPanelContext, CascaderProps, CascaderValue, RenderLabel, Tag } from "./components/cascader/types";
+export { Element, Event, VNode } from "@stencil/core";
 export { ReactiveObject as ReactiveObject1 } from "./utils/reactive/ReactiveObject";
 export { ChatBodyThemes, ChatBubbleThemes, ChatContext, ChatFooterThemes, ChatHeaderThemes, ChatInputThemes, ThemeTokens } from "./components/chat/types";
 export { CheckboxGroupContext, CheckboxGroupValueType, CheckboxOption, CheckboxOptionProps, CheckboxValueType } from "./components/checkbox/types";
@@ -56,8 +58,8 @@ export { ValidateFieldsError } from "async-validator";
 export { ForwardRefContext, ForwardRefSetter } from "./components/forward-ref/types";
 export { InputAutoSize, InputMode, InputModelModifiers, InputType } from "./components/input/types";
 export { MentionOption, MentionOptionProps } from "./components/mention/types";
-export { Instance, Props } from "tippy.js";
 export { MenuMode, MenuTrigger } from "./components/menu/types";
+export { PaginationPageSize } from "./components/pagination/types";
 export { RadioGroupContext, RadioOption, RadioOptionProp } from "./components/radio/types";
 export { RowAlignType, RowContext, RowJustifyType } from "./components/row/types";
 export { ScrollbarDirection } from "./components/scrollbar/types";
@@ -79,14 +81,10 @@ export namespace Components {
         "surfaceId": string | null;
     }
     interface ZaneAside {
-        "width": string;
+        "width": string | undefined;
     }
     interface ZaneAutocomplete {
-        /**
-          * @default () =>     document?.body
-         */
-        "appendTo": 'parent' | ((ref: Element) => Element) | Element;
-        "ariaLabel": string;
+        "ariaLabel": string | undefined;
         /**
           * @default false
          */
@@ -95,7 +93,7 @@ export namespace Components {
           * @default 'close-circle-line'
          */
         "clearIcon": string;
-        "clearable": boolean;
+        "clearable": boolean | undefined;
         "close": () => Promise<void>;
         /**
           * @default 300
@@ -104,38 +102,38 @@ export namespace Components {
         /**
           * @default undefined
          */
-        "disabled": boolean;
+        "disabled": boolean | undefined;
         /**
           * @default NOOP
          */
         "fetchSuggestions": AutocompleteFetchSuggestions;
-        "fitInputWidth": boolean;
-        "form": string;
-        "formatter": AnyNormalFunction<any, string>;
+        "fitInputWidth": boolean | undefined;
+        "form": string | undefined;
+        "formatter": AnyNormalFunction<any, string> | undefined;
         "getData": (queryString: string) => Promise<void>;
         "handleKeyEnter": () => Promise<void>;
         "handleSelect": (item: any) => Promise<void>;
-        "hideLoading": boolean;
+        "hideLoading": boolean | undefined;
         "highlight": (index: number) => Promise<void>;
-        "highlightFirstItem": boolean;
+        "highlightFirstItem": boolean | undefined;
         "inputBlur": () => Promise<void>;
         "inputFocus": () => Promise<void>;
         /**
           * @default mutable({} as const)
          */
         "inputStyle": Record<string, string> | string;
-        "loadingRender": () => HTMLElement;
+        "loadingRender": (() => HTMLElement) | undefined;
         /**
           * @default true
          */
         "loopNavigation": boolean;
-        "max": number;
-        "maxLength": number | string;
-        "min": number;
-        "minLength": number | string;
-        "name": string;
-        "parser": AnyNormalFunction<any, any>;
-        "placeholder": string;
+        "max": number | undefined;
+        "maxLength": number | string | undefined;
+        "min": number | undefined;
+        "minLength": number | string | undefined;
+        "name": string | undefined;
+        "parser": AnyNormalFunction<any, any> | undefined;
+        "placeholder": string | undefined;
         /**
           * @default 'bottom-start'
          */
@@ -144,19 +142,19 @@ export namespace Components {
           * @default 'autocomplete'
          */
         "popperTheme": string;
-        "prefixIcon": string;
-        "resize": 'both' | 'horizontal' | 'none' | 'vertical';
+        "prefixIcon": string | undefined;
+        "resize": 'both' | 'horizontal' | 'none' | 'vertical' | undefined;
         /**
           * @default 2
          */
         "rows": number;
-        "selectWhenUnmatched": boolean;
-        "showPassword": boolean;
-        "showWordLimit": boolean;
-        "size": ComponentSize;
-        "step": number;
-        "suffixIcon": string;
-        "suggestionRender": (item: any) => HTMLElement;
+        "selectWhenUnmatched": boolean | undefined;
+        "showPassword": boolean | undefined;
+        "showWordLimit": boolean | undefined;
+        "size": ComponentSize | undefined;
+        "step": number | undefined;
+        "suffixIcon": string | undefined;
+        "suggestionRender": ((item: any) => HTMLElement) | undefined;
         /**
           * @default true
          */
@@ -181,26 +179,26 @@ export namespace Components {
           * @default 'inside'
          */
         "wordLimitPosition": 'inside' | 'outside';
-        "zInputMode": | 'decimal'
-    | 'email'
-    | 'none'
-    | 'numeric'
-    | 'search'
-    | 'tel'
-    | 'text'
-    | 'url';
+        "zInputMode": 'decimal' |
+    'email' |
+    'none' |
+    'numeric' |
+    'search' |
+    'tel' |
+    'text' |
+    'url' | undefined;
         /**
           * @default 0
          */
         "zTabindex": number | string;
     }
     interface ZaneAvatar {
-        "alt": string;
+        "alt": string | undefined;
         /**
           * @default 'cover'
          */
         "fit": 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
-        "icon": string;
+        "icon": string | undefined;
         /**
           * @default 'circle'
          */
@@ -213,7 +211,89 @@ export namespace Components {
           * @default ''
          */
         "src": string;
-        "srcSet": string;
+        "srcSet": string | undefined;
+    }
+    interface ZaneAvatarGroup {
+        "avatars"?: string[];
+        /**
+          * @default false
+         */
+        "collapseAvatars": boolean;
+        /**
+          * @default false
+         */
+        "collapseAvatarsTooltip": boolean;
+        "collapseClass": string | undefined;
+        "collapseStyle": Record<string, any> | undefined;
+        /**
+          * @default 'light'
+         */
+        "effect": 'dark' | 'light';
+        /**
+          * @default 1
+         */
+        "maxCollapseAvatars": number;
+        /**
+          * @default 'bottom-start'
+         */
+        "placement": Props['placement'];
+        "popperBoxClass": string | undefined;
+        "popperContentClass": string | undefined;
+        /**
+          * @default {}
+         */
+        "popperOptions": Props['popperOptions'];
+        "popperTheme": string | undefined;
+        /**
+          * @default 'circle'
+         */
+        "shape": 'circle' | 'square';
+        /**
+          * @default 'default'
+         */
+        "size": 'default' | 'large' | 'small' | number;
+    }
+    interface ZaneBadge {
+        /**
+          * @default ''
+         */
+        "badgeClass": string;
+        /**
+          * @default {}
+         */
+        "badgeStyle": Record<string, string>;
+        /**
+          * @default ''
+         */
+        "color": string;
+        /**
+          * @default false
+         */
+        "hidden": boolean;
+        /**
+          * @default false
+         */
+        "isDot": boolean;
+        /**
+          * @default 99
+         */
+        "max": number;
+        /**
+          * @default [0, 0]
+         */
+        "offset": number[] | string;
+        /**
+          * @default true
+         */
+        "showZero": boolean;
+        /**
+          * @default 'danger'
+         */
+        "type": 'primary' | 'success' | 'warning' | 'info' | 'danger';
+        /**
+          * @default ''
+         */
+        "value": string | number;
     }
     interface ZaneBar {
         "always": boolean;
@@ -225,7 +305,7 @@ export namespace Components {
         /**
           * @default undefined
          */
-        "autoInsertSpace": boolean;
+        "autoInsertSpace": boolean | undefined;
         /**
           * @default false
          */
@@ -238,7 +318,7 @@ export namespace Components {
           * @default false
          */
         "circle": boolean;
-        "color": string;
+        "color": string | undefined;
         /**
           * @default false
          */
@@ -246,8 +326,8 @@ export namespace Components {
         /**
           * @default undefined
          */
-        "disabled": boolean;
-        "icon": string;
+        "disabled": boolean | undefined;
+        "icon": string | undefined;
         /**
           * @default false
          */
@@ -263,26 +343,26 @@ export namespace Components {
         /**
           * @default undefined
          */
-        "plain": boolean;
+        "plain": boolean | undefined;
         /**
           * @default undefined
          */
-        "round": boolean;
-        "size": ComponentSize;
+        "round": boolean | undefined;
+        "size": ComponentSize | undefined;
         /**
           * @default undefined
          */
-        "text": boolean;
+        "text": boolean | undefined;
         /**
           * @default ""
          */
         "type": ButtonType;
     }
     interface ZaneButtonGroup {
-        "disabled": boolean;
+        "disabled": boolean | undefined;
         "getContext": () => Promise<ReactiveObject<ButtonGroupContext>>;
-        "size": ComponentSize;
-        "type": ButtonType;
+        "size": ComponentSize | undefined;
+        "type": ButtonType | undefined;
     }
     interface ZaneCard {
         /**
@@ -316,13 +396,25 @@ export namespace Components {
           * @default () => true
          */
         "beforeFilter": (value: string) => boolean | Promise<any>;
+        /**
+          * @default false
+         */
         "checkOnClickNode": boolean;
         /**
           * @default "close-circle-line"
          */
         "clearIcon": string;
+        /**
+          * @default false
+         */
         "clearable": boolean;
+        /**
+          * @default false
+         */
         "collapseTags": boolean;
+        /**
+          * @default false
+         */
         "collapseTagsTooltip": boolean;
         /**
           * @default 300
@@ -331,17 +423,20 @@ export namespace Components {
         /**
           * @default undefined
          */
-        "disabled": boolean;
-        "filterMethod": (
+        "disabled"?: boolean;
+        "filterMethod"?: (
     node: CascaderNode,
     keyword: string
   ) => boolean;
+        /**
+          * @default false
+         */
         "filterable": boolean;
         /**
           * @default 1
          */
         "maxCollapseTags": number;
-        "maxCollapseTagsTooltipHeight": number | string;
+        "maxCollapseTagsTooltipHeight"?: number | string;
         /**
           * @default []
          */
@@ -359,6 +454,12 @@ export namespace Components {
     | "right"
     | "top"
     | "top-start";
+        "popperBoxClass"?: string;
+        "popperContentClass"?: string;
+        /**
+          * @default {}
+         */
+        "popperOptions": Props['popperOptions'];
         /**
           * @default "cascader"
          */
@@ -367,9 +468,9 @@ export namespace Components {
           * @default {}
          */
         "props": CascaderProps;
-        "renderLabel": RenderLabel;
-        "renderSuggestion": (suggestion) => HTMLElement;
-        "renderTags": (
+        "renderLabel"?: RenderLabel;
+        "renderSuggestion"?: (suggestions: CascaderNode[]) => HTMLElement;
+        "renderTags"?: (
     tags: Tag[],
     deleteTag: (tag: Tag) => void
   ) => HTMLElement;
@@ -389,7 +490,7 @@ export namespace Components {
           * @default true
          */
         "showPrefix": boolean;
-        "size": ComponentSize;
+        "size"?: ComponentSize;
         /**
           * @default "light"
          */
@@ -402,23 +503,26 @@ export namespace Components {
           * @default true
          */
         "validateEvent": boolean;
-        "value": CascaderValue | null;
+        "value"?: CascaderValue;
         /**
           * @default undefined
          */
-        "valueOnClear": string | number | boolean | Function | null;
-        "wrapperStyle": Record<string, string>;
+        "valueOnClear"?: string | number | boolean | Function | null;
+        "wrapperStyle"?: Record<string, string>;
     }
     interface ZaneCascaderMenu {
-        "index": number;
+        "index": number | undefined;
+        /**
+          * @default []
+         */
         "nodes": CascaderNode[];
     }
     interface ZaneCascaderNode {
-        "menuId": string;
-        "node": CascaderNode;
+        "menuId"?: string;
+        "node"?: CascaderNode;
     }
     interface ZaneCascaderNodeContent {
-        "node": CascaderNode;
+        "node"?: CascaderNode;
     }
     interface ZaneCascaderPanel {
         /**
@@ -444,9 +548,9 @@ export namespace Components {
           * @default {}
          */
         "props": CascaderProps;
-        "renderLabel": RenderLabel;
+        "renderLabel"?: RenderLabel;
         "scrollToExpandingNode": () => Promise<void>;
-        "value": CascaderValue | null;
+        "value"?: CascaderValue;
     }
     interface ZaneChat {
         "getContext": () => Promise<ReactiveObject<ChatContext>>;
@@ -546,41 +650,41 @@ export namespace Components {
         "content": string;
     }
     interface ZaneCheckbox {
-        "ariaControls": string;
-        "ariaLabel": string;
-        "border": boolean;
-        "checked": boolean;
+        "ariaControls"?: string;
+        "ariaLabel"?: string;
+        "border"?: boolean;
+        "checked"?: boolean;
         /**
           * @default undefined
          */
-        "disabled": boolean;
+        "disabled"?: boolean;
         /**
           * @default undefined
          */
-        "falseLabel": string | number;
+        "falseLabel"?: string | number;
         /**
           * @default undefined
          */
-        "falseValue": string | number;
-        "indeterminate": boolean;
+        "falseValue"?: string | number;
+        "indeterminate"?: boolean;
         "label": any;
-        "name": string;
-        "size": ComponentSize;
+        "name"?: string;
+        "size"?: ComponentSize;
         /**
           * @default undefined
          */
-        "trueLabel": string | number;
+        "trueLabel"?: string | number;
         /**
           * @default undefined
          */
-        "trueValue": string | number;
+        "trueValue"?: string | number;
         /**
           * @default true
          */
         "validateEvent": boolean;
-        "value": number | string | boolean;
-        "zId": string;
-        "zTabIndex": number;
+        "value"?: number | string | boolean;
+        "zId"?: string;
+        "zTabIndex"?: number;
     }
     interface ZaneCheckboxButton {
         "ariaControls": string;
@@ -755,6 +859,17 @@ export namespace Components {
          */
         "direction": 'horizontal' | 'vertical';
     }
+    interface ZaneEmpty {
+        /**
+          * @default ''
+         */
+        "description": string;
+        /**
+          * @default ''
+         */
+        "image": string;
+        "imageSize": number;
+    }
     interface ZaneFocusTrap {
         /**
           * @default 'first'
@@ -779,10 +894,19 @@ export namespace Components {
         "height": string;
     }
     interface ZaneForm {
-        "disabled": boolean;
+        "disabled": boolean | undefined;
         "getContext": () => Promise<ReactiveObject<FormContext>>;
+        /**
+          * @default false
+         */
         "hideRequiredAsterisk": boolean;
+        /**
+          * @default false
+         */
         "inline": boolean;
+        /**
+          * @default false
+         */
         "inlineMessage": boolean;
         /**
           * @default "right"
@@ -796,25 +920,34 @@ export namespace Components {
           * @default ""
          */
         "labelWidth": number | string;
-        "model": Record<string, any>;
+        "model": Record<string, any> | undefined;
         /**
           * @default "left"
          */
         "requireAsteriskPosition": "left" | "right";
-        "rules": FormRules;
+        "rules": FormRules | undefined;
         /**
           * @default true
          */
         "scrollIntoViewOptions": boolean | ScrollIntoViewOptions;
+        /**
+          * @default false
+         */
         "scrollToError": boolean;
         /**
           * @default true
          */
         "showMessage": boolean;
+        /**
+          * @default ''
+         */
         "size": ComponentSize;
+        /**
+          * @default false
+         */
         "statusIcon": boolean;
         "validate": (callback?: FormValidateCallback) => Promise<boolean>;
-        "validateField": (modelProps?: string | string[] | undefined, callback?: FormValidateCallback) => Promise<boolean>;
+        "validateField": (modelProps?: Arrayable<FormItemProp> | undefined, callback?: FormValidateCallback) => Promise<boolean>;
         /**
           * @default true
          */
@@ -822,30 +955,45 @@ export namespace Components {
     }
     interface ZaneFormItem {
         "clearValidate": () => Promise<void>;
-        "error": string;
-        "for": string;
+        "error": string | undefined;
+        "for": string | undefined;
         "getContext": () => Promise<ReactiveObject<FormItemContext>>;
+        /**
+          * @default false
+         */
         "inlineMessage": boolean;
-        "label": string;
+        "label": string | undefined;
         /**
           * @default ""
          */
         "labelPosition": "left" | "right" | "top" | "";
-        "labelWidth": string | number;
-        "prop": FormItemProp;
+        "labelWidth": string | number | undefined;
+        "prop": FormItemProp | undefined;
         /**
           * @default undefined
          */
-        "required": boolean;
+        "required": boolean | undefined;
         "resetField": () => Promise<void>;
-        "rules": Arrayable<FormItemRule>;
+        "rules": Arrayable<FormItemRule> | undefined;
+        /**
+          * @default false
+         */
         "showMessage": boolean;
-        "size": ComponentSize;
+        "size": ComponentSize | undefined;
         "validate": (trigger: string, callback?: FormValidateCallback) => Promise<boolean>;
+        /**
+          * @default ''
+         */
         "validateStatus": FormItemValidateState;
     }
     interface ZaneFormLabelWrap {
+        /**
+          * @default false
+         */
         "isAutoWidth": boolean;
+        /**
+          * @default false
+         */
         "updateAll": boolean;
     }
     interface ZaneForwardRef {
@@ -868,12 +1016,20 @@ export namespace Components {
         "styles": object;
         "zPrefix": string;
     }
+    interface ZaneImgEmpty {
+    }
     interface ZaneInput {
+        /**
+          * @default ''
+         */
         "ariaLabel": string;
         /**
           * @default "off"
          */
         "autocomplete": HTMLInputElement['autocomplete'];
+        /**
+          * @default false
+         */
         "autofocus": boolean;
         /**
           * @default false
@@ -888,14 +1044,14 @@ export namespace Components {
           * @default false
          */
         "clearable": boolean;
-        "containerRole": string;
-        "containerStyle": Record<string, string> | string;
+        "containerRole"?: string;
+        "containerStyle"?: Record<string, string> | string;
         /**
           * @default undefined
          */
-        "disabled": boolean;
-        "form": string;
-        "formatter": Function;
+        "disabled"?: boolean;
+        "form"?: string;
+        "formatter"?: Function;
         "getInput": () => Promise<HTMLInputElement>;
         "getTextarea": () => Promise<HTMLTextAreaElement>;
         /**
@@ -906,26 +1062,41 @@ export namespace Components {
           * @default false
          */
         "isComposing": boolean;
-        "max": number;
-        "maxLength": number | string;
-        "min": number;
-        "minLength": number | string;
-        "name": string;
-        "parser": Function;
-        "placeholder": string;
-        "prefixIcon": string;
+        "max"?: number;
+        "maxLength"?: number | string;
+        "min"?: number;
+        "minLength"?: number | string;
+        "name"?: string;
+        "parser"?: Function;
+        "placeholder"?: string;
+        "prefixIcon"?: string;
+        /**
+          * @default false
+         */
         "readonly": boolean;
+        /**
+          * @default "none"
+         */
         "resize": "both" | "horizontal" | "none" | "vertical";
         /**
           * @default 2
          */
         "rows": number;
         "select": () => Promise<void>;
+        /**
+          * @default false
+         */
         "showPassword": boolean;
+        /**
+          * @default false
+         */
         "showWordLimit": boolean;
-        "size": ComponentSize;
+        "size"?: ComponentSize;
+        /**
+          * @default 1
+         */
         "step": number;
-        "suffixIcon": string;
+        "suffixIcon"?: string;
         /**
           * @default "text"
          */
@@ -944,8 +1115,8 @@ export namespace Components {
         "wordLimitPosition": "inside" | "outside";
         "zBlur": () => Promise<void>;
         "zFocus": () => Promise<void>;
-        "zId": string;
-        "zInputMode": InputMode;
+        "zId"?: string;
+        "zInputMode"?: InputMode;
         /**
           * @default 0
          */
@@ -1306,6 +1477,88 @@ export namespace Components {
          */
         "strict": boolean;
     }
+    interface ZanePagination {
+        /**
+          * 是否带背景色
+          * @default false
+         */
+        "background": boolean;
+        /**
+          * 当前页码（受控）
+         */
+        "currentPage"?: number;
+        /**
+          * 默认当前页码
+          * @default 1
+         */
+        "defaultCurrentPage": number;
+        /**
+          * 默认每页条数
+          * @default 10
+         */
+        "defaultPageSize": number;
+        /**
+          * 是否禁用
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * 只有一页时是否隐藏
+          * @default false
+         */
+        "hideOnSinglePage": boolean;
+        /**
+          * 布局配置，逗号分隔
+          * @default DEFAULT_LAYOUT
+         */
+        "layout": string;
+        /**
+          * 下一页按钮图标
+          * @default 'arrow-right-s-line'
+         */
+        "nextIcon": string;
+        /**
+          * 下一页按钮文字
+          * @default ''
+         */
+        "nextText": string;
+        /**
+          * 总页数（优先于 total）
+         */
+        "pageCount"?: number;
+        /**
+          * 每页条数（受控）
+         */
+        "pageSize"?: number;
+        /**
+          * 每页条数选项列表 — 支持数组或逗号分隔字符串
+          * @default [...DEFAULT_PAGE_SIZES]
+         */
+        "pageSizes": PaginationPageSize[] | string;
+        /**
+          * 显示的页码按钮数量（必须为大于4的奇数）
+          * @default DEFAULT_PAGE_COUNT
+         */
+        "pagerCount": number;
+        /**
+          * 上一页按钮图标
+          * @default 'arrow-left-s-line'
+         */
+        "prevIcon": string;
+        /**
+          * 上一页按钮文字
+          * @default ''
+         */
+        "prevText": string;
+        /**
+          * 组件尺寸
+         */
+        "size"?: ComponentSize;
+        /**
+          * 总记录数
+         */
+        "total"?: number;
+    }
     interface ZaneRadio {
         /**
           * @default undefined
@@ -1527,77 +1780,116 @@ export namespace Components {
         "wrapStyle": Record<string, string>;
     }
     interface ZaneSelect {
+        /**
+          * @default false
+         */
         "allowCreate": boolean;
         /**
           * @default tippy.defaultProps.appendTo
          */
         "appendTo": Props['appendTo'];
-        "ariaLabel": string;
+        "ariaLabel"?: string;
         /**
           * @default 'off'
          */
         "autocomplete": string;
+        /**
+          * @default false
+         */
         "automaticDropdown": boolean;
         /**
           * @default 'close-circle-line'
          */
         "clearIcon": string;
+        /**
+          * @default false
+         */
         "clearable": boolean;
+        /**
+          * @default false
+         */
         "collapseTags": boolean;
+        /**
+          * @default false
+         */
         "collapseTagsTooltip": boolean;
         /**
           * @default 300
          */
         "debounce": number;
+        /**
+          * @default false
+         */
         "defaultFirstOption": boolean;
         /**
           * @default undefined
          */
-        "disabled": boolean;
-        "emptyValues": any[];
-        "filterMethod": (query) => any;
+        "disabled"?: boolean;
+        "emptyValues"?: any[];
+        "filterMethod"?: (query: string) => any;
+        /**
+          * @default false
+         */
         "filterable": boolean;
+        /**
+          * @default false
+         */
         "fitInputWidth": boolean;
         "getContext": () => Promise<ReactiveObject<SelectContext>>;
         "handleOptionSelect": (option: Option) => Promise<void>;
-        "label": string;
+        "label"?: string;
+        /**
+          * @default false
+         */
         "loading": boolean;
-        "loadingText": string;
+        "loadingText"?: string;
         /**
           * @default 1
          */
         "maxCollapseTags": number;
+        /**
+          * @default false
+         */
         "multiple": boolean;
         /**
           * @default 0
          */
         "multipleLimit": number;
-        "name": string;
-        "noDataText": string;
-        "noMatchText": string;
+        "name"?: string;
+        "noDataText"?: string;
+        "noMatchText"?: string;
         /**
           * @default tippy.defaultProps.offset
          */
         "offset": Props['offset'];
+        /**
+          * @default []
+         */
         "options": Record<string, any>[];
-        "placeholder": string;
+        "placeholder"?: string;
         /**
           * @default 'bottom-start'
          */
         "placement": Props['placement'];
-        "popperBoxClass": string;
-        "popperContentClass": string;
+        "popperBoxClass"?: string;
+        "popperContentClass"?: string;
         /**
           * @default {}
          */
         "popperOptions": Props['popperOptions'];
-        "popperTheme": string;
+        "popperTheme"?: string;
         /**
           * @default { ...defaultProps }
          */
         "props": SelectOptionProps;
+        /**
+          * @default false
+         */
         "remote": boolean;
-        "remoteMethod": (query) => any;
+        "remoteMethod"?: (query: string) => any;
+        /**
+          * @default false
+         */
         "remoteShowSuffix": boolean;
         /**
           * @default true
@@ -1607,7 +1899,7 @@ export namespace Components {
           * @default false
          */
         "showArrow": boolean;
-        "size": ComponentSize;
+        "size"?: ComponentSize;
         /**
           * @default 'arrow-down-s-line'
          */
@@ -1616,10 +1908,10 @@ export namespace Components {
           * @default 'light'
          */
         "tagEffect": 'dark' | 'light' | 'plain';
-        "tagLabelRender": (
+        "tagLabelRender"?: (
     label: string | number | boolean, value: SelectOptionValue, index: number
   ) => HTMLElement;
-        "tagRender": () => HTMLElement;
+        "tagRender"?: () => HTMLElement;
         /**
           * @default {}
          */
@@ -1646,7 +1938,7 @@ export namespace Components {
         "valueOnClear": any;
         "zBlur": () => Promise<void>;
         "zFocus": () => Promise<void>;
-        "zId": string;
+        "zId"?: string;
         /**
           * @default 0
          */
@@ -1930,6 +2222,33 @@ export namespace Components {
     interface ZaneSliderMarker {
         "mark": string | { style: Record<string, any>, label: any};
     }
+    interface ZaneSpace {
+        /**
+          * @default 'center'
+         */
+        "alignment": string;
+        /**
+          * @default 'horizontal'
+         */
+        "direction": 'horizontal' | 'vertical';
+        /**
+          * @default false
+         */
+        "fill": boolean;
+        /**
+          * @default 100
+         */
+        "fillRatio": number;
+        /**
+          * @default 'small'
+         */
+        "size": string;
+        "spacer": string | undefined;
+        /**
+          * @default false
+         */
+        "wrap": boolean;
+    }
     interface ZaneSplitter {
         "getContext": () => Promise<ReactiveObject<SplitterRootContext>>;
         /**
@@ -2094,11 +2413,11 @@ export namespace Components {
         /**
           * @default undefined
          */
-        "boxStyle": Record<string, any>;
+        "boxStyle"?: Record<string, any>;
         /**
           * 内容支持字符串（直接作为 HTML 或文本）
          */
-        "content": string;
+        "content"?: string;
         /**
           * @default ''
          */
@@ -2106,7 +2425,7 @@ export namespace Components {
         /**
           * @default undefined
          */
-        "contentStyle": Record<string, any>;
+        "contentStyle"?: Record<string, any>;
         /**
           * @default 'span'
          */
@@ -2215,7 +2534,7 @@ export namespace Components {
           * @default tippy.defaultProps.render
          */
         "tippyRender": (instance: Instance<Props>) => { popper: PopperElement<Props>; onUpdate?: (prevProps: Props, nextProps: Props) => void; };
-        "to": string | 'parent' | HTMLElement;
+        "to"?: string | 'parent' | HTMLElement;
         /**
           * @default tippy.defaultProps.touch
          */
@@ -2968,6 +3287,10 @@ export interface ZaneMenuCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLZaneMenuElement;
 }
+export interface ZanePaginationCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLZanePaginationElement;
+}
 export interface ZaneRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLZaneRadioElement;
@@ -3082,12 +3405,12 @@ declare global {
         new (): HTMLZaneAsideElement;
     };
     interface HTMLZaneAutocompleteElementEventMap {
-        "zBlur": FocusEvent;
-        "zChange": number | string;
-        "zClear": void;
-        "zFocus": FocusEvent;
-        "zInput": string;
-        "zSelect": number | string;
+        "zBlur": any;
+        "zChange": any;
+        "zClear": any;
+        "zFocus": any;
+        "zInput": any;
+        "zSelect": any;
     }
     interface HTMLZaneAutocompleteElement extends Components.ZaneAutocomplete, HTMLStencilElement {
         addEventListener<K extends keyof HTMLZaneAutocompleteElementEventMap>(type: K, listener: (this: HTMLZaneAutocompleteElement, ev: ZaneAutocompleteCustomEvent<HTMLZaneAutocompleteElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3104,7 +3427,7 @@ declare global {
         new (): HTMLZaneAutocompleteElement;
     };
     interface HTMLZaneAvatarElementEventMap {
-        "imgError": Event;
+        "imgError": any;
     }
     interface HTMLZaneAvatarElement extends Components.ZaneAvatar, HTMLStencilElement {
         addEventListener<K extends keyof HTMLZaneAvatarElementEventMap>(type: K, listener: (this: HTMLZaneAvatarElement, ev: ZaneAvatarCustomEvent<HTMLZaneAvatarElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3120,6 +3443,18 @@ declare global {
         prototype: HTMLZaneAvatarElement;
         new (): HTMLZaneAvatarElement;
     };
+    interface HTMLZaneAvatarGroupElement extends Components.ZaneAvatarGroup, HTMLStencilElement {
+    }
+    var HTMLZaneAvatarGroupElement: {
+        prototype: HTMLZaneAvatarGroupElement;
+        new (): HTMLZaneAvatarGroupElement;
+    };
+    interface HTMLZaneBadgeElement extends Components.ZaneBadge, HTMLStencilElement {
+    }
+    var HTMLZaneBadgeElement: {
+        prototype: HTMLZaneBadgeElement;
+        new (): HTMLZaneBadgeElement;
+    };
     interface HTMLZaneBarElement extends Components.ZaneBar, HTMLStencilElement {
     }
     var HTMLZaneBarElement: {
@@ -3127,7 +3462,7 @@ declare global {
         new (): HTMLZaneBarElement;
     };
     interface HTMLZaneButtonElementEventMap {
-        "zClick": MouseEvent;
+        "zClick": any;
     }
     interface HTMLZaneButtonElement extends Components.ZaneButton, HTMLStencilElement {
         addEventListener<K extends keyof HTMLZaneButtonElementEventMap>(type: K, listener: (this: HTMLZaneButtonElement, ev: ZaneButtonCustomEvent<HTMLZaneButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3392,6 +3727,12 @@ declare global {
         prototype: HTMLZaneDividerElement;
         new (): HTMLZaneDividerElement;
     };
+    interface HTMLZaneEmptyElement extends Components.ZaneEmpty, HTMLStencilElement {
+    }
+    var HTMLZaneEmptyElement: {
+        prototype: HTMLZaneEmptyElement;
+        new (): HTMLZaneEmptyElement;
+    };
     interface HTMLZaneFocusTrapElementEventMap {
         "zFocusAfterReleased": Event;
         "zFocusAfterTrapped": Event;
@@ -3421,11 +3762,7 @@ declare global {
         new (): HTMLZaneFooterElement;
     };
     interface HTMLZaneFormElementEventMap {
-        "validate": {
-    prop: FormItemProp;
-    isValid: boolean;
-    message: string;
-  };
+        "validate": any;
     }
     interface HTMLZaneFormElement extends Components.ZaneForm, HTMLStencilElement {
         addEventListener<K extends keyof HTMLZaneFormElementEventMap>(type: K, listener: (this: HTMLZaneFormElement, ev: ZaneFormCustomEvent<HTMLZaneFormElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3470,6 +3807,12 @@ declare global {
     var HTMLZaneIconElement: {
         prototype: HTMLZaneIconElement;
         new (): HTMLZaneIconElement;
+    };
+    interface HTMLZaneImgEmptyElement extends Components.ZaneImgEmpty, HTMLStencilElement {
+    }
+    var HTMLZaneImgEmptyElement: {
+        prototype: HTMLZaneImgEmptyElement;
+        new (): HTMLZaneImgEmptyElement;
     };
     interface HTMLZaneInputElementEventMap {
         "zBlur": FocusEvent;
@@ -3656,6 +3999,30 @@ declare global {
     var HTMLZaneOnlyChildElement: {
         prototype: HTMLZaneOnlyChildElement;
         new (): HTMLZaneOnlyChildElement;
+    };
+    interface HTMLZanePaginationElementEventMap {
+        "zSizeChange": number;
+        "zCurrentChange": number;
+        "zChange": {
+    currentPage: number;
+    pageSize: number;
+  };
+        "zPrevClick": number;
+        "zNextClick": number;
+    }
+    interface HTMLZanePaginationElement extends Components.ZanePagination, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLZanePaginationElementEventMap>(type: K, listener: (this: HTMLZanePaginationElement, ev: ZanePaginationCustomEvent<HTMLZanePaginationElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLZanePaginationElementEventMap>(type: K, listener: (this: HTMLZanePaginationElement, ev: ZanePaginationCustomEvent<HTMLZanePaginationElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLZanePaginationElement: {
+        prototype: HTMLZanePaginationElement;
+        new (): HTMLZanePaginationElement;
     };
     interface HTMLZaneRadioElementEventMap {
         "zChange": string | number | boolean | undefined;
@@ -3899,6 +4266,12 @@ declare global {
     var HTMLZaneSliderMarkerElement: {
         prototype: HTMLZaneSliderMarkerElement;
         new (): HTMLZaneSliderMarkerElement;
+    };
+    interface HTMLZaneSpaceElement extends Components.ZaneSpace, HTMLStencilElement {
+    }
+    var HTMLZaneSpaceElement: {
+        prototype: HTMLZaneSpaceElement;
+        new (): HTMLZaneSpaceElement;
     };
     interface HTMLZaneSplitterElementEventMap {
         "collapse": {
@@ -4370,6 +4743,8 @@ declare global {
         "zane-aside": HTMLZaneAsideElement;
         "zane-autocomplete": HTMLZaneAutocompleteElement;
         "zane-avatar": HTMLZaneAvatarElement;
+        "zane-avatar-group": HTMLZaneAvatarGroupElement;
+        "zane-badge": HTMLZaneBadgeElement;
         "zane-bar": HTMLZaneBarElement;
         "zane-button": HTMLZaneButtonElement;
         "zane-button-group": HTMLZaneButtonGroupElement;
@@ -4395,6 +4770,7 @@ declare global {
         "zane-config-provider": HTMLZaneConfigProviderElement;
         "zane-container": HTMLZaneContainerElement;
         "zane-divider": HTMLZaneDividerElement;
+        "zane-empty": HTMLZaneEmptyElement;
         "zane-focus-trap": HTMLZaneFocusTrapElement;
         "zane-footer": HTMLZaneFooterElement;
         "zane-form": HTMLZaneFormElement;
@@ -4403,6 +4779,7 @@ declare global {
         "zane-forward-ref": HTMLZaneForwardRefElement;
         "zane-header": HTMLZaneHeaderElement;
         "zane-icon": HTMLZaneIconElement;
+        "zane-img-empty": HTMLZaneImgEmptyElement;
         "zane-input": HTMLZaneInputElement;
         "zane-input-number": HTMLZaneInputNumberElement;
         "zane-input-tag": HTMLZaneInputTagElement;
@@ -4414,6 +4791,7 @@ declare global {
         "zane-menu-item": HTMLZaneMenuItemElement;
         "zane-menu-item-group": HTMLZaneMenuItemGroupElement;
         "zane-only-child": HTMLZaneOnlyChildElement;
+        "zane-pagination": HTMLZanePaginationElement;
         "zane-radio": HTMLZaneRadioElement;
         "zane-radio-button": HTMLZaneRadioButtonElement;
         "zane-radio-group": HTMLZaneRadioGroupElement;
@@ -4432,6 +4810,7 @@ declare global {
         "zane-slider": HTMLZaneSliderElement;
         "zane-slider-button": HTMLZaneSliderButtonElement;
         "zane-slider-marker": HTMLZaneSliderMarkerElement;
+        "zane-space": HTMLZaneSpaceElement;
         "zane-splitter": HTMLZaneSplitterElement;
         "zane-splitter-bar": HTMLZaneSplitterBarElement;
         "zane-splitter-panel": HTMLZaneSplitterPanelElement;
@@ -4462,14 +4841,10 @@ declare namespace LocalJSX {
         "surfaceId"?: string | null;
     }
     interface ZaneAside {
-        "width"?: string;
+        "width"?: string | undefined;
     }
     interface ZaneAutocomplete {
-        /**
-          * @default () =>     document?.body
-         */
-        "appendTo"?: 'parent' | ((ref: Element) => Element) | Element;
-        "ariaLabel"?: string;
+        "ariaLabel"?: string | undefined;
         /**
           * @default false
          */
@@ -4478,7 +4853,7 @@ declare namespace LocalJSX {
           * @default 'close-circle-line'
          */
         "clearIcon"?: string;
-        "clearable"?: boolean;
+        "clearable"?: boolean | undefined;
         /**
           * @default 300
          */
@@ -4486,38 +4861,38 @@ declare namespace LocalJSX {
         /**
           * @default undefined
          */
-        "disabled"?: boolean;
+        "disabled"?: boolean | undefined;
         /**
           * @default NOOP
          */
         "fetchSuggestions"?: AutocompleteFetchSuggestions;
-        "fitInputWidth"?: boolean;
-        "form"?: string;
-        "formatter"?: AnyNormalFunction<any, string>;
-        "hideLoading"?: boolean;
-        "highlightFirstItem"?: boolean;
+        "fitInputWidth"?: boolean | undefined;
+        "form"?: string | undefined;
+        "formatter"?: AnyNormalFunction<any, string> | undefined;
+        "hideLoading"?: boolean | undefined;
+        "highlightFirstItem"?: boolean | undefined;
         /**
           * @default mutable({} as const)
          */
         "inputStyle"?: Record<string, string> | string;
-        "loadingRender"?: () => HTMLElement;
+        "loadingRender"?: (() => HTMLElement) | undefined;
         /**
           * @default true
          */
         "loopNavigation"?: boolean;
-        "max"?: number;
-        "maxLength"?: number | string;
-        "min"?: number;
-        "minLength"?: number | string;
-        "name"?: string;
-        "onZBlur"?: (event: ZaneAutocompleteCustomEvent<FocusEvent>) => void;
-        "onZChange"?: (event: ZaneAutocompleteCustomEvent<number | string>) => void;
-        "onZClear"?: (event: ZaneAutocompleteCustomEvent<void>) => void;
-        "onZFocus"?: (event: ZaneAutocompleteCustomEvent<FocusEvent>) => void;
-        "onZInput"?: (event: ZaneAutocompleteCustomEvent<string>) => void;
-        "onZSelect"?: (event: ZaneAutocompleteCustomEvent<number | string>) => void;
-        "parser"?: AnyNormalFunction<any, any>;
-        "placeholder"?: string;
+        "max"?: number | undefined;
+        "maxLength"?: number | string | undefined;
+        "min"?: number | undefined;
+        "minLength"?: number | string | undefined;
+        "name"?: string | undefined;
+        "onZBlur"?: (event: ZaneAutocompleteCustomEvent<any>) => void;
+        "onZChange"?: (event: ZaneAutocompleteCustomEvent<any>) => void;
+        "onZClear"?: (event: ZaneAutocompleteCustomEvent<any>) => void;
+        "onZFocus"?: (event: ZaneAutocompleteCustomEvent<any>) => void;
+        "onZInput"?: (event: ZaneAutocompleteCustomEvent<any>) => void;
+        "onZSelect"?: (event: ZaneAutocompleteCustomEvent<any>) => void;
+        "parser"?: AnyNormalFunction<any, any> | undefined;
+        "placeholder"?: string | undefined;
         /**
           * @default 'bottom-start'
          */
@@ -4526,19 +4901,19 @@ declare namespace LocalJSX {
           * @default 'autocomplete'
          */
         "popperTheme"?: string;
-        "prefixIcon"?: string;
-        "resize"?: 'both' | 'horizontal' | 'none' | 'vertical';
+        "prefixIcon"?: string | undefined;
+        "resize"?: 'both' | 'horizontal' | 'none' | 'vertical' | undefined;
         /**
           * @default 2
          */
         "rows"?: number;
-        "selectWhenUnmatched"?: boolean;
-        "showPassword"?: boolean;
-        "showWordLimit"?: boolean;
-        "size"?: ComponentSize;
-        "step"?: number;
-        "suffixIcon"?: string;
-        "suggestionRender"?: (item: any) => HTMLElement;
+        "selectWhenUnmatched"?: boolean | undefined;
+        "showPassword"?: boolean | undefined;
+        "showWordLimit"?: boolean | undefined;
+        "size"?: ComponentSize | undefined;
+        "step"?: number | undefined;
+        "suffixIcon"?: string | undefined;
+        "suggestionRender"?: ((item: any) => HTMLElement) | undefined;
         /**
           * @default true
          */
@@ -4563,27 +4938,27 @@ declare namespace LocalJSX {
           * @default 'inside'
          */
         "wordLimitPosition"?: 'inside' | 'outside';
-        "zInputMode"?: | 'decimal'
-    | 'email'
-    | 'none'
-    | 'numeric'
-    | 'search'
-    | 'tel'
-    | 'text'
-    | 'url';
+        "zInputMode"?: 'decimal' |
+    'email' |
+    'none' |
+    'numeric' |
+    'search' |
+    'tel' |
+    'text' |
+    'url' | undefined;
         /**
           * @default 0
          */
         "zTabindex"?: number | string;
     }
     interface ZaneAvatar {
-        "alt"?: string;
+        "alt"?: string | undefined;
         /**
           * @default 'cover'
          */
         "fit"?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
-        "icon"?: string;
-        "onImgError"?: (event: ZaneAvatarCustomEvent<Event>) => void;
+        "icon"?: string | undefined;
+        "onImgError"?: (event: ZaneAvatarCustomEvent<any>) => void;
         /**
           * @default 'circle'
          */
@@ -4596,7 +4971,89 @@ declare namespace LocalJSX {
           * @default ''
          */
         "src"?: string;
-        "srcSet"?: string;
+        "srcSet"?: string | undefined;
+    }
+    interface ZaneAvatarGroup {
+        "avatars"?: string[];
+        /**
+          * @default false
+         */
+        "collapseAvatars"?: boolean;
+        /**
+          * @default false
+         */
+        "collapseAvatarsTooltip"?: boolean;
+        "collapseClass"?: string | undefined;
+        "collapseStyle"?: Record<string, any> | undefined;
+        /**
+          * @default 'light'
+         */
+        "effect"?: 'dark' | 'light';
+        /**
+          * @default 1
+         */
+        "maxCollapseAvatars"?: number;
+        /**
+          * @default 'bottom-start'
+         */
+        "placement"?: Props['placement'];
+        "popperBoxClass"?: string | undefined;
+        "popperContentClass"?: string | undefined;
+        /**
+          * @default {}
+         */
+        "popperOptions"?: Props['popperOptions'];
+        "popperTheme"?: string | undefined;
+        /**
+          * @default 'circle'
+         */
+        "shape"?: 'circle' | 'square';
+        /**
+          * @default 'default'
+         */
+        "size"?: 'default' | 'large' | 'small' | number;
+    }
+    interface ZaneBadge {
+        /**
+          * @default ''
+         */
+        "badgeClass"?: string;
+        /**
+          * @default {}
+         */
+        "badgeStyle"?: Record<string, string>;
+        /**
+          * @default ''
+         */
+        "color"?: string;
+        /**
+          * @default false
+         */
+        "hidden"?: boolean;
+        /**
+          * @default false
+         */
+        "isDot"?: boolean;
+        /**
+          * @default 99
+         */
+        "max"?: number;
+        /**
+          * @default [0, 0]
+         */
+        "offset"?: number[] | string;
+        /**
+          * @default true
+         */
+        "showZero"?: boolean;
+        /**
+          * @default 'danger'
+         */
+        "type"?: 'primary' | 'success' | 'warning' | 'info' | 'danger';
+        /**
+          * @default ''
+         */
+        "value"?: string | number;
     }
     interface ZaneBar {
         "always"?: boolean;
@@ -4606,7 +5063,7 @@ declare namespace LocalJSX {
         /**
           * @default undefined
          */
-        "autoInsertSpace"?: boolean;
+        "autoInsertSpace"?: boolean | undefined;
         /**
           * @default false
          */
@@ -4619,7 +5076,7 @@ declare namespace LocalJSX {
           * @default false
          */
         "circle"?: boolean;
-        "color"?: string;
+        "color"?: string | undefined;
         /**
           * @default false
          */
@@ -4627,8 +5084,8 @@ declare namespace LocalJSX {
         /**
           * @default undefined
          */
-        "disabled"?: boolean;
-        "icon"?: string;
+        "disabled"?: boolean | undefined;
+        "icon"?: string | undefined;
         /**
           * @default false
          */
@@ -4641,29 +5098,29 @@ declare namespace LocalJSX {
           * @default "button"
          */
         "nativeType"?: ButtonNativeType;
-        "onZClick"?: (event: ZaneButtonCustomEvent<MouseEvent>) => void;
+        "onZClick"?: (event: ZaneButtonCustomEvent<any>) => void;
         /**
           * @default undefined
          */
-        "plain"?: boolean;
+        "plain"?: boolean | undefined;
         /**
           * @default undefined
          */
-        "round"?: boolean;
-        "size"?: ComponentSize;
+        "round"?: boolean | undefined;
+        "size"?: ComponentSize | undefined;
         /**
           * @default undefined
          */
-        "text"?: boolean;
+        "text"?: boolean | undefined;
         /**
           * @default ""
          */
         "type"?: ButtonType;
     }
     interface ZaneButtonGroup {
-        "disabled"?: boolean;
-        "size"?: ComponentSize;
-        "type"?: ButtonType;
+        "disabled"?: boolean | undefined;
+        "size"?: ComponentSize | undefined;
+        "type"?: ButtonType | undefined;
     }
     interface ZaneCard {
         /**
@@ -4697,13 +5154,25 @@ declare namespace LocalJSX {
           * @default () => true
          */
         "beforeFilter"?: (value: string) => boolean | Promise<any>;
+        /**
+          * @default false
+         */
         "checkOnClickNode"?: boolean;
         /**
           * @default "close-circle-line"
          */
         "clearIcon"?: string;
+        /**
+          * @default false
+         */
         "clearable"?: boolean;
+        /**
+          * @default false
+         */
         "collapseTags"?: boolean;
+        /**
+          * @default false
+         */
         "collapseTagsTooltip"?: boolean;
         /**
           * @default 300
@@ -4717,6 +5186,9 @@ declare namespace LocalJSX {
     node: CascaderNode,
     keyword: string
   ) => boolean;
+        /**
+          * @default false
+         */
         "filterable"?: boolean;
         /**
           * @default 1
@@ -4750,6 +5222,12 @@ declare namespace LocalJSX {
     | "right"
     | "top"
     | "top-start";
+        "popperBoxClass"?: string;
+        "popperContentClass"?: string;
+        /**
+          * @default {}
+         */
+        "popperOptions"?: Props['popperOptions'];
         /**
           * @default "cascader"
          */
@@ -4759,7 +5237,7 @@ declare namespace LocalJSX {
          */
         "props"?: CascaderProps;
         "renderLabel"?: RenderLabel;
-        "renderSuggestion"?: (suggestion) => HTMLElement;
+        "renderSuggestion"?: (suggestions: CascaderNode[]) => HTMLElement;
         "renderTags"?: (
     tags: Tag[],
     deleteTag: (tag: Tag) => void
@@ -4793,7 +5271,7 @@ declare namespace LocalJSX {
           * @default true
          */
         "validateEvent"?: boolean;
-        "value"?: CascaderValue | null;
+        "value"?: CascaderValue;
         /**
           * @default undefined
          */
@@ -4801,7 +5279,10 @@ declare namespace LocalJSX {
         "wrapperStyle"?: Record<string, string>;
     }
     interface ZaneCascaderMenu {
-        "index"?: number;
+        "index"?: number | undefined;
+        /**
+          * @default []
+         */
         "nodes"?: CascaderNode[];
     }
     interface ZaneCascaderNode {
@@ -4833,7 +5314,7 @@ declare namespace LocalJSX {
          */
         "props"?: CascaderProps;
         "renderLabel"?: RenderLabel;
-        "value"?: CascaderValue | null;
+        "value"?: CascaderValue;
     }
     interface ZaneChat {
         /**
@@ -5144,6 +5625,17 @@ declare namespace LocalJSX {
          */
         "direction"?: 'horizontal' | 'vertical';
     }
+    interface ZaneEmpty {
+        /**
+          * @default ''
+         */
+        "description"?: string;
+        /**
+          * @default ''
+         */
+        "image"?: string;
+        "imageSize"?: number;
+    }
     interface ZaneFocusTrap {
         /**
           * @default 'first'
@@ -5173,9 +5665,18 @@ declare namespace LocalJSX {
         "height"?: string;
     }
     interface ZaneForm {
-        "disabled"?: boolean;
+        "disabled"?: boolean | undefined;
+        /**
+          * @default false
+         */
         "hideRequiredAsterisk"?: boolean;
+        /**
+          * @default false
+         */
         "inline"?: boolean;
+        /**
+          * @default false
+         */
         "inlineMessage"?: boolean;
         /**
           * @default "right"
@@ -5189,27 +5690,32 @@ declare namespace LocalJSX {
           * @default ""
          */
         "labelWidth"?: number | string;
-        "model"?: Record<string, any>;
-        "onValidate"?: (event: ZaneFormCustomEvent<{
-    prop: FormItemProp;
-    isValid: boolean;
-    message: string;
-  }>) => void;
+        "model"?: Record<string, any> | undefined;
+        "onValidate"?: (event: ZaneFormCustomEvent<any>) => void;
         /**
           * @default "left"
          */
         "requireAsteriskPosition"?: "left" | "right";
-        "rules"?: FormRules;
+        "rules"?: FormRules | undefined;
         /**
           * @default true
          */
         "scrollIntoViewOptions"?: boolean | ScrollIntoViewOptions;
+        /**
+          * @default false
+         */
         "scrollToError"?: boolean;
         /**
           * @default true
          */
         "showMessage"?: boolean;
+        /**
+          * @default ''
+         */
         "size"?: ComponentSize;
+        /**
+          * @default false
+         */
         "statusIcon"?: boolean;
         /**
           * @default true
@@ -5217,27 +5723,42 @@ declare namespace LocalJSX {
         "validateOnRuleChange"?: boolean;
     }
     interface ZaneFormItem {
-        "error"?: string;
-        "for"?: string;
+        "error"?: string | undefined;
+        "for"?: string | undefined;
+        /**
+          * @default false
+         */
         "inlineMessage"?: boolean;
-        "label"?: string;
+        "label"?: string | undefined;
         /**
           * @default ""
          */
         "labelPosition"?: "left" | "right" | "top" | "";
-        "labelWidth"?: string | number;
-        "prop"?: FormItemProp;
+        "labelWidth"?: string | number | undefined;
+        "prop"?: FormItemProp | undefined;
         /**
           * @default undefined
          */
-        "required"?: boolean;
-        "rules"?: Arrayable<FormItemRule>;
+        "required"?: boolean | undefined;
+        "rules"?: Arrayable<FormItemRule> | undefined;
+        /**
+          * @default false
+         */
         "showMessage"?: boolean;
-        "size"?: ComponentSize;
+        "size"?: ComponentSize | undefined;
+        /**
+          * @default ''
+         */
         "validateStatus"?: FormItemValidateState;
     }
     interface ZaneFormLabelWrap {
+        /**
+          * @default false
+         */
         "isAutoWidth"?: boolean;
+        /**
+          * @default false
+         */
         "updateAll"?: boolean;
     }
     interface ZaneForwardRef {
@@ -5259,12 +5780,20 @@ declare namespace LocalJSX {
         "styles"?: object;
         "zPrefix"?: string;
     }
+    interface ZaneImgEmpty {
+    }
     interface ZaneInput {
+        /**
+          * @default ''
+         */
         "ariaLabel"?: string;
         /**
           * @default "off"
          */
         "autocomplete"?: HTMLInputElement['autocomplete'];
+        /**
+          * @default false
+         */
         "autofocus"?: boolean;
         /**
           * @default false
@@ -5313,15 +5842,30 @@ declare namespace LocalJSX {
         "parser"?: Function;
         "placeholder"?: string;
         "prefixIcon"?: string;
+        /**
+          * @default false
+         */
         "readonly"?: boolean;
+        /**
+          * @default "none"
+         */
         "resize"?: "both" | "horizontal" | "none" | "vertical";
         /**
           * @default 2
          */
         "rows"?: number;
+        /**
+          * @default false
+         */
         "showPassword"?: boolean;
+        /**
+          * @default false
+         */
         "showWordLimit"?: boolean;
         "size"?: ComponentSize;
+        /**
+          * @default 1
+         */
         "step"?: number;
         "suffixIcon"?: string;
         /**
@@ -5734,6 +6278,111 @@ declare namespace LocalJSX {
          */
         "strict"?: boolean;
     }
+    interface ZanePagination {
+        /**
+          * 是否带背景色
+          * @default false
+         */
+        "background"?: boolean;
+        /**
+          * 当前页码（受控）
+         */
+        "currentPage"?: number;
+        /**
+          * 默认当前页码
+          * @default 1
+         */
+        "defaultCurrentPage"?: number;
+        /**
+          * 默认每页条数
+          * @default 10
+         */
+        "defaultPageSize"?: number;
+        /**
+          * 是否禁用
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * 只有一页时是否隐藏
+          * @default false
+         */
+        "hideOnSinglePage"?: boolean;
+        /**
+          * 布局配置，逗号分隔
+          * @default DEFAULT_LAYOUT
+         */
+        "layout"?: string;
+        /**
+          * 下一页按钮图标
+          * @default 'arrow-right-s-line'
+         */
+        "nextIcon"?: string;
+        /**
+          * 下一页按钮文字
+          * @default ''
+         */
+        "nextText"?: string;
+        /**
+          * 综合变化事件（currentPage + pageSize）
+         */
+        "onZChange"?: (event: ZanePaginationCustomEvent<{
+    currentPage: number;
+    pageSize: number;
+  }>) => void;
+        /**
+          * 当前页变化事件
+         */
+        "onZCurrentChange"?: (event: ZanePaginationCustomEvent<number>) => void;
+        /**
+          * 点击下一页按钮事件
+         */
+        "onZNextClick"?: (event: ZanePaginationCustomEvent<number>) => void;
+        /**
+          * 点击上一页按钮事件
+         */
+        "onZPrevClick"?: (event: ZanePaginationCustomEvent<number>) => void;
+        /**
+          * 每页条数变化事件
+         */
+        "onZSizeChange"?: (event: ZanePaginationCustomEvent<number>) => void;
+        /**
+          * 总页数（优先于 total）
+         */
+        "pageCount"?: number;
+        /**
+          * 每页条数（受控）
+         */
+        "pageSize"?: number;
+        /**
+          * 每页条数选项列表 — 支持数组或逗号分隔字符串
+          * @default [...DEFAULT_PAGE_SIZES]
+         */
+        "pageSizes"?: PaginationPageSize[] | string;
+        /**
+          * 显示的页码按钮数量（必须为大于4的奇数）
+          * @default DEFAULT_PAGE_COUNT
+         */
+        "pagerCount"?: number;
+        /**
+          * 上一页按钮图标
+          * @default 'arrow-left-s-line'
+         */
+        "prevIcon"?: string;
+        /**
+          * 上一页按钮文字
+          * @default ''
+         */
+        "prevText"?: string;
+        /**
+          * 组件尺寸
+         */
+        "size"?: ComponentSize;
+        /**
+          * 总记录数
+         */
+        "total"?: number;
+    }
     interface ZaneRadio {
         /**
           * @default undefined
@@ -5957,6 +6606,9 @@ declare namespace LocalJSX {
         "wrapStyle"?: Record<string, string>;
     }
     interface ZaneSelect {
+        /**
+          * @default false
+         */
         "allowCreate"?: boolean;
         /**
           * @default tippy.defaultProps.appendTo
@@ -5967,34 +6619,61 @@ declare namespace LocalJSX {
           * @default 'off'
          */
         "autocomplete"?: string;
+        /**
+          * @default false
+         */
         "automaticDropdown"?: boolean;
         /**
           * @default 'close-circle-line'
          */
         "clearIcon"?: string;
+        /**
+          * @default false
+         */
         "clearable"?: boolean;
+        /**
+          * @default false
+         */
         "collapseTags"?: boolean;
+        /**
+          * @default false
+         */
         "collapseTagsTooltip"?: boolean;
         /**
           * @default 300
          */
         "debounce"?: number;
+        /**
+          * @default false
+         */
         "defaultFirstOption"?: boolean;
         /**
           * @default undefined
          */
         "disabled"?: boolean;
         "emptyValues"?: any[];
-        "filterMethod"?: (query) => any;
+        "filterMethod"?: (query: string) => any;
+        /**
+          * @default false
+         */
         "filterable"?: boolean;
+        /**
+          * @default false
+         */
         "fitInputWidth"?: boolean;
         "label"?: string;
+        /**
+          * @default false
+         */
         "loading"?: boolean;
         "loadingText"?: string;
         /**
           * @default 1
          */
         "maxCollapseTags"?: number;
+        /**
+          * @default false
+         */
         "multiple"?: boolean;
         /**
           * @default 0
@@ -6017,6 +6696,9 @@ declare namespace LocalJSX {
         "onZPopupScroll"?: (event: ZaneSelectCustomEvent<{scrollTop: number; scrollLeft: number}>) => void;
         "onZRemoveTag"?: (event: ZaneSelectCustomEvent<any>) => void;
         "onZVisibleChange"?: (event: ZaneSelectCustomEvent<boolean>) => void;
+        /**
+          * @default []
+         */
         "options"?: Record<string, any>[];
         "placeholder"?: string;
         /**
@@ -6034,8 +6716,14 @@ declare namespace LocalJSX {
           * @default { ...defaultProps }
          */
         "props"?: SelectOptionProps;
+        /**
+          * @default false
+         */
         "remote"?: boolean;
-        "remoteMethod"?: (query) => any;
+        "remoteMethod"?: (query: string) => any;
+        /**
+          * @default false
+         */
         "remoteShowSuffix"?: boolean;
         /**
           * @default true
@@ -6359,6 +7047,33 @@ declare namespace LocalJSX {
     }
     interface ZaneSliderMarker {
         "mark"?: string | { style: Record<string, any>, label: any};
+    }
+    interface ZaneSpace {
+        /**
+          * @default 'center'
+         */
+        "alignment"?: string;
+        /**
+          * @default 'horizontal'
+         */
+        "direction"?: 'horizontal' | 'vertical';
+        /**
+          * @default false
+         */
+        "fill"?: boolean;
+        /**
+          * @default 100
+         */
+        "fillRatio"?: number;
+        /**
+          * @default 'small'
+         */
+        "size"?: string;
+        "spacer"?: string | undefined;
+        /**
+          * @default false
+         */
+        "wrap"?: boolean;
     }
     interface ZaneSplitter {
         /**
@@ -7453,6 +8168,8 @@ declare namespace LocalJSX {
         "zane-aside": ZaneAside;
         "zane-autocomplete": ZaneAutocomplete;
         "zane-avatar": ZaneAvatar;
+        "zane-avatar-group": ZaneAvatarGroup;
+        "zane-badge": ZaneBadge;
         "zane-bar": ZaneBar;
         "zane-button": ZaneButton;
         "zane-button-group": ZaneButtonGroup;
@@ -7478,6 +8195,7 @@ declare namespace LocalJSX {
         "zane-config-provider": ZaneConfigProvider;
         "zane-container": ZaneContainer;
         "zane-divider": ZaneDivider;
+        "zane-empty": ZaneEmpty;
         "zane-focus-trap": ZaneFocusTrap;
         "zane-footer": ZaneFooter;
         "zane-form": ZaneForm;
@@ -7486,6 +8204,7 @@ declare namespace LocalJSX {
         "zane-forward-ref": ZaneForwardRef;
         "zane-header": ZaneHeader;
         "zane-icon": ZaneIcon;
+        "zane-img-empty": ZaneImgEmpty;
         "zane-input": ZaneInput;
         "zane-input-number": ZaneInputNumber;
         "zane-input-tag": ZaneInputTag;
@@ -7497,6 +8216,7 @@ declare namespace LocalJSX {
         "zane-menu-item": ZaneMenuItem;
         "zane-menu-item-group": ZaneMenuItemGroup;
         "zane-only-child": ZaneOnlyChild;
+        "zane-pagination": ZanePagination;
         "zane-radio": ZaneRadio;
         "zane-radio-button": ZaneRadioButton;
         "zane-radio-group": ZaneRadioGroup;
@@ -7515,6 +8235,7 @@ declare namespace LocalJSX {
         "zane-slider": ZaneSlider;
         "zane-slider-button": ZaneSliderButton;
         "zane-slider-marker": ZaneSliderMarker;
+        "zane-space": ZaneSpace;
         "zane-splitter": ZaneSplitter;
         "zane-splitter-bar": ZaneSplitterBar;
         "zane-splitter-panel": ZaneSplitterPanel;
@@ -7545,6 +8266,8 @@ declare module "@stencil/core" {
             "zane-aside": LocalJSX.ZaneAside & JSXBase.HTMLAttributes<HTMLZaneAsideElement>;
             "zane-autocomplete": LocalJSX.ZaneAutocomplete & JSXBase.HTMLAttributes<HTMLZaneAutocompleteElement>;
             "zane-avatar": LocalJSX.ZaneAvatar & JSXBase.HTMLAttributes<HTMLZaneAvatarElement>;
+            "zane-avatar-group": LocalJSX.ZaneAvatarGroup & JSXBase.HTMLAttributes<HTMLZaneAvatarGroupElement>;
+            "zane-badge": LocalJSX.ZaneBadge & JSXBase.HTMLAttributes<HTMLZaneBadgeElement>;
             "zane-bar": LocalJSX.ZaneBar & JSXBase.HTMLAttributes<HTMLZaneBarElement>;
             "zane-button": LocalJSX.ZaneButton & JSXBase.HTMLAttributes<HTMLZaneButtonElement>;
             "zane-button-group": LocalJSX.ZaneButtonGroup & JSXBase.HTMLAttributes<HTMLZaneButtonGroupElement>;
@@ -7570,6 +8293,7 @@ declare module "@stencil/core" {
             "zane-config-provider": LocalJSX.ZaneConfigProvider & JSXBase.HTMLAttributes<HTMLZaneConfigProviderElement>;
             "zane-container": LocalJSX.ZaneContainer & JSXBase.HTMLAttributes<HTMLZaneContainerElement>;
             "zane-divider": LocalJSX.ZaneDivider & JSXBase.HTMLAttributes<HTMLZaneDividerElement>;
+            "zane-empty": LocalJSX.ZaneEmpty & JSXBase.HTMLAttributes<HTMLZaneEmptyElement>;
             "zane-focus-trap": LocalJSX.ZaneFocusTrap & JSXBase.HTMLAttributes<HTMLZaneFocusTrapElement>;
             "zane-footer": LocalJSX.ZaneFooter & JSXBase.HTMLAttributes<HTMLZaneFooterElement>;
             "zane-form": LocalJSX.ZaneForm & JSXBase.HTMLAttributes<HTMLZaneFormElement>;
@@ -7578,6 +8302,7 @@ declare module "@stencil/core" {
             "zane-forward-ref": LocalJSX.ZaneForwardRef & JSXBase.HTMLAttributes<HTMLZaneForwardRefElement>;
             "zane-header": LocalJSX.ZaneHeader & JSXBase.HTMLAttributes<HTMLZaneHeaderElement>;
             "zane-icon": LocalJSX.ZaneIcon & JSXBase.HTMLAttributes<HTMLZaneIconElement>;
+            "zane-img-empty": LocalJSX.ZaneImgEmpty & JSXBase.HTMLAttributes<HTMLZaneImgEmptyElement>;
             "zane-input": LocalJSX.ZaneInput & JSXBase.HTMLAttributes<HTMLZaneInputElement>;
             "zane-input-number": LocalJSX.ZaneInputNumber & JSXBase.HTMLAttributes<HTMLZaneInputNumberElement>;
             "zane-input-tag": LocalJSX.ZaneInputTag & JSXBase.HTMLAttributes<HTMLZaneInputTagElement>;
@@ -7589,6 +8314,7 @@ declare module "@stencil/core" {
             "zane-menu-item": LocalJSX.ZaneMenuItem & JSXBase.HTMLAttributes<HTMLZaneMenuItemElement>;
             "zane-menu-item-group": LocalJSX.ZaneMenuItemGroup & JSXBase.HTMLAttributes<HTMLZaneMenuItemGroupElement>;
             "zane-only-child": LocalJSX.ZaneOnlyChild & JSXBase.HTMLAttributes<HTMLZaneOnlyChildElement>;
+            "zane-pagination": LocalJSX.ZanePagination & JSXBase.HTMLAttributes<HTMLZanePaginationElement>;
             "zane-radio": LocalJSX.ZaneRadio & JSXBase.HTMLAttributes<HTMLZaneRadioElement>;
             "zane-radio-button": LocalJSX.ZaneRadioButton & JSXBase.HTMLAttributes<HTMLZaneRadioButtonElement>;
             "zane-radio-group": LocalJSX.ZaneRadioGroup & JSXBase.HTMLAttributes<HTMLZaneRadioGroupElement>;
@@ -7607,6 +8333,7 @@ declare module "@stencil/core" {
             "zane-slider": LocalJSX.ZaneSlider & JSXBase.HTMLAttributes<HTMLZaneSliderElement>;
             "zane-slider-button": LocalJSX.ZaneSliderButton & JSXBase.HTMLAttributes<HTMLZaneSliderButtonElement>;
             "zane-slider-marker": LocalJSX.ZaneSliderMarker & JSXBase.HTMLAttributes<HTMLZaneSliderMarkerElement>;
+            "zane-space": LocalJSX.ZaneSpace & JSXBase.HTMLAttributes<HTMLZaneSpaceElement>;
             "zane-splitter": LocalJSX.ZaneSplitter & JSXBase.HTMLAttributes<HTMLZaneSplitterElement>;
             "zane-splitter-bar": LocalJSX.ZaneSplitterBar & JSXBase.HTMLAttributes<HTMLZaneSplitterBarElement>;
             "zane-splitter-panel": LocalJSX.ZaneSplitterPanel & JSXBase.HTMLAttributes<HTMLZaneSplitterPanelElement>;

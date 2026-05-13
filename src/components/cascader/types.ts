@@ -32,8 +32,8 @@ export type LazyLoad = (
 ) => void;
 
 export interface RenderLabelProps {
-  node: CascaderNode
-  data: CascaderOption
+  node?: CascaderNode
+  data?: CascaderOption
 }
 
 export type RenderLabel = (props: RenderLabelProps) => HTMLElement
@@ -68,7 +68,7 @@ export interface Tag {
 
 export type CascaderPanelContext = {
   config: CascaderConfig;
-  expandingNode: CascaderNode;
+  expandingNode?: CascaderNode;
   checkedNodes: CascaderNode[];
   isHoverMenu: boolean;
   initialLoaded: boolean;

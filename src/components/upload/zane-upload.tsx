@@ -438,8 +438,8 @@ export class ZaneUpload {
     if (this.fileList.length === 0) return null;
 
     const listClasses = classNames(
-      ns.e("list"),
-      ns.m(this.listType),
+      ns.b("list"),
+      ns.bm("list", this.listType),
       ns.is("picture-card", this.listType === "picture-card"),
     );
 

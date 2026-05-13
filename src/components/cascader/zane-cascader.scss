@@ -265,14 +265,11 @@
   }
 }
 
+.#{$namespace}-cascader-tippy-box {
+  background-color: getCssVar('bg-color', 'overlay');
+  border: 1px solid getCssVar('border-color', 'lighter');
 
-#{$namespace}-cascader {
-  .#{$namespace}-tooltip-box {
-    background-color: getCssVar('bg-color', 'overlay');
-    border: 1px solid getCssVar('border-color', 'lighter');
-
-    .#{$namespace}-tooltip-content {
-      padding: 0;
-    }
+  .#{$namespace}-cascader-tippy-content {
+    padding: 0;
   }
 }

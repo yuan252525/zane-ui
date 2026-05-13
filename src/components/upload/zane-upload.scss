@@ -139,7 +139,7 @@
     align-items: center;
     color: getCssVar('text-color-regular');
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1;
     cursor: pointer;
     text-decoration: none;
     overflow: hidden;
@@ -148,6 +148,7 @@
     flex: 1;
     min-width: 0;
     gap: 4px;
+    height: 16px;
 
     &:hover {
       color: getCssVar('color', 'primary');
@@ -160,12 +161,16 @@
     flex-shrink: 0;
     width: 14px;
     height: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   @include e(item-text) {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    line-height: 1;
   }
 
   @include e(item-status-label) {

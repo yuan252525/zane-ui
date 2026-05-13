@@ -13,27 +13,27 @@ const ns = useNamespace("cascader-menu");
   tag: "zane-cascader-menu",
 })
 export class ZaneCascaderMenu {
-  @Element() el: HTMLElement;
+  @Element() el: HTMLElement | undefined;
 
-  @Prop() nodes: CascaderNode[];
+  @Prop() nodes: CascaderNode[] = [];
 
-  @Prop() index: number;
+  @Prop() index: number | undefined;
 
-  @State() isEmpty: boolean;
+  @State() isEmpty: boolean = false;
 
-  @State() isLoading: boolean;
+  @State() isLoading: boolean = false;
 
-  @State() menuId: string;
+  @State() menuId: string | undefined;
 
-  private cascaderPanelContext: ReactiveObject<CascaderPanelContext>;
+  private cascaderPanelContext: ReactiveObject<CascaderPanelContext> | undefined;
 
-  private hoverZone: SVGElement;
+  private hoverZone: SVGElement | undefined;
 
-  private activeNode: HTMLElement;
+  private activeNode: HTMLElement | undefined;
 
   private hoverTimer: number | undefined;
 
-  private id: string;
+  private id: string | undefined;
 
   @Watch("index")
   onIndexChange() {
@@ -44,7 +44,7 @@ export class ZaneCascaderMenu {
     this.id = `${ns.namespace}-id-${state.idInjection.prefix}-${state
       .idInjection.current++}`;
     this.menuId = `${this.id}-${this.index}`;
-    this.cascaderPanelContext = getCascaderPanelContext(this.el);
+    this.cascaderPanelContext = getCascaderPanelContext(this.el!);
   }
 
   private handleExpand = (e: CustomEvent) => {
@@ -62,13 +62,13 @@ export class ZaneCascaderMenu {
     if (this.activeNode.contains(e.target as HTMLElement)) {
       this.clearHoverTimer();
 
-      const { left } = this.el.getBoundingClientRect();
-      const { offsetWidth, offsetHeight } = this.el;
+      const { left } = this.el!.getBoundingClientRect();
+      const { offsetWidth = 0, offsetHeight = 0 } = this.el || {};
       const startX = e.clientX - left;
       const top = this.activeNode.offsetTop;
       const bottom = top + this.activeNode.offsetHeight;
       const scrollTop =
-        this.el.querySelector(`.${ns.e("wrap")}`)?.scrollTop || 0;
+        this.el?.querySelector(`.${ns.e("wrap")}`)?.scrollTop || 0;
 
       this.hoverZone.innerHTML = `
             <path style="pointer-events: auto;" fill="transparent" d="M${startX} ${top} L${offsetWidth} ${scrollTop} V${top} Z" />

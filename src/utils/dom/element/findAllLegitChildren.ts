@@ -25,7 +25,7 @@ export function findAllLegitChildren(el: HTMLElement): ChildNode[] {
 
     // 处理文本节点：保留包含非空白字符的节点
     if (child.nodeType === Node.TEXT_NODE) {
-      return child.textContent?.trim().length > 0;
+      return (child.textContent?.trim().length ?? 0) > 0;
     }
 
     // 可选：保留其他需要支持的节点类型

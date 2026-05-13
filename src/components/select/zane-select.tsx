@@ -54,75 +54,75 @@ const nsInput = useNamespace('input');
   styleUrl: 'zane-select.scss'
 })
 export class ZaneSelect {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop() name: string;
+  @Prop() name?: string;
 
-  @Prop({ attribute: 'id' }) zId: string;
+  @Prop({ attribute: 'id' }) zId?: string;
 
   @Prop({ mutable: true }) value: any[] | string | number | Record<string, any> | any = undefined;
 
   @Prop() autocomplete: string = 'off';
 
-  @Prop() automaticDropdown: boolean;
+  @Prop() automaticDropdown: boolean = false;
 
-  @Prop() size: ComponentSize;
+  @Prop() size?: ComponentSize;
 
-  @Prop() disabled: boolean = undefined;
+  @Prop() disabled?: boolean = undefined;
 
-  @Prop() clearable: boolean;
+  @Prop() clearable: boolean = false;
 
   @Prop() clearIcon: string = 'close-circle-line';
 
-  @Prop() allowCreate: boolean;
+  @Prop() allowCreate: boolean = false;
 
-  @Prop() loading: boolean;
+  @Prop() loading: boolean = false;
 
-  @Prop() popperTheme: string;
+  @Prop() popperTheme?: string;
 
   @Prop() popperOptions: Props['popperOptions'] = {};
 
-  @Prop() popperBoxClass: string;
+  @Prop() popperBoxClass?: string;
 
-  @Prop() popperContentClass: string;
+  @Prop() popperContentClass?: string;
 
   @Prop() debounce: number = 300;
 
-  @Prop() loadingText: string;
+  @Prop() loadingText?: string;
 
-  @Prop() noMatchText: string;
+  @Prop() noMatchText?: string;
 
-  @Prop() noDataText: string;
+  @Prop() noDataText?: string;
 
-  @Prop() remote: boolean;
+  @Prop() remote: boolean = false;
 
-  @Prop() remoteMethod: (query) => any;
+  @Prop() remoteMethod?: (query: string) => any;
 
-  @Prop() filterable: boolean;
+  @Prop() filterable: boolean = false;
 
-  @Prop() filterMethod: (query) => any;
+  @Prop() filterMethod?: (query: string) => any;
 
-  @Prop() multiple: boolean;
+  @Prop() multiple: boolean = false;
 
   @Prop() multipleLimit: number = 0;
 
-  @Prop() placeholder: string;
+  @Prop() placeholder?: string;
 
-  @Prop() defaultFirstOption: boolean;
+  @Prop() defaultFirstOption: boolean = false;
 
   @Prop() reserveKeyword: boolean = true;
 
   @Prop() valueKey: string = 'value';
 
-  @Prop() collapseTags: boolean;
+  @Prop() collapseTags: boolean = false;
 
-  @Prop() collapseTagsTooltip: boolean;
+  @Prop() collapseTagsTooltip: boolean = false;
 
   @Prop() tagTooltip: TagTooltipProps = {};
 
   @Prop() maxCollapseTags: number = 1;
 
-  @Prop() fitInputWidth: boolean;
+  @Prop() fitInputWidth: boolean = false;
 
   @Prop() suffixIcon: string = 'arrow-down-s-line';
 
@@ -132,7 +132,7 @@ export class ZaneSelect {
 
   @Prop() validateEvent: boolean = true;
 
-  @Prop() remoteShowSuffix: boolean;
+  @Prop() remoteShowSuffix: boolean = false;
 
   @Prop() showArrow: boolean = false;
 
@@ -144,67 +144,67 @@ export class ZaneSelect {
 
   @Prop() appendTo: Props['appendTo'] = tippy.defaultProps.appendTo;
 
-  @Prop() options: Record<string, any>[];
+  @Prop() options: Record<string, any>[] = [];
 
   @Prop() props: SelectOptionProps = { ...defaultProps };
 
-  @Prop() emptyValues: any[];
+  @Prop() emptyValues?: any[];
 
   @Prop() valueOnClear: any = undefined;
 
-  @Prop() label: string;
+  @Prop() label?: string;
 
-  @Prop() ariaLabel: string;
+  @Prop() ariaLabel?: string;
 
-  @Prop() tagRender: () => HTMLElement;
+  @Prop() tagRender?: () => HTMLElement;
 
-  @Prop() tagLabelRender: (
+  @Prop() tagLabelRender?: (
     label: string | number | boolean, value: SelectOptionValue, index: number
   ) => HTMLElement;
 
   @Event({ eventName: 'zChange', bubbles: false })
-  changeEvent: EventEmitter<any>;
+  changeEvent?: EventEmitter<any>;
 
   @Event({ eventName: 'zRemoveTag', bubbles: false })
-  removeTagEvent: EventEmitter<any>;
+  removeTagEvent?: EventEmitter<any>;
 
   @Event({ eventName: 'zClear', bubbles: false })
-  clearEvent: EventEmitter<any>;
+  clearEvent?: EventEmitter<any>;
 
   @Event({ eventName: 'zFocus', bubbles: false })
-  focusEvent: EventEmitter<FocusEvent>;
+  focusEvent?: EventEmitter<FocusEvent>;
 
   @Event({ eventName: 'zPopupScroll', bubbles: false })
-  popupScrollEvent: EventEmitter<{scrollTop: number; scrollLeft: number}>;
+  popupScrollEvent?: EventEmitter<{scrollTop: number; scrollLeft: number}>;
 
   @Event({ eventName: 'zBlur', bubbles: false })
-  blurEvent: EventEmitter<FocusEvent>;
+  blurEvent?: EventEmitter<FocusEvent>;
 
   @Event({ eventName: 'zVisibleChange', bubbles: false })
-  visibleChangeEvent: EventEmitter<boolean>;
+  visibleChangeEvent?: EventEmitter<boolean>;
 
   @Event({ eventName: "zCompositionEnd", bubbles: false })
-  compositionendEvent: EventEmitter<CompositionEvent>;
+  compositionendEvent?: EventEmitter<CompositionEvent>;
 
   @Event({ eventName: "zCompositionStart", bubbles: false })
-  compositionstartEvent: EventEmitter<CompositionEvent>;
+  compositionstartEvent?: EventEmitter<CompositionEvent>;
 
   @Event({ eventName: "zCompositionUpdate", bubbles: false })
-  compositionupdateEvent: EventEmitter<CompositionEvent>;
+  compositionupdateEvent?: EventEmitter<CompositionEvent>;
 
-  @State() inputId: string;
+  @State() inputId?: string;
 
-  @State() selectSize: ComponentSize;
+  @State() selectSize?: ComponentSize;
 
-  @State() selectDisabled: boolean;
+  @State() selectDisabled: boolean = false;
 
-  @State() dropdownMenuVisible: boolean;
+  @State() dropdownMenuVisible: boolean = false;
 
   @State() isFocused: boolean = false;
 
   @State() expanded: boolean = false;
 
-  @State() contentId: string;
+  @State() contentId?: string;
 
   @State() optionsArray: Option[] = [];
 
@@ -224,7 +224,7 @@ export class ZaneSelect {
 
   @State() shouldShowPlaceholder: boolean = false;
 
-  @State() hoverOption: Option;
+  @State() hoverOption?: Option;
 
   @State() aliasProps: SelectProps = {
     label: 'label',
@@ -244,44 +244,44 @@ export class ZaneSelect {
   @State() collapseItemWidth: number = 0;
   @State() hoveringIndex: number = -1;
   @State() selectedLabel: string = '';
-  @State() previousQuery: string = null;
+  @State() previousQuery: string | null = null;
   @State() inputHovering: boolean = false;
   @State() menuVisibleOnFocus: boolean = false;
   @State() isBeforeHide: boolean = false;
 
-  private selectRef: HTMLDivElement;
+  private selectRef?: HTMLDivElement;
 
-  private tooltipRef: HTMLZaneTippyElement;
+  private tooltipRef?: HTMLZaneTippyElement;
 
-  private wrapperRef: HTMLDivElement;
+  private wrapperRef?: HTMLDivElement;
 
-  private selectionRef: HTMLDivElement;
+  private selectionRef?: HTMLDivElement;
 
-  private inputRef: HTMLInputElement;
+  private inputRef?: HTMLInputElement;
 
-  private calculatorRef: HTMLSpanElement;
+  private calculatorRef?: HTMLSpanElement;
 
-  private suffixRef: HTMLDivElement;
+  private suffixRef?: HTMLDivElement;
 
-  private menuRef: HTMLElement;
+  private menuRef?: HTMLElement;
 
-  private collapseItemRef: HTMLDivElement;
+  private collapseItemRef?: HTMLDivElement;
 
-  private tagMenuRef: HTMLDivElement;
+  private tagMenuRef?: HTMLDivElement;
 
-  private scrollbarRef: HTMLZaneScrollbarElement;
+  private scrollbarRef?: HTMLZaneScrollbarElement;
 
-  private tagTooltipRef: HTMLZaneTippyElement;
+  private tagTooltipRef?: HTMLZaneTippyElement;
 
   private tagLabelRefs: HTMLElement[] = [];
 
   private collapseTagLabelRefs: HTMLElement[] = [];
 
-  private formContext: ReactiveObject<FormContext>;
+  private formContext?: ReactiveObject<FormContext>;
 
-  private formItemContext: ReactiveObject<FormItemContext>;
+  private formItemContext?: ReactiveObject<FormItemContext>;
 
-  private configProviderContext: ReactiveObject<ConfigProviderContext>;
+  private configProviderContext?: ReactiveObject<ConfigProviderContext>;
 
   private hasPrefixSlot = false;
 
@@ -291,15 +291,15 @@ export class ZaneSelect {
 
   private hasFooterSlot = false;
 
-  private context: ReactiveObject<SelectContext>;
+  private context?: ReactiveObject<SelectContext>;
 
-  private unCalculatorResizeObserver: () => void;
-  private unSelectResizeObserver: () => void;
-  private unWrapperResizeObserver: () => void;
-  private unTagMenuResizeObserver: () => void;
-  private unCollapseItemResizeObserver: () => void;
-  private unSelectionResizeObserver: () => void;
-  private unMenuResizeObserver: () => void;
+  private unCalculatorResizeObserver?: () => void;
+  private unSelectResizeObserver?: () => void;
+  private unWrapperResizeObserver?: () => void;
+  private unTagMenuResizeObserver?: () => void;
+  private unCollapseItemResizeObserver?: () => void;
+  private unSelectionResizeObserver?: () => void;
+  private unMenuResizeObserver?: () => void;
 
   @Watch('zId')
   handleWatchId() {
@@ -445,7 +445,7 @@ export class ZaneSelect {
       this.menuVisibleOnFocus = false;
     }
 
-    this.expanded ? this.tooltipRef.show() : this.tooltipRef.hide();
+    this.expanded ? this.tooltipRef?.show() : this.tooltipRef?.hide();
   }
 
   @Watch('dropdownMenuVisible')
@@ -454,9 +454,9 @@ export class ZaneSelect {
       this.unMenuResizeObserver = useResizeObserver(this.menuRef, this.updateTooltip);
     } else {
       this.unMenuResizeObserver?.();
-      this.unMenuResizeObserver = null;
+      this.unMenuResizeObserver = undefined;
     }
-    this.visibleChangeEvent.emit(this.dropdownMenuVisible);
+    this.visibleChangeEvent?.emit(this.dropdownMenuVisible);
   }
 
   @Watch('filterable')
@@ -479,7 +479,7 @@ export class ZaneSelect {
 
   @Watch('value')
   handleWatchValue() {
-    this.context.value.value = this.value;
+    this.context!.value.value = this.value;
     if (this.multiple) {
       if (this.filterable && !this.reserveKeyword) {
         this.inputValue = '';
@@ -523,7 +523,7 @@ export class ZaneSelect {
     ) {
       return;
     }
-    this.inputRef.focus();
+    this.inputRef?.focus();
   }
 
   private handleWrapperFocus = (event: FocusEvent) => {
@@ -531,7 +531,7 @@ export class ZaneSelect {
       return;
     }
     this.isFocused = true;
-    this.focusEvent.emit(event);
+    this.focusEvent?.emit(event);
 
     if (this.automaticDropdown && !this.expanded) {
       this.expanded = true;
@@ -540,18 +540,18 @@ export class ZaneSelect {
   }
 
   private handleWrapperBlur = async (event: FocusEvent) => {
-    const cancelBlur = await this.tooltipRef.isFocusInsideContent(event) ||
+    const cancelBlur = await this.tooltipRef?.isFocusInsideContent(event) ||
       await this.tagTooltipRef?.isFocusInsideContent(event);
 
     if (this.selectDisabled ||
-      (event.relatedTarget && this.wrapperRef.contains(event.relatedTarget as Node)) ||
+      (event.relatedTarget && this.wrapperRef?.contains(event.relatedTarget as Node)) ||
       cancelBlur
     ) {
       return;
     }
 
     this.isFocused = false;
-    this.blurEvent.emit(event);
+    this.blurEvent?.emit(event);
 
     this.expanded = false;
     this.menuVisibleOnFocus = false;
@@ -596,7 +596,7 @@ export class ZaneSelect {
   ) => {
     if (this.tagLabelRender) {
       nextFrame(() => {
-        const result = this.tagLabelRender(label, value, index);
+        const result = this.tagLabelRender?.(label, value, index);
         const parentEl = this.tagLabelRefs[index];
         if (result && parentEl) {
           parentEl.innerHTML = result.innerHTML;
@@ -612,7 +612,7 @@ export class ZaneSelect {
   ) => {
     if (this.tagLabelRender) {
       nextFrame(() => {
-        const result = this.tagLabelRender(label, value, index);
+        const result = this.tagLabelRender?.(label, value, index);
         const parentEl = this.collapseTagLabelRefs[index];
         if (result && parentEl) {
           parentEl.innerHTML = result.innerHTML;
@@ -687,7 +687,7 @@ export class ZaneSelect {
       }
 
       nextFrame(() => {
-        this.scrollToOption(this.hoverOption);
+        this.scrollToOption(this.hoverOption ?? [this.optionsArray[this.hoveringIndex]]);
       });
     }
   }
@@ -781,7 +781,7 @@ export class ZaneSelect {
     this.emitChange(value);
     this.hoveringIndex = -1;
     this.expanded = false;
-    this.clearEvent.emit();
+    this.clearEvent?.emit();
     this.zFocus();
   }
 
@@ -814,12 +814,12 @@ export class ZaneSelect {
   }
 
   private handleCompositionStart = (event: CompositionEvent) => {
-    this.compositionstartEvent.emit(event);
+    this.compositionstartEvent?.emit(event);
     this.isComposing = true;
   }
 
   private handleCompositionEnd = (event: CompositionEvent) => {
-    this.compositionendEvent.emit(event);
+    this.compositionendEvent?.emit(event);
     if (this.isComposing) {
       this.isComposing = false;
       nextFrame(() => {
@@ -829,7 +829,7 @@ export class ZaneSelect {
   }
 
   private handleCompositionUpdate = (event: CompositionEvent) => {
-    this.compositionupdateEvent.emit(event);
+    this.compositionupdateEvent?.emit(event);
     const text = (event.target as HTMLInputElement).value;
     const lastCharacter = text[text.length - 1] || '';
     this.isComposing = !isKorean(lastCharacter);
@@ -853,7 +853,7 @@ export class ZaneSelect {
       value.splice(lastNotDisabledIndex, 1);
       this.value = value;
       this.emitChange(value);
-      this.removeTagEvent.emit(removeTagValue);
+      this.removeTagEvent?.emit(removeTagValue);
     }
   }
 
@@ -861,7 +861,7 @@ export class ZaneSelect {
     scrollTop: number;
     scrollLeft: number;
   }>) => {
-    this.popupScrollEvent.emit(e.detail);
+    this.popupScrollEvent?.emit(e.detail);
   }
 
   private handleKeyDown = (e: KeyboardEvent) => {
@@ -926,7 +926,7 @@ export class ZaneSelect {
   }
 
   private getOptions = (option: Option) => {
-    return get(option, this.aliasProps.options);
+    return get(option, this.aliasProps.options as any);
   }
 
   private getOptionProps = (option: Option) => {
@@ -938,15 +938,15 @@ export class ZaneSelect {
   }
 
   private getLabel = (option: Option) => {
-    return get(option, this.aliasProps.label);
+    return get(option, this.aliasProps.label as any);
   }
 
   private getValue = (option: Option) => {
-    return get(option, this.aliasProps.value);
+    return get(option, this.aliasProps.value as any);
   }
 
   private getDisabled = (option: Option) => {
-    return get(option, this.aliasProps.disabled);
+    return get(option, this.aliasProps.disabled as any);
   }
 
   private getValueIndex = (arr: SelectOptionValue[], option: Option) => {
@@ -1043,7 +1043,7 @@ export class ZaneSelect {
   }
 
   private resetSelectionWidth = () => {
-    this.selectionWidth = Number.parseFloat(window.getComputedStyle(this.selectionRef).width) || 0
+    this.selectionWidth = Number.parseFloat(window.getComputedStyle(this.selectionRef as HTMLElement).width) || 0
   }
 
   private updateTooltip = () => {
@@ -1102,7 +1102,7 @@ export class ZaneSelect {
       value.splice(index, 1);
       this.value = value;
       this.emitChange(value);
-      this.removeTagEvent.emit(tag.value);
+      this.removeTagEvent?.emit(tag.value);
     }
     e.stopPropagation();
     this.zFocus();
@@ -1110,7 +1110,7 @@ export class ZaneSelect {
 
   private emitChange = (val: SelectOptionValue | SelectOptionValue[]) => {
     if (!isEqual(this.value, val)) {
-      this.changeEvent.emit(val);
+      this.changeEvent?.emit(val);
     }
   }
 
@@ -1146,7 +1146,7 @@ export class ZaneSelect {
       this.hoveringIndex = newIndex;
 
       nextFrame(() => {
-        this.scrollToOption(this.hoverOption);
+        this.scrollToOption(this.hoverOption ?? [this.optionsArray[this.hoveringIndex]]);
       });
     }
   }
@@ -1195,7 +1195,7 @@ export class ZaneSelect {
     if (this.tooltipRef && target) {
       const menu = this.tooltipRef.querySelector(`.${ns.be('dropdown', 'wrap')}`);
       if (menu) {
-        scrollIntoView(menu as HTMLElement, target);
+        scrollIntoView(menu as HTMLElement, target as HTMLElement);
       }
     }
 
@@ -1233,9 +1233,9 @@ export class ZaneSelect {
       valueKey: this.valueKey,
       hoveringIndex: this.hoveringIndex,
       remote: this.remote,
-      setSelected: this.setSelected,
-      handleOptionSelect: this.handleOptionSelect,
-    });
+      setSelected: this.setSelected.bind(this),
+      handleOptionSelect: this.handleOptionSelect.bind(this),
+    } as SelectContext);
 
     this.context.change$.subscribe(({ key, value }) => {
       if (key === 'optionValues') {
@@ -1281,11 +1281,11 @@ export class ZaneSelect {
     this.unCollapseItemResizeObserver = useResizeObserver(this.collapseItemRef, this.resetCollapseItemWidth);
     this.unCalculatorResizeObserver = useResizeObserver(this.calculatorRef, this.resetCalculatorWidth);
 
-    this.wrapperRef.addEventListener('click', this.handleWrapperClick);
-    this.wrapperRef.addEventListener('focus', this.handleWrapperFocus);
-    this.wrapperRef.addEventListener('blur', this.handleWrapperBlur);
+    this.wrapperRef?.addEventListener('click', this.handleWrapperClick);
+    this.wrapperRef?.addEventListener('focus', this.handleWrapperFocus);
+    this.wrapperRef?.addEventListener('blur', this.handleWrapperBlur);
 
-    this.context.value.selectRef = this.selectRef;
+    this.context!.value.selectRef = this.selectRef;
   }
 
   componentWillRender() {
@@ -1296,7 +1296,7 @@ export class ZaneSelect {
   disconnectedCallback() {
     if (!hasRawParent(this.el)) {
       selectContexts.delete(this.el);
-      this.context = null;
+      this.context = undefined;
     }
 
     this.unCalculatorResizeObserver?.();
@@ -1376,7 +1376,7 @@ export class ZaneSelect {
 
     return (
       <div
-        ref={(el) => (this.selectRef = el)}
+        ref={(el) => (this.selectRef = el!)}
         class={classNames(
           ns.b(),
           ns.m(this.selectSize)
@@ -1445,7 +1445,7 @@ export class ZaneSelect {
                         onZClose={(e) => this.deleteTag(e.detail, tag)}
                       >
                         <span
-                          ref={(el) => this.tagLabelRefs[index] = el}
+                          ref={(el) => this.tagLabelRefs[index] = el!}
                           class={ns.e('tags-text')}
                         >
                           {
@@ -1512,7 +1512,7 @@ export class ZaneSelect {
                                     onZClose={(e) => this.deleteTag(e.detail, tag)}
                                   >
                                     <span
-                                      ref={(el) => this.collapseTagLabelRefs[index] = el}
+                                      ref={(el) => this.collapseTagLabelRefs[index] = el!}
                                       class={ns.e('tags-text')}
                                     >
                                       {
@@ -1555,7 +1555,7 @@ export class ZaneSelect {
                   name={this.name}
                   class={classNames(
                     ns.e('input'),
-                    ns.is(this.selectSize),
+                    ns.is(this.selectSize!),
                   )}
                   disabled={this.selectDisabled}
                   autoComplete={this.autocomplete}
@@ -1691,7 +1691,7 @@ export class ZaneSelect {
                             disabled={this.getDisabled(option)}
                           >
                             {
-                              this.getOptions(option).map((item) => (
+                              this.getOptions(option).map((item: any) => (
                                 <zane-select-option
                                   {
                                     ...this.getOptionProps(item)

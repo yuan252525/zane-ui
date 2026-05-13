@@ -13,33 +13,33 @@ const COMPONENT_NAME = 'zane-form-label-wrap'
   tag: 'zane-form-label-wrap',
 })
 export class ZaneFormLabelWrap {
-  @Element() el: HTMLElement;
+  @Element() el: HTMLElement | undefined;
   
-  @Prop() isAutoWidth: boolean;
+  @Prop() isAutoWidth: boolean = false;
 
-  @Prop() updateAll: boolean;
+  @Prop() updateAll: boolean = false;
 
   @State() computedWidth: number = 0;
 
-  private rootEl: HTMLElement;
+  private rootEl: HTMLElement | undefined;
   
   private hasDefaultSlot = false;
 
-  private formContext: ReactiveObject<FormContext>;
+  private formContext: ReactiveObject<FormContext> | undefined;
 
-  private formItemContext: ReactiveObject<FormItemContext>;
+  private formItemContext: ReactiveObject<FormItemContext> | undefined;
 
   componentWillLoad() {
-    this.formContext = getFormContext(this.el);
-    this.formItemContext = getFormItemContext(this.el);
+    this.formContext = getFormContext(this.el!);
+    this.formItemContext = getFormItemContext(this.el!);
 
     if (!this.formItemContext) {
       throwError(COMPONENT_NAME, 'usage: <zane-form-item><zane-form-label-wrap /></zane-form-item>')
     }
 
-    this.hasDefaultSlot = Array.from(this.el.childNodes).some(node => {
+    this.hasDefaultSlot = Array.from(this.el!.childNodes).some(node => {
       if (node.nodeType === Node.TEXT_NODE) {
-        return node.textContent?.trim().length > 0;
+        return (node.textContent?.trim().length ?? 0) > 0;
       }
       if (node.nodeType === Node.ELEMENT_NODE) {
         return true;
@@ -61,7 +61,7 @@ export class ZaneFormLabelWrap {
   }
 
   @Watch('computedWidth')
-  handleComputedWidthChanged(val, oldVal: number) {
+  handleComputedWidthChanged(val: number, oldVal: number) {
     if (this.updateAll) {
       this.formContext?.value.registerLabelWidth(val, oldVal);
     }

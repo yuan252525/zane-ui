@@ -16,7 +16,7 @@ export class ZaneCard {
 
   @Prop() bodyStyle: Record<string, string> = {};
 
-  @Element() el: HTMLElement;
+  @Element() el: HTMLElement | undefined;
 
   @Prop() footer: string = '';
 
@@ -32,16 +32,16 @@ export class ZaneCard {
 
   @Prop() shadow?: 'always' | 'hover' | 'never';
 
-  private configProviderContext: ReactiveObject<ConfigProviderContext>;
+  private configProviderContext: ReactiveObject<ConfigProviderContext> | undefined;
 
 
   checkSlotContent() {
-    this.hasHeaderContent = !!this.el.querySelector('[slot="header"]');
-    this.hasFooterContent = !!this.el.querySelector('[slot="footer"]');
+    this.hasHeaderContent = !!this.el?.querySelector('[slot="header"]');
+    this.hasFooterContent = !!this.el?.querySelector('[slot="footer"]');
   }
 
   componentWillLoad() {
-    this.configProviderContext = getConfigProviderContext(this.el);
+    this.configProviderContext = getConfigProviderContext(this.el!);
     
     this.checkSlotContent();
   }

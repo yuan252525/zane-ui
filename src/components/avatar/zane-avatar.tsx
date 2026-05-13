@@ -21,9 +21,9 @@ const ns = useNamespace('avatar');
 })
 export class ZaneAvatar {
   @Prop({ attribute: 'alt', reflect: true })
-  alt: string;
+  alt: string | undefined;
 
-  @Element() el: HTMLElement;
+  @Element() el: HTMLElement | undefined;
 
   @Prop({ attribute: 'fit', reflect: true })
   fit: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down' = 'cover';
@@ -31,9 +31,9 @@ export class ZaneAvatar {
   @State() hasLoadError: boolean = false;
 
   @Prop({ attribute: 'icon', reflect: true })
-  icon: string;
+  icon: string | undefined;
 
-  @Event() imgError: EventEmitter<Event>;
+  @Event() imgError: EventEmitter<Event> | undefined;
 
   @Prop({ attribute: 'shape', reflect: true })
   shape: 'circle' | 'square' = 'circle';
@@ -45,36 +45,29 @@ export class ZaneAvatar {
   src: string = '';
 
   @Prop({ attribute: 'srcSet', reflect: true })
-  srcSet: string;
+  srcSet: string | undefined;
 
-  get avatarClass(): string {
+  handleError(e: Event) {
+    this.hasLoadError = true;
+    this.imgError?.emit(e);
+  }
+
+  render() {
     const classList = [ns.b()];
     if (isString(this.size)) classList.push(ns.m(this.size as string));
     if (this.icon) classList.push(ns.m('icon'));
     if (this.shape) classList.push(ns.m(this.shape));
-    return classList.join(' ');
-  }
 
-  get fitStyle() {
-    return { objectFit: this.fit };
-  }
+    const avatarClass = classList.join(' ');
 
-  get sizeStyle() {
-    return isNumber(this.size)
+    const sizeStyle = isNumber(this.size)
       ? ns.cssVarBlock({
           size: addUnit(this.size) || '',
         })
       : undefined;
-  }
 
-  handleError(e: Event) {
-    this.hasLoadError = true;
-    this.imgError.emit(e);
-  }
-
-  render() {
     return (
-      <Host class={this.avatarClass} style={this.sizeStyle}>
+      <Host class={avatarClass} style={sizeStyle}>
         {this.renderContent()}
       </Host>
     );
@@ -87,13 +80,14 @@ export class ZaneAvatar {
 
   private renderContent() {
     if ((this.src || this.srcSet) && !this.hasLoadError) {
+      const fitStyle = { objectFit: this.fit };
       return (
         <img
           alt={this.alt}
           onError={(e) => this.handleError(e)}
           src={this.src}
           srcset={this.srcSet}
-          style={this.fitStyle}
+          style={fitStyle}
         />
       );
     }

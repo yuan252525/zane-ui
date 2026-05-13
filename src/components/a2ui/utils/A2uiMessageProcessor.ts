@@ -192,7 +192,7 @@ export class A2uiMessageProcessor implements MessageProcessor {
   private setDataByPath(root: DataMap, path: string, value: DataValue): void {
     if (Array.isArray(value) && (value.length === 0 || (isObject(value[0]) && 'key' in value[0]))) {
       if (value.length == 1 && isObject(value[0]) && (value[0] as any).key === '.') {
-        const item = value[0];
+        const item: any = value[0];
         const valueKey = this.findValueKey(item as any);
 
         if (valueKey) {
@@ -381,7 +381,7 @@ export class A2uiMessageProcessor implements MessageProcessor {
     visited.add(fullId);
 
     const componentData = components.get(baseComponentId);
-    const componentProps = componentData.component ?? {};
+    const componentProps = componentData?.component ?? {};
     const componentType = Object.keys(componentProps)[0];
     const unresolvedProperties = componentProps[componentType as keyof typeof componentProps];
 
@@ -403,7 +403,7 @@ export class A2uiMessageProcessor implements MessageProcessor {
     const baseNode = {
       id: fullId,
       dataContextPath,
-      weight: componentData.weight ?? 'initial',
+      weight: componentData?.weight ?? 'initial',
     };
 
     switch(componentType) {

@@ -31,7 +31,6 @@ import {
   getEventCode,
   getSibling,
   isClient,
-  isFocusable,
   isFunction,
   isKorean,
   isPromise,
@@ -45,6 +44,7 @@ import { getConfigProviderContext } from "../config-provider/utils";
 import { DEFAULT_VALUE_ON_CLEAR, EVENT_CODE } from "../../constants";
 import { cloneDeep, debounce } from "lodash-es";
 import classNames from "classnames";
+import type { Props } from "tippy.js";
 
 const ns = useNamespace("cascader");
 
@@ -57,36 +57,36 @@ const nsInput = useNamespace("input");
   tag: "zane-cascader",
 })
 export class ZaneCascader {
-  @Prop() checkOnClickNode: boolean;
+  @Prop() checkOnClickNode: boolean = false;
 
-  @Prop() clearable: boolean;
+  @Prop() clearable: boolean = false;
 
   @Prop() clearIcon: string = "close-circle-line";
 
-  @Prop() collapseTags: boolean;
+  @Prop() collapseTags: boolean = false;
 
-  @Prop() collapseTagsTooltip: boolean;
+  @Prop() collapseTagsTooltip: boolean = false;
 
   @Prop() debounce: number = 300;
 
-  @Prop() disabled: boolean = undefined;
+  @Prop() disabled?: boolean = undefined;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop() filterable: boolean;
+  @Prop() filterable: boolean = false;
 
   @State() filtering: boolean = false;
 
-  @Prop({ mutable: true }) filterMethod: (
+  @Prop({ mutable: true }) filterMethod?: (
     node: CascaderNode,
     keyword: string
   ) => boolean;
 
   @Event({ eventName: "zFocus", bubbles: false })
-  focusEvent: EventEmitter<FocusEvent>;
+  focusEvent?: EventEmitter<FocusEvent>;
 
   @Event({ eventName: "zRemoveTag", bubbles: false })
-  removeTagEvent: EventEmitter<
+  removeTagEvent?: EventEmitter<
     CascaderNodeValue | CascaderNodePathValue
   >;
 
@@ -98,9 +98,9 @@ export class ZaneCascader {
 
   @Prop() maxCollapseTags: number = 1;
 
-  @Prop() maxCollapseTagsTooltipHeight: number | string;
+  @Prop() maxCollapseTagsTooltipHeight?: number | string;
 
-  @Prop({ mutable: true }) value: CascaderValue | null;
+  @Prop({ mutable: true }) value?: CascaderValue;
 
   @Prop() options: CascaderOption[] = [];
 
@@ -118,7 +118,13 @@ export class ZaneCascader {
 
   @Prop() popperTheme: string = "cascader";
 
-  @State() popperVisible: boolean = false;
+  @Prop() popperOptions: Props['popperOptions'] = {};
+
+  @Prop() popperBoxClass?: string;
+
+  @Prop() popperContentClass?: string;
+
+  @State() popperVisible?: boolean = undefined;
 
   @State() searchKeyword: string = "";
 
@@ -132,7 +138,7 @@ export class ZaneCascader {
 
   @Prop() showPrefix: boolean = true;
 
-  @Prop() size: ComponentSize;
+  @Prop() size?: ComponentSize;
 
   @Prop() tagType: "primary" | "success" | "info" | "warning" | "danger" =
     "info";
@@ -143,54 +149,54 @@ export class ZaneCascader {
 
   @Prop() validateEvent: boolean = true;
 
-  @Prop() valueOnClear: string | number | boolean | Function | null = undefined;
+  @Prop() valueOnClear?: string | number | boolean | Function | null = undefined;
 
   @Event({ eventName: "zBlur", bubbles: false })
-  blurEvent: EventEmitter<FocusEvent>;
+  blurEvent?: EventEmitter<FocusEvent>;
 
   @Event({ eventName: "zClear", bubbles: false })
-  clearEvent: EventEmitter<void>;
+  clearEvent?: EventEmitter<void>;
 
   @Event({ eventName: "zChange", bubbles: false })
-  changeEvent: EventEmitter<CascaderValue>;
+  changeEvent?: EventEmitter<CascaderValue>;
 
   @Event({ eventName: "zCompositionEnd", bubbles: false })
-  compositionendEvent: EventEmitter<CompositionEvent>;
+  compositionendEvent?: EventEmitter<CompositionEvent>;
 
   @Event({ eventName: "zCompositionStart", bubbles: false })
-  compositionstartEvent: EventEmitter<CompositionEvent>;
+  compositionstartEvent?: EventEmitter<CompositionEvent>;
 
   @Event({ eventName: "zCompositionUpdate", bubbles: false })
-  compositionupdateEvent: EventEmitter<CompositionEvent>;
+  compositionupdateEvent?: EventEmitter<CompositionEvent>;
 
   @Event({ eventName: "zVisibleChange", bubbles: false })
-  visibleChangeEvent: EventEmitter<boolean>;
+  visibleChangeEvent?: EventEmitter<boolean>;
 
   @Event({ eventName: "zExpandChange", bubbles: false })
-  expandChangeEvent: EventEmitter<CascaderNodePathValue>;
+  expandChangeEvent?: EventEmitter<CascaderNodePathValue>;
 
-  @Prop() wrapperStyle: Record<string, string>;
+  @Prop() wrapperStyle?: Record<string, string>;
 
-  @Prop() renderLabel: RenderLabel;
+  @Prop() renderLabel?: RenderLabel;
 
-  @Prop() renderTags: (
+  @Prop() renderTags?: (
     tags: Tag[],
     deleteTag: (tag: Tag) => void
   ) => HTMLElement;
 
-  @Prop() renderSuggestion: (suggestion) => HTMLElement;
+  @Prop() renderSuggestion?: (suggestions: CascaderNode[]) => HTMLElement;
 
   @Prop() beforeFilter: (value: string) => boolean | Promise<any> = () => true;
 
-  @State() realSize: ComponentSize;
+  @State() realSize?: ComponentSize;
 
-  @State() tagSize: ComponentSize;
+  @State() tagSize?: ComponentSize;
 
   @State() collapseTagList: Tag[] = [];
 
   @State() showTagList: Tag[] = [];
 
-  @State() isDisabled: boolean;
+  @State() isDisabled: boolean = false;
 
   @State() isComposing: boolean = false;
 
@@ -198,35 +204,35 @@ export class ZaneCascader {
 
   @State() presentText: string = "";
 
-  @State() checkedNodes: CascaderNode[] = undefined;
+  @State() checkedNodes?: CascaderNode[] = undefined;
 
-  private formContext: ReactiveObject<FormContext>;
+  private formContext?: ReactiveObject<FormContext>;
 
-  private formItemContext: ReactiveObject<FormItemContext>;
+  private formItemContext?: ReactiveObject<FormItemContext>;
 
-  private configProviderContext: ReactiveObject<ConfigProviderContext>;
+  private configProviderContext?: ReactiveObject<ConfigProviderContext>;
 
-  private cascaderPanelRef: HTMLZaneCascaderPanelElement;
+  private cascaderPanelRef?: HTMLZaneCascaderPanelElement;
 
   private inputInitialHeight = 0;
 
-  private inputRef: HTMLZaneInputElement;
+  private inputRef?: HTMLZaneInputElement;
 
-  private suggestionPanel: HTMLZaneScrollbarElement;
+  private suggestionPanel?: HTMLZaneScrollbarElement;
 
-  private tagTooltipRef: HTMLZaneTippyElement;
+  private tagTooltipRef?: HTMLZaneTippyElement;
 
-  private tagWrapper: HTMLElement;
+  private tagWrapper?: HTMLElement;
 
-  private tooltipRef: HTMLZaneTippyElement;
+  private tooltipRef?: HTMLZaneTippyElement;
 
-  private wrapperRef: HTMLElement;
+  private wrapperRef?: HTMLElement;
 
-  private hasPrefixSlot: boolean;
+  private hasPrefixSlot: boolean = false;
 
-  private hasHeaderSlot: boolean;
+  private hasHeaderSlot: boolean = false;
 
-  private hasFooterSlot: boolean;
+  private hasFooterSlot: boolean = false;
 
   componentWillLoad() {
     this.hasPrefixSlot = !!this.el.querySelector('[slot="prefix"]');
@@ -269,8 +275,8 @@ export class ZaneCascader {
   }
 
   componentDidLoad() {
-    const inputInnerHeight = this.getInputInnerHeight(this.inputRef);
-    this.inputInitialHeight = this.inputRef.offsetHeight || inputInnerHeight;
+    const inputInnerHeight = this.getInputInnerHeight(this.inputRef!);
+    this.inputInitialHeight = this.inputRef!.offsetHeight || inputInnerHeight;
 
   }
 
@@ -311,7 +317,7 @@ export class ZaneCascader {
   handleWatchRealSize() {
     this.tagSize = this.realSize === "small" ? "small" : "default";
     nextFrame(() => {
-      this.inputInitialHeight = this.getInputInnerHeight(this.inputRef) || this.inputInitialHeight;
+      this.inputInitialHeight = this.getInputInnerHeight(this.inputRef!) || this.inputInitialHeight;
     });
   }
 
@@ -411,23 +417,25 @@ export class ZaneCascader {
     return (
       <Host>
         <zane-tippy
+          appendTo={document.body}
           arrow={false}
           hideOnClick={false}
           interactive={true}
-          offset={[0, 1]}
+          maxWidth={''}
+          boxClass={this.popperBoxClass || ns.b('tippy-box')}
+          contentClass={this.popperContentClass || ns.b('tippy-content')}
           onClickOutside={this.handleClickOutside}
           onZHide={this.handleHide}
           placement={this.placement}
           ref={(el) => (this.tooltipRef = el)}
           theme={this.popperTheme}
-          maxWidth=""
+          popperOptions={this.popperOptions}
+          role="cascader"
           trigger="manual"
         >
           <div
             class={cascaderKls}
-            onBlur={this.handleBlur}
             onClick={this.handleClick}
-            onFocus={this.handleFocus}
             onKeyDown={this.handleKeyDown}
             onMouseEnter={() => (this.inputHover = true)}
             onMouseLeave={() => (this.inputHover = false)}
@@ -438,6 +446,8 @@ export class ZaneCascader {
             <zane-input
               class={ns.is("focus", this.isFocused)}
               disabled={this.isDisabled}
+              onBlur={this.handleBlur}
+              onFocus={this.handleFocus}
               onZCompositionEnd={this.handleCompositionEnd}
               onZCompositionStart={this.handleCompositionStart}
               onZCompositionUpdate={this.handleCompositionUpdate}
@@ -562,8 +572,10 @@ export class ZaneCascader {
                     }
                     onInput={
                       (e) => {
-                        this.searchInputValue = e.data;
-                        this.handleInput(e.data, e as InputEvent)
+                        if (e.data) {
+                          this.searchInputValue = e.data;
+                          this.handleInput(e.data, e as InputEvent);
+                        }
                       }
                     }
                     onClick={this.handleSearchInputClick}
@@ -701,16 +713,16 @@ export class ZaneCascader {
   private deleteTag = (tag: Tag) => {
     const node = tag.node as CascaderNode;
     node.doCheck(false);
-    this.cascaderPanelRef.calculateCheckedValue();
-    this.removeTagEvent.emit(node.valueByOption);
+    this.cascaderPanelRef?.calculateCheckedValue();
+    this.removeTagEvent?.emit(node.valueByOption);
   };
 
   private handleBlur = async (event: FocusEvent) => {
     const isFocusInsideTooltipContent =
-      await this.tooltipRef.isFocusInsideContent(event);
+      await this.tooltipRef?.isFocusInsideContent(event);
 
     const isFocusInsideTagTooltipContent =
-      await this.tagTooltipRef.isFocusInsideContent(event);
+      await this.tagTooltipRef?.isFocusInsideContent(event);
 
     const cancelBlur =
       isFocusInsideTooltipContent || isFocusInsideTagTooltipContent;
@@ -718,14 +730,14 @@ export class ZaneCascader {
     if (
       this.isDisabled ||
       (event.relatedTarget &&
-        this.wrapperRef.contains(event.relatedTarget as Node)) ||
+        this.wrapperRef?.contains(event.relatedTarget as Node)) ||
       cancelBlur
     ) {
       return;
     }
 
     this.isFocused = false;
-    this.blurEvent.emit(event);
+    this.blurEvent?.emit(event);
     if (this.validateEvent) {
       this.formItemContext?.value
         .validate("blur")
@@ -735,33 +747,34 @@ export class ZaneCascader {
 
   private handleClear = async (event: MouseEvent) => {
     event.stopPropagation();
-    await this.cascaderPanelRef.clearCheckedNodes();
+    await this.cascaderPanelRef?.clearCheckedNodes();
     if (!this.popperVisible && this.filterable) {
       this.syncPresentTextValue();
     }
     this.togglePopperVisible(false);
-    this.clearEvent.emit();
+    this.clearEvent?.emit();
   };
 
-  private handleClick = (event: Event) => {
+  private handleClick = (event: MouseEvent) => {
+    event.stopPropagation();
     this.togglePopperVisible(
       !this.filterable || this.props.multiple ? undefined : true
     );
-    if (
-      this.isDisabled ||
-      isFocusable(event.target as HTMLElement) ||
-      (this.wrapperRef.contains(document.activeElement) &&
-        this.wrapperRef !== document.activeElement)
-    ) {
-      return;
-    }
+    // if (
+    //   this.isDisabled ||
+    //   isFocusable(event.target as HTMLElement) ||
+    //   (this.wrapperRef?.contains(document.activeElement) &&
+    //     this.wrapperRef !== document.activeElement)
+    // ) {
+    //   return;
+    // }
 
-    this.inputRef.focus();
+    // this.inputRef?.focus();
   };
 
   private handleExpandChange = (e: CustomEvent<CascaderNodePathValue>) => {
     this.updatePopperPosition();
-    this.expandChangeEvent.emit(e.detail);
+    this.expandChangeEvent?.emit(e.detail);
   };
 
   private handlePanelClose = () => {
@@ -774,9 +787,9 @@ export class ZaneCascader {
     e: CustomEvent<CascaderValue | undefined | null>
   ) => {
     this.value = e.detail ?? this.getValueOnClear();
-    this.checkedNodes = this.cascaderPanelRef.checkedNodes;
+    this.checkedNodes = this.cascaderPanelRef?.checkedNodes;
 
-    this.changeEvent.emit(cloneDeep(this.value));
+    this.changeEvent?.emit(cloneDeep(this.value));
 
     if (this.validateEvent) {
       this.formItemContext?.value
@@ -798,7 +811,7 @@ export class ZaneCascader {
 
   private handleCompositionEnd = (event: CustomEvent<CompositionEvent> | CompositionEvent) => {
     const e = event instanceof CompositionEvent ? event : event.detail;
-    this.compositionendEvent.emit(e);
+    this.compositionendEvent?.emit(e);
     if (this.isComposing) {
       this.isComposing = false;
       nextFrame(() => {
@@ -810,13 +823,13 @@ export class ZaneCascader {
 
   private handleCompositionStart = (event: CustomEvent<CompositionEvent> | CompositionEvent) => {
     const e = event instanceof CompositionEvent ? event : event.detail;
-    this.compositionstartEvent.emit(e);
+    this.compositionstartEvent?.emit(e);
     this.isComposing = true;
   };
 
   private handleCompositionUpdate = (event: CustomEvent<CompositionEvent> | CompositionEvent) => {
     const e = event instanceof CompositionEvent ? event : event.detail;
-    this.compositionupdateEvent.emit(e);
+    this.compositionupdateEvent?.emit(e);
     const text = (event.target as HTMLInputElement)?.value;
     const lastCharacter = text[text.length - 1] || "";
     this.isComposing = !isKorean(lastCharacter);
@@ -843,10 +856,10 @@ export class ZaneCascader {
 
   private handleFocus = async (event: FocusEvent) => {
     const isFocusInsideTooltipContent =
-      await this.tooltipRef.isFocusInsideContent(event);
+      await this.tooltipRef?.isFocusInsideContent(event);
 
     const isFocusInsideTagTooltipContent =
-      await this.tagTooltipRef.isFocusInsideContent(event);
+      await this.tagTooltipRef?.isFocusInsideContent(event);
 
     const cancelFocus =
       isFocusInsideTooltipContent || isFocusInsideTagTooltipContent;
@@ -856,7 +869,7 @@ export class ZaneCascader {
     }
 
     this.isFocused = true;
-    this.focusEvent.emit(event);
+    this.focusEvent?.emit(event);
     if (this.validateEvent) {
       this.formItemContext?.value
         .validate("blur")
@@ -869,7 +882,7 @@ export class ZaneCascader {
   };
 
   private handleInput = (val: string, e?: InputEvent) => {
-    this.tooltipRef.isVisible().then((visible: boolean) => {
+    this.tooltipRef?.isVisible().then((visible: boolean) => {
       if (!visible) {
         this.togglePopperVisible(true);
       }
@@ -883,7 +896,7 @@ export class ZaneCascader {
   };
 
   private focusFirstNode = () => {
-    let firstNode!: HTMLElement
+    let firstNode: HTMLElement | null | undefined = null;
 
     if (this.filtering && this.suggestionPanel) {
       firstNode = this.suggestionPanel?.querySelector(
@@ -996,7 +1009,7 @@ export class ZaneCascader {
 
     if (visible !== this.popperVisible) {
       this.popperVisible = visible;
-      this.inputRef.getInput().then((nativeInput: HTMLInputElement) => {
+      this.inputRef?.getInput().then((nativeInput: HTMLInputElement) => {
         nativeInput?.setAttribute("aria-expanded", `${visible}`);
       });
 
@@ -1004,7 +1017,7 @@ export class ZaneCascader {
         this.updatePopperPosition();
         if (this.cascaderPanelRef) {
           nextFrame(() => {
-            this.cascaderPanelRef.scrollToExpandingNode();
+            this.cascaderPanelRef?.scrollToExpandingNode();
           });
         }
       } else {
@@ -1015,7 +1028,7 @@ export class ZaneCascader {
 
   private updatePopperPosition = () => {
     nextFrame(() => {
-      this.tooltipRef.updateTippyProps();
+      this.tooltipRef?.updateTippyProps();
     });
   };
 
@@ -1026,7 +1039,7 @@ export class ZaneCascader {
     }
 
     if (this.suggestionPanel) {
-      const suggestionList: HTMLElement = this.suggestionPanel.querySelector(
+      const suggestionList: HTMLElement | null = this.suggestionPanel.querySelector(
         `.${ns.e("suggestion-list")}`
       );
       if (suggestionList) {
@@ -1035,13 +1048,13 @@ export class ZaneCascader {
     }
 
     if (this.inputInitialHeight === 0) {
-      this.inputInitialHeight = this.getInputInnerHeight(this.inputRef);
+      this.inputInitialHeight = this.getInputInnerHeight(this.inputRef!);
     }
 
     if (this.tagWrapper) {
       nextFrame(() => {
 
-        const { offsetHeight } = this.tagWrapper;
+        const { offsetHeight = 0 } = this.tagWrapper || {};
         const height =
           this.tags.length > 0
             ? `${Math.max(offsetHeight, this.inputInitialHeight)}px`
@@ -1086,7 +1099,7 @@ export class ZaneCascader {
     const res = nodes?.filter((node) => {
       if (node.isDisabled) return false;
       node.calcText(this.showAllLevels, this.separator);
-      return this.filterMethod(node, this.searchKeyword);
+      return this.filterMethod?.(node, this.searchKeyword);
     });
 
     if (this.props.multiple) {

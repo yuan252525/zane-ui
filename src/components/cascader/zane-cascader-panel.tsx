@@ -39,9 +39,9 @@ const ns = useNamespace("cascader");
   tag: "zane-cascader-panel",
 })
 export class ZaneCascaderPanel {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({ mutable: true }) value: CascaderValue | null;
+  @Prop({ mutable: true }) value?: CascaderValue;
 
   @Prop() options: CascaderOption[] = [];
 
@@ -49,20 +49,20 @@ export class ZaneCascaderPanel {
 
   @Prop() border: boolean = true;
 
-  @Prop() renderLabel: RenderLabel;
+  @Prop() renderLabel?: RenderLabel;
 
   @Prop({ mutable: true }) checkedNodes: CascaderNode[] = [];
 
   @Event({ eventName: "zChange", bubbles: false })
-  changeEvent: EventEmitter<
+  changeEvent?: EventEmitter<
     CascaderValue | undefined | null
   >;
 
   @Event({ eventName: "zClose", bubbles: false })
-  closeEvent: EventEmitter<void>;
+  closeEvent?: EventEmitter<void>;
 
   @Event({ eventName: "zExpandChange", bubbles: false })
-  expandChangeEvent: EventEmitter<CascaderNodePathValue>;
+  expandChangeEvent?: EventEmitter<CascaderNodePathValue>;
 
   @Method()
   async clearCheckedNodes() {
@@ -70,14 +70,14 @@ export class ZaneCascaderPanel {
     await this.calculateCheckedValue();
     this.menus = this.menus.slice(0, 1);
     this.expandingNode = undefined;
-    this.expandChangeEvent.emit([]);
+    this.expandChangeEvent?.emit([]);
   }
 
-  @State() config: CascaderConfig;
+  @State() config?: CascaderConfig;
 
-  @State() expandingNode: CascaderNode;
+  @State() expandingNode?: CascaderNode;
 
-  @State() isHoverMenu: boolean;
+  @State() isHoverMenu: boolean = false;
 
   @State() initialLoaded: boolean = true;
 
@@ -89,15 +89,15 @@ export class ZaneCascaderPanel {
 
   @State() menuList: HTMLZaneCascaderMenuElement[] = [];
 
-  private store: Store;
+  private store?: Store;
 
   private manualChecked = false;
 
   private lazyLoad = (
-    node: CascaderNode,
-    cb: (dataList: CascaderOption[]) => void
+    node?: CascaderNode,
+    cb?: (dataList: CascaderOption[]) => void
   ) => {
-    const cfg = this.config
+    const cfg: CascaderConfig = this.config!;
     node! = node || new CascaderNode({}, cfg, undefined, true)
     node.loading = true
 
@@ -140,7 +140,7 @@ export class ZaneCascaderPanel {
     if (this.expandingNode?.uid !== newExpandingNode?.uid) {
       this.expandingNode = node
       this.menus = newMenus
-      !silent && this.expandChangeEvent.emit(node?.pathValues || []);
+      !silent && this.expandChangeEvent?.emit(node?.pathValues || []);
     }
   };
 
@@ -157,18 +157,18 @@ export class ZaneCascaderPanel {
     checked: boolean,
     emitClose: boolean = true
   ) {
-    const { checkStrictly, multiple } = this.config;
+    const { checkStrictly, multiple } = this.config!;
     const oldNode = this.checkedNodes[0];
     this.manualChecked = true;
 
     !multiple && oldNode?.doCheck(false)
     node.doCheck(checked)
     this.calculateCheckedValue();
-    emitClose && !multiple && !checkStrictly && this.closeEvent.emit();
+    emitClose && !multiple && !checkStrictly && this.closeEvent?.emit();
     !emitClose && !multiple && this.expandParentNode(node)
   };
 
-  private context: ReactiveObject<CascaderPanelContext>;
+  private context?: ReactiveObject<CascaderPanelContext>;
 
   @Watch("props")
   updateConfig() {
@@ -180,20 +180,20 @@ export class ZaneCascaderPanel {
 
   @Watch("isHoverMenu")
   handleIsHoverMenuChange() {
-    this.context.value.isHoverMenu = this.isHoverMenu;
+    this.context!.value.isHoverMenu = this.isHoverMenu;
   }
 
   @Watch("checkedNodes")
   handleCheckedNodesChange() {
-    this.context.value.checkedNodes = this.checkedNodes;
+    this.context!.value.checkedNodes = this.checkedNodes;
   }
 
   @Watch('config')
-  handleConfigChange(newVal, oldVal) {
+  handleConfigChange(newVal: CascaderConfig, oldVal: CascaderConfig) {
     if (!isEqual(newVal, oldVal)) {
       this.initStore();
     }
-    this.context.value.config = this.config;
+    this.context!.value.config = this.config as CascaderConfig;
   }
 
   @Watch('options')
@@ -208,16 +208,16 @@ export class ZaneCascaderPanel {
   }
 
   @Watch('checkedValue')
-  handleCheckedValueChange(newVal) {
+  handleCheckedValueChange(newVal: CascaderValue | undefined) {
     if (!isEqual(newVal, this.value)) {
       this.value = newVal;
-      this.changeEvent.emit(newVal);
+      this.changeEvent?.emit(newVal);
     }
   }
 
   @Watch('expandingNode')
   handleExpandingNodeChange() {
-    this.context.value.expandingNode = this.expandingNode;
+    this.context!.value.expandingNode = this.expandingNode!;
   }
 
   @Method()
@@ -229,14 +229,14 @@ export class ZaneCascaderPanel {
     const cfg = this.config
 
     this.manualChecked = false;
-    this.store = new Store(this.options, cfg);
+    this.store = new Store(this.options, cfg!);
     this.menus = [this.store.getNodes()];
 
-    if (cfg.lazy && isEmpty(this.options)) {
+    if (cfg!.lazy && isEmpty(this.options)) {
       this.initialLoaded = false;
       this.lazyLoad(undefined, (list) => {
         if (list) {
-          this.store = new Store(list, cfg);
+          this.store = new Store(list, cfg!);
           this.menus = [this.store.getNodes()];
         }
         this.initialLoaded = true;
@@ -248,7 +248,7 @@ export class ZaneCascaderPanel {
   }
 
   private syncCheckedValue = (loaded = false, forced = false) => {
-    const { lazy, multiple, checkStrictly } = this.config;
+    const { lazy, multiple, checkStrictly } = this.config!;
     const leafOnly = !checkStrictly;
 
     if (
@@ -293,7 +293,7 @@ export class ZaneCascaderPanel {
     newCheckedNodes: CascaderNode[],
     reserveExpandingState = true
   ) => {
-    const { checkStrictly } = this.config;
+    const { checkStrictly } = this.config!;
     const oldNodes = this.checkedNodes;
     const newNodes = newCheckedNodes.filter(
       (node) => !!node && (checkStrictly || node.isLeaf)
@@ -404,7 +404,7 @@ export class ZaneCascaderPanel {
         {this.menus.map((menu, index) => (
           <zane-cascader-menu
             key={index}
-            ref={(el) => (this.menuList[index] = el)}
+            ref={(el) => (this.menuList[index] = el!)}
             index={index}
             nodes={[...menu]}
           >
@@ -448,10 +448,10 @@ export class ZaneCascaderPanel {
 
   @Method()
   async calculateCheckedValue() {
-    const { checkStrictly, multiple } = this.config;
+    const { checkStrictly, multiple } = this.config!;
     const oldNodes = this.checkedNodes;
     const newNodes = await this.getCheckedNodes(!checkStrictly)!;
-    const nodes = sortByOriginalOrder(oldNodes, newNodes);
+    const nodes = sortByOriginalOrder(oldNodes, newNodes ?? []);
     const values = nodes.map((node) => node.valueByOption);
     this.checkedNodes = nodes;
     this.checkedValue = multiple ? values : (values[0] ?? null);

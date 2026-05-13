@@ -35,33 +35,33 @@ const ns = useNamespace("form-item");
   tag: "zane-form-item",
 })
 export class ZaneFormItem {
-  @Element() el: HTMLElement;
+  @Element() el: HTMLElement | undefined;
 
-  @Prop() label: string;
+  @Prop() label: string | undefined;
 
-  @Prop() labelWidth: string | number;
+  @Prop() labelWidth: string | number | undefined;
 
   @Prop() labelPosition: "left" | "right" | "top" | "" = "";
 
-  @Prop() prop: FormItemProp;
+  @Prop() prop: FormItemProp | undefined;
 
-  @Prop() required: boolean = undefined;
+  @Prop() required: boolean | undefined = undefined;
 
-  @Prop() rules: Arrayable<FormItemRule>;
+  @Prop() rules: Arrayable<FormItemRule> | undefined;
 
-  @Prop() error: string;
+  @Prop() error: string | undefined;
 
-  @Prop() validateStatus: FormItemValidateState;
+  @Prop() validateStatus: FormItemValidateState = '';
 
-  @Prop() for: string;
+  @Prop() for: string | undefined;
 
-  @Prop() inlineMessage: boolean;
+  @Prop() inlineMessage: boolean = false;
 
-  @Prop() showMessage: boolean;
+  @Prop() showMessage: boolean = false;
 
-  @Prop() size: ComponentSize;
+  @Prop() size: ComponentSize | undefined;
 
-  @State() labelId: string;
+  @State() labelId: string | undefined;
 
   @State() hasLabel = false;
 
@@ -69,7 +69,7 @@ export class ZaneFormItem {
 
   @State() inputIds: string[] = [];
 
-  @State() isGroup: boolean;
+  @State() isGroup: boolean | undefined;
 
   @State() fieldValue: any;
 
@@ -77,19 +77,19 @@ export class ZaneFormItem {
 
   @State() validateState: FormItemValidateState = "";
 
-  @State() validateEnabled: boolean;
+  @State() validateEnabled: boolean = false;
 
-  @State() propString: string;
+  @State() propString: string | undefined;
 
-  private formItemRef: HTMLDivElement;
+  private formItemRef: HTMLDivElement | undefined;
 
-  private formContext: ReactiveObject<FormContext>;
+  private formContext: ReactiveObject<FormContext> | undefined;
 
-  private parentFormItemContext: ReactiveObject<FormItemContext>;
+  private parentFormItemContext: ReactiveObject<FormItemContext> | undefined;
 
-  private configProviderContext: ReactiveObject<ConfigProviderContext>;
+  private configProviderContext: ReactiveObject<ConfigProviderContext> | undefined;
 
-  private context: ReactiveObject<FormItemContext>;
+  private context: ReactiveObject<FormItemContext> | undefined;
 
   private isResettingField = false;
 
@@ -189,7 +189,7 @@ export class ZaneFormItem {
   };
 
   private doValidate = async (rules: RuleItem[]): Promise<true> => {
-    const modelName = this.propString;
+    const modelName = this.propString || '';
     const validator = new AsyncValidator({
       [modelName]: rules,
     });
@@ -248,7 +248,7 @@ export class ZaneFormItem {
     if (formRules && this.prop) {
       const _rules = get<Arrayable<FormItemRule> | undefined>(
         formRules,
-        this.prop
+        this.prop as any
       );
       if (_rules) {
         rules.push(...castArray(_rules));
@@ -279,18 +279,18 @@ export class ZaneFormItem {
   }
 
   componentWillLoad() {
-    this.formContext = getFormContext(this.el);
-    this.parentFormItemContext = getFormItemContext(this.el);
-    this.configProviderContext = getConfigProviderContext(this.el);
+    this.formContext = getFormContext(this.el!);
+    this.parentFormItemContext = getFormItemContext(this.el!);
+    this.configProviderContext = getConfigProviderContext(this.el!);
 
     const id = state.idInjection.current++;
     this.labelId = `${ns.namespace}-id-${state.idInjection.prefix}-${id}`;
 
-    this.hasLabel = !!(this.label || this.el.querySelector('[slot="label"]'));
+    this.hasLabel = !!(this.label || this.el?.querySelector('[slot="label"]'));
     this.labelFor =
       this.for ?? (this.inputIds.length === 1 ? this.inputIds[0] : undefined);
     this.isGroup = !this.labelFor && this.hasLabel;
-    this.fieldValue = get(this.formContext?.value.model, this.prop);
+    this.fieldValue = get(this.formContext?.value.model, this.prop as any);
     this.validateEnabled = this.getNormalizedRules().length > 0;
     this.propString = this.prop
       ? Array.isArray(this.prop)
@@ -326,20 +326,20 @@ export class ZaneFormItem {
       resetField: this.resetField,
       clearValidate: this.clearValidate,
     });
-    formItemContexts.set(this.el, this.context);
+    formItemContexts.set(this.el!, this.context);
   }
 
   componentDidLoad() {
     if (this.prop) {
-      this.formContext?.value.addField(this.context);
+      this.formContext?.value.addField(this.context!);
       this.initialValue = clone(this.fieldValue);
     }
   }
 
   disconnectedCallback() {
-    if (!hasRawParent(this.el)) {
-      formItemContexts.delete(this.el);
-      this.context = null;
+    if (!hasRawParent(this.el!)) {
+      formItemContexts.delete(this.el!);
+      this.context = undefined;
     }
   }
 
