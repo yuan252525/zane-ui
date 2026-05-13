@@ -52,6 +52,124 @@
 </head>
 
 <body>
+  <!-- Timeline 时间线 -->
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">基础用法</h4>
+    <zane-timeline>
+      <zane-timeline-item timestamp="2018-04-15">Event start</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-13">Approved</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-11">Success</zane-timeline-item>
+    </zane-timeline>
+  </div>
+
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">自定义节点样式</h4>
+    <zane-timeline>
+      <zane-timeline-item timestamp="2018-04-12 20:46" size="large" type="primary" icon="more-fill">Custom
+        icon</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-03 20:46" color="#0bbd87">Custom color</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-03 20:46" size="large">Custom size</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-03 20:46" type="primary" hollow>Custom hollow</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-03 20:46">Default node</zane-timeline-item>
+    </zane-timeline>
+  </div>
+
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">自定义时间戳 (placement="top")</h4>
+    <zane-timeline>
+      <zane-timeline-item timestamp="2018/4/12" placement="top">
+        <div
+          style="border: 1px solid var(--zane-border-color); padding: 12px; border-radius: 4px; background: var(--zane-bg-color-blank);">
+          <h4 style="margin: 0 0 8px 0; font-size: 14px;">Update Github template</h4>
+          <p style="margin: 0; font-size: 13px; color: var(--zane-text-color-secondary);">Tom committed 2018/4/12 20:46
+          </p>
+        </div>
+      </zane-timeline-item>
+      <zane-timeline-item timestamp="2018/4/3" placement="top">
+        <div
+          style="border: 1px solid var(--zane-border-color); padding: 12px; border-radius: 4px; background: var(--zane-bg-color-blank);">
+          <h4 style="margin: 0 0 8px 0; font-size: 14px;">Update Github template</h4>
+          <p style="margin: 0; font-size: 13px; color: var(--zane-text-color-secondary);">Tom committed 2018/4/3 20:46
+          </p>
+        </div>
+      </zane-timeline-item>
+      <zane-timeline-item timestamp="2018/4/2" placement="top">
+        <div
+          style="border: 1px solid var(--zane-border-color); padding: 12px; border-radius: 4px; background: var(--zane-bg-color-blank);">
+          <h4 style="margin: 0 0 8px 0; font-size: 14px;">Update Github template</h4>
+          <p style="margin: 0; font-size: 13px; color: var(--zane-text-color-secondary);">Tom committed 2018/4/2 20:46
+          </p>
+        </div>
+      </zane-timeline-item>
+    </zane-timeline>
+  </div>
+
+
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">反向排序 (reverse)</h4>
+    <div style="margin-bottom: 16px;">
+      <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+        <input type="checkbox" id="timelineReverseBtn" /> reverse
+      </label>
+    </div>
+    <zane-timeline id="timelineReverse">
+      <zane-timeline-item timestamp="2018-04-15">Event start</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-13">Approved</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-11">Success</zane-timeline-item>
+    </zane-timeline>
+  </div>
+
+
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">自定义 dot 节点插槽</h4>
+    <zane-timeline>
+      <zane-timeline-item timestamp="2018-04-15">
+        <span slot="dot"
+          style="display:flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#409eff;color:#fff;font-size:10px;position:absolute;left:-2px;">
+          <zane-icon name="check-line" style="font-size:10px;"></zane-icon>
+        </span>
+        Custom dot with icon
+      </zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-13">
+        <span slot="dot"
+          style="display:flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#f56c6c;color:#fff;font-size:12px;position:absolute;left:-3px;">
+          <zane-icon name="close-line"></zane-icon>
+        </span>
+        Custom red dot
+      </zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-11">
+        <span slot="dot" style="display:flex;align-items:center;justify-content:center;position:absolute;left:-5px;">
+          <img src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+            style="width:22px;height:22px;border-radius:50%;" />
+        </span>
+        Custom image dot
+      </zane-timeline-item>
+    </zane-timeline>
+  </div>
+
+ 
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">所有类型节点 (type)</h4>
+    <zane-timeline>
+      <zane-timeline-item timestamp="Primary" type="primary">Primary</zane-timeline-item>
+      <zane-timeline-item timestamp="Success" type="success">Success</zane-timeline-item>
+      <zane-timeline-item timestamp="Warning" type="warning">Warning</zane-timeline-item>
+      <zane-timeline-item timestamp="Danger" type="danger">Danger</zane-timeline-item>
+      <zane-timeline-item timestamp="Info" type="info">Info</zane-timeline-item>
+      <zane-timeline-item timestamp="Default">Default</zane-timeline-item>
+    </zane-timeline>
+  </div>
+   
+
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">隐藏时间戳 (hideTimestamp)</h4>
+    <zane-timeline>
+      <zane-timeline-item hide-timestamp>No timestamp 1</zane-timeline-item>
+      <zane-timeline-item hide-timestamp>No timestamp 2</zane-timeline-item>
+      <zane-timeline-item hide-timestamp>No timestamp 3</zane-timeline-item>
+    </zane-timeline>
+  </div>
+
   <!-- Pagination 分页 -->
   <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
     <h4 style="margin-bottom: 16px;">完整分页布局</h4>
@@ -736,7 +854,17 @@
         paginationLog.textContent = `当前页: 1, 每页条数: ${e.detail}`;
       });
     }
+
+    // ---- start timeline reverse demo ----
+    var timelineReverseEl = document.querySelector('#timelineReverse');
+    var reverseBtnEl = document.querySelector('#timelineReverseBtn');
+    if (timelineReverseEl && reverseBtnEl) {
+      reverseBtnEl.addEventListener('change', function (e) {
+        timelineReverseEl.reverse = e.target.checked;
+      });
+    }
   </script>
+
 </body>
 
 </html>

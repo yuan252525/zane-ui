@@ -33,6 +33,8 @@ import { Option as Option1, OptionType, SelectContext as SelectContext1, SelectP
 import { Placement } from "@popperjs/core";
 import { SliderContext } from "./components/slider/types";
 import { SplitterRootContext } from "./components/splitter/types";
+import { TimelineMode } from "./components/timeline/zane-timeline";
+import { TimelineItemPlacement, TimelineItemSize, TimelineItemType } from "./components/timeline/zane-timeline-item";
 import { TransferDataItem, TransferDirection, TransferFormat, TransferKey, TransferPropsAlias } from "./components/transfer/types";
 import { CheckedInfo, FilterMethod, TreeContext, TreeData, TreeKey, TreeNode, TreeNodeData, TreeOptionProps } from "./components/tree/types";
 import { FilterMethod as FilterMethod1, TagTooltipProps as TagTooltipProps1, TreeData as TreeData1, TreeKey as TreeKey1, TreeNode as TreeNode1, TreeNodeData as TreeNodeData1, TreeSelectOptionProps, TreeSelectOptionValue } from "./components/tree-select/types";
@@ -66,6 +68,8 @@ export { Option as Option1, OptionType, SelectContext as SelectContext1, SelectP
 export { Placement } from "@popperjs/core";
 export { SliderContext } from "./components/slider/types";
 export { SplitterRootContext } from "./components/splitter/types";
+export { TimelineMode } from "./components/timeline/zane-timeline";
+export { TimelineItemPlacement, TimelineItemSize, TimelineItemType } from "./components/timeline/zane-timeline-item";
 export { TransferDataItem, TransferDirection, TransferFormat, TransferKey, TransferPropsAlias } from "./components/transfer/types";
 export { CheckedInfo, FilterMethod, TreeContext, TreeData, TreeKey, TreeNode, TreeNodeData, TreeOptionProps } from "./components/tree/types";
 export { FilterMethod as FilterMethod1, TagTooltipProps as TagTooltipProps1, TreeData as TreeData1, TreeKey as TreeKey1, TreeNode as TreeNode1, TreeNodeData as TreeNodeData1, TreeSelectOptionProps, TreeSelectOptionValue } from "./components/tree-select/types";
@@ -2485,6 +2489,64 @@ export namespace Components {
         "size": string;
         "vertical": boolean;
     }
+    interface ZaneTimeline {
+        /**
+          * 时间线与内容的相对位置
+          * @default 'start'
+         */
+        "mode": TimelineMode;
+        /**
+          * 是否逆序排序
+          * @default false
+         */
+        "reverse": boolean;
+    }
+    interface ZaneTimelineItem {
+        /**
+          * 是否垂直居中
+          * @default false
+         */
+        "center": boolean;
+        /**
+          * 节点颜色
+          * @default ''
+         */
+        "color": string;
+        /**
+          * 是否隐藏时间戳
+          * @default false
+         */
+        "hideTimestamp": boolean;
+        /**
+          * 是否空心点
+          * @default false
+         */
+        "hollow": boolean;
+        /**
+          * 自定义图标名称（@zanejs/icons）
+         */
+        "icon"?: string;
+        /**
+          * 时间戳位置
+          * @default 'bottom'
+         */
+        "placement": TimelineItemPlacement;
+        /**
+          * 节点尺寸
+          * @default 'normal'
+         */
+        "size": TimelineItemSize;
+        /**
+          * 时间戳内容
+          * @default ''
+         */
+        "timestamp": string;
+        /**
+          * 节点类型
+          * @default ''
+         */
+        "type": TimelineItemType;
+    }
     interface ZaneTippy {
         /**
           * @default tippy.defaultProps.allowHTML
@@ -4491,6 +4553,18 @@ declare global {
         prototype: HTMLZaneThumbElement;
         new (): HTMLZaneThumbElement;
     };
+    interface HTMLZaneTimelineElement extends Components.ZaneTimeline, HTMLStencilElement {
+    }
+    var HTMLZaneTimelineElement: {
+        prototype: HTMLZaneTimelineElement;
+        new (): HTMLZaneTimelineElement;
+    };
+    interface HTMLZaneTimelineItemElement extends Components.ZaneTimelineItem, HTMLStencilElement {
+    }
+    var HTMLZaneTimelineItemElement: {
+        prototype: HTMLZaneTimelineItemElement;
+        new (): HTMLZaneTimelineItemElement;
+    };
     interface HTMLZaneTippyElementEventMap {
         "afterUpdate": [Instance<Props>, Partial<Props>];
         "beforeUpdate": [Instance<Props>, Partial<Props>];
@@ -4928,6 +5002,8 @@ declare global {
         "zane-tag": HTMLZaneTagElement;
         "zane-text": HTMLZaneTextElement;
         "zane-thumb": HTMLZaneThumbElement;
+        "zane-timeline": HTMLZaneTimelineElement;
+        "zane-timeline-item": HTMLZaneTimelineItemElement;
         "zane-tippy": HTMLZaneTippyElement;
         "zane-todo-list": HTMLZaneTodoListElement;
         "zane-transfer": HTMLZaneTransferElement;
@@ -7434,6 +7510,64 @@ declare namespace LocalJSX {
         "size"?: string;
         "vertical"?: boolean;
     }
+    interface ZaneTimeline {
+        /**
+          * 时间线与内容的相对位置
+          * @default 'start'
+         */
+        "mode"?: TimelineMode;
+        /**
+          * 是否逆序排序
+          * @default false
+         */
+        "reverse"?: boolean;
+    }
+    interface ZaneTimelineItem {
+        /**
+          * 是否垂直居中
+          * @default false
+         */
+        "center"?: boolean;
+        /**
+          * 节点颜色
+          * @default ''
+         */
+        "color"?: string;
+        /**
+          * 是否隐藏时间戳
+          * @default false
+         */
+        "hideTimestamp"?: boolean;
+        /**
+          * 是否空心点
+          * @default false
+         */
+        "hollow"?: boolean;
+        /**
+          * 自定义图标名称（@zanejs/icons）
+         */
+        "icon"?: string;
+        /**
+          * 时间戳位置
+          * @default 'bottom'
+         */
+        "placement"?: TimelineItemPlacement;
+        /**
+          * 节点尺寸
+          * @default 'normal'
+         */
+        "size"?: TimelineItemSize;
+        /**
+          * 时间戳内容
+          * @default ''
+         */
+        "timestamp"?: string;
+        /**
+          * 节点类型
+          * @default ''
+         */
+        "type"?: TimelineItemType;
+    }
     interface ZaneTippy {
         /**
           * @default tippy.defaultProps.allowHTML
@@ -8454,6 +8588,8 @@ declare namespace LocalJSX {
         "zane-tag": ZaneTag;
         "zane-text": ZaneText;
         "zane-thumb": ZaneThumb;
+        "zane-timeline": ZaneTimeline;
+        "zane-timeline-item": ZaneTimelineItem;
         "zane-tippy": ZaneTippy;
         "zane-todo-list": ZaneTodoList;
         "zane-transfer": ZaneTransfer;
@@ -8553,6 +8689,8 @@ declare module "@stencil/core" {
             "zane-tag": LocalJSX.ZaneTag & JSXBase.HTMLAttributes<HTMLZaneTagElement>;
             "zane-text": LocalJSX.ZaneText & JSXBase.HTMLAttributes<HTMLZaneTextElement>;
             "zane-thumb": LocalJSX.ZaneThumb & JSXBase.HTMLAttributes<HTMLZaneThumbElement>;
+            "zane-timeline": LocalJSX.ZaneTimeline & JSXBase.HTMLAttributes<HTMLZaneTimelineElement>;
+            "zane-timeline-item": LocalJSX.ZaneTimelineItem & JSXBase.HTMLAttributes<HTMLZaneTimelineItemElement>;
             "zane-tippy": LocalJSX.ZaneTippy & JSXBase.HTMLAttributes<HTMLZaneTippyElement>;
             "zane-todo-list": LocalJSX.ZaneTodoList & JSXBase.HTMLAttributes<HTMLZaneTodoListElement>;
             "zane-transfer": LocalJSX.ZaneTransfer & JSXBase.HTMLAttributes<HTMLZaneTransferElement>;

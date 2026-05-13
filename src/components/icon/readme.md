@@ -43,6 +43,7 @@
  - [zane-splitter-bar](../splitter)
  - [zane-switch](../switch)
  - [zane-tag](../tag)
+ - [zane-timeline-item](../timeline)
  - [zane-transfer](../transfer)
  - [zane-tree-node](../tree)
  - [zane-upload](../upload)
@@ -70,6 +71,7 @@ graph TD;
   zane-splitter-bar --> zane-icon
   zane-switch --> zane-icon
   zane-tag --> zane-icon
+  zane-timeline-item --> zane-icon
   zane-transfer --> zane-icon
   zane-tree-node --> zane-icon
   zane-upload --> zane-icon
