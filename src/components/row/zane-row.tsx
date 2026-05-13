@@ -13,18 +13,18 @@ const ns = useNamespace('row');
   tag: 'zane-row',
 })
 export class ZaneRow {
-  @Prop({ attribute: 'align', reflect: true })
+  @Prop()
   align?: RowAlignType;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({ attribute: 'gutter', reflect: true })
+  @Prop()
   gutter: number = 0;
 
-  @Prop({ attribute: 'justify', reflect: true })
+  @Prop()
   justify: RowJustifyType = 'start';
 
-  private context: ReactiveObject<RowContext>;
+  private context?: ReactiveObject<RowContext>;
 
   @Method()
   async getContext() {
@@ -41,7 +41,7 @@ export class ZaneRow {
   disconnectedCallback() {
     if (!hasRawParent(this.el)) {
       rowContexts.delete(this.el);
-      this.context = null;
+      this.context = undefined;
     }
   }
 

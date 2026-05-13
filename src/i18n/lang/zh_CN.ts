@@ -39,5 +39,10 @@ export const zh_CN: I18nResource = {
   },
   tree: {
     emptyText: '暂无数据'
-  }
+  },
+  carousel: {
+    leftArrow: '上一张幻灯片',
+    rightArrow: '下一张幻灯片',
+    indicator: '幻灯片切换至索引 {index}',
+  },
 };

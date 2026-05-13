@@ -17,19 +17,19 @@ const SVG_END_WITH_FLAG = '|svg'
 export class ZaneIcon {
   @Prop() iconClass: string = '';
 
-  @Prop() color: string;
+  @Prop() color?: string;
 
-  @Prop({attribute: 'prefix'}) zPrefix: string;
+  @Prop({attribute: 'prefix'}) zPrefix?: string;
 
-  @Prop() name: string;
+  @Prop() name?: string;
 
-  @Prop() rotate: number;
+  @Prop() rotate?: number;
 
-  @Prop() size: string;
+  @Prop() size?: string;
 
-  @Prop() spin: boolean;
+  @Prop() spin: boolean = false;
 
-  @Prop() styles: object;
+  @Prop() styles?: object;
 
   @State() isSvgIcon: boolean = false;
 
@@ -52,6 +52,7 @@ export class ZaneIcon {
         : `${this.size}px`;
       style.width = value;
       style.height = value;
+      style.fontSize = value;
     }
 
     if (this.rotate && Number.isSafeInteger(this.rotate)) {
@@ -76,6 +77,8 @@ export class ZaneIcon {
         <IconName
           class={classNames(ns.b(), this.iconClass, ns.is('spin', this.spin))}
           style={style}
+          width={style.width}
+          height={style.height}
         ></IconName>
     );
   }

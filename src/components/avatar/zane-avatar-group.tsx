@@ -27,8 +27,6 @@ export class ZaneAvatarGroup {
 
   @Prop() maxCollapseAvatars: number = 1;
 
-  @Prop() effect: 'dark' | 'light' = 'light';
-
   @Prop() placement: Props['placement'] = 'bottom-start';
 
   @Prop() popperTheme: string | undefined;

@@ -992,6 +992,19 @@ $badge: map.merge(
   $badge
 );
 
+// Progress
+$progress: () !default;
+$progress: map.merge(
+  (
+    'color': getCssVar('color-primary'),
+    'success-color': getCssVar('color-success'),
+    'exception-color': getCssVar('color-danger'),
+    'warning-color': getCssVar('color-warning'),
+    'text-color': getCssVar('text-color-regular'),
+  ),
+  $progress
+);
+
 // Card
 $card: () !default;
 $card: map.merge(
