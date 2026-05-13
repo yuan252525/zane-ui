@@ -2423,7 +2423,7 @@ export namespace Components {
         /**
           * @default tippy.defaultProps.arrow
          */
-        "arrow": string | boolean | DocumentFragment | SVGElement;
+        "arrow": string | boolean | SVGElement | DocumentFragment;
         /**
           * @default ''
          */
@@ -7117,7 +7117,7 @@ declare namespace LocalJSX {
         /**
           * @default tippy.defaultProps.arrow
          */
-        "arrow"?: string | boolean | DocumentFragment | SVGElement;
+        "arrow"?: string | boolean | SVGElement | DocumentFragment;
         /**
           * @default ''
          */
