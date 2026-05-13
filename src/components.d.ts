@@ -24,7 +24,6 @@ import { ValidateFieldsError } from "async-validator";
 import { ForwardRefContext, ForwardRefSetter } from "./components/forward-ref/types";
 import { InputAutoSize, InputMode, InputModelModifiers, InputType } from "./components/input/types";
 import { MentionOption, MentionOptionProps } from "./components/mention/types";
-import { MenuMode, MenuTrigger } from "./components/menu/types";
 import { PaginationPageSize } from "./components/pagination/types";
 import { RadioGroupContext, RadioOption, RadioOptionProp } from "./components/radio/types";
 import { RowAlignType, RowContext, RowJustifyType } from "./components/row/types";
@@ -58,7 +57,6 @@ export { ValidateFieldsError } from "async-validator";
 export { ForwardRefContext, ForwardRefSetter } from "./components/forward-ref/types";
 export { InputAutoSize, InputMode, InputModelModifiers, InputType } from "./components/input/types";
 export { MentionOption, MentionOptionProps } from "./components/mention/types";
-export { MenuMode, MenuTrigger } from "./components/menu/types";
 export { PaginationPageSize } from "./components/pagination/types";
 export { RadioGroupContext, RadioOption, RadioOptionProp } from "./components/radio/types";
 export { RowAlignType, RowContext, RowJustifyType } from "./components/row/types";
@@ -1539,64 +1537,6 @@ export namespace Components {
         "options": MentionOption[];
         "selectHoverOption": () => Promise<void>;
     }
-    interface ZaneMenu {
-        /**
-          * @default ''
-         */
-        "activeTextColor": string;
-        /**
-          * @default ''
-         */
-        "backgroundColor": string;
-        /**
-          * @default false
-         */
-        "collapse": boolean;
-        /**
-          * @default ''
-         */
-        "defaultActive": string;
-        /**
-          * @default []
-         */
-        "defaultOpeneds": string[];
-        /**
-          * @default false
-         */
-        "ellipsis": boolean;
-        /**
-          * @default 'click'
-         */
-        "menuTrigger": MenuTrigger;
-        /**
-          * @default 'vertical'
-         */
-        "mode": MenuMode;
-        /**
-          * @default ''
-         */
-        "textColor": string;
-        /**
-          * @default false
-         */
-        "uniqueOpened": boolean;
-    }
-    interface ZaneMenuItem {
-        /**
-          * @default false
-         */
-        "disabled": boolean;
-        /**
-          * @default ''
-         */
-        "index": string;
-    }
-    interface ZaneMenuItemGroup {
-        /**
-          * @default ''
-         */
-        "groupTitle": string;
-    }
     interface ZaneOnlyChild {
         /**
           * 是否启用调试模式，启用后会输出警告信息
@@ -2459,28 +2399,6 @@ export namespace Components {
         "resizable": boolean;
         "size": number | string;
         "uuid": string;
-    }
-    interface ZaneSubMenu {
-        /**
-          * @default false
-         */
-        "disabled": boolean;
-        /**
-          * @default 300
-         */
-        "hideTimeout": number;
-        /**
-          * @default ''
-         */
-        "index": string;
-        /**
-          * @default ''
-         */
-        "popperClass": string;
-        /**
-          * @default 300
-         */
-        "showTimeout": number;
     }
     interface ZaneSwitch {
         "activeActionIcon": string;
@@ -3473,10 +3391,6 @@ export interface ZaneMentionDropdownCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLZaneMentionDropdownElement;
 }
-export interface ZaneMenuCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLZaneMenuElement;
-}
 export interface ZanePaginationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLZanePaginationElement;
@@ -4188,37 +4102,6 @@ declare global {
         prototype: HTMLZaneMentionDropdownElement;
         new (): HTMLZaneMentionDropdownElement;
     };
-    interface HTMLZaneMenuElementEventMap {
-        "zSelect": { index: string; indexPath: string[] };
-        "zOpen": { index: string; indexPath: string[] };
-        "zClose": { index: string; indexPath: string[] };
-    }
-    interface HTMLZaneMenuElement extends Components.ZaneMenu, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLZaneMenuElementEventMap>(type: K, listener: (this: HTMLZaneMenuElement, ev: ZaneMenuCustomEvent<HTMLZaneMenuElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLZaneMenuElementEventMap>(type: K, listener: (this: HTMLZaneMenuElement, ev: ZaneMenuCustomEvent<HTMLZaneMenuElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-    }
-    var HTMLZaneMenuElement: {
-        prototype: HTMLZaneMenuElement;
-        new (): HTMLZaneMenuElement;
-    };
-    interface HTMLZaneMenuItemElement extends Components.ZaneMenuItem, HTMLStencilElement {
-    }
-    var HTMLZaneMenuItemElement: {
-        prototype: HTMLZaneMenuItemElement;
-        new (): HTMLZaneMenuItemElement;
-    };
-    interface HTMLZaneMenuItemGroupElement extends Components.ZaneMenuItemGroup, HTMLStencilElement {
-    }
-    var HTMLZaneMenuItemGroupElement: {
-        prototype: HTMLZaneMenuItemGroupElement;
-        new (): HTMLZaneMenuItemGroupElement;
-    };
     interface HTMLZaneOnlyChildElement extends Components.ZaneOnlyChild, HTMLStencilElement {
     }
     var HTMLZaneOnlyChildElement: {
@@ -4559,12 +4442,6 @@ declare global {
     var HTMLZaneSplitterPanelElement: {
         prototype: HTMLZaneSplitterPanelElement;
         new (): HTMLZaneSplitterPanelElement;
-    };
-    interface HTMLZaneSubMenuElement extends Components.ZaneSubMenu, HTMLStencilElement {
-    }
-    var HTMLZaneSubMenuElement: {
-        prototype: HTMLZaneSubMenuElement;
-        new (): HTMLZaneSubMenuElement;
     };
     interface HTMLZaneSwitchElementEventMap {
         "zChange": boolean | string | number;
@@ -5022,9 +4899,6 @@ declare global {
         "zane-main": HTMLZaneMainElement;
         "zane-mention": HTMLZaneMentionElement;
         "zane-mention-dropdown": HTMLZaneMentionDropdownElement;
-        "zane-menu": HTMLZaneMenuElement;
-        "zane-menu-item": HTMLZaneMenuItemElement;
-        "zane-menu-item-group": HTMLZaneMenuItemGroupElement;
         "zane-only-child": HTMLZaneOnlyChildElement;
         "zane-pagination": HTMLZanePaginationElement;
         "zane-progress": HTMLZaneProgressElement;
@@ -5050,7 +4924,6 @@ declare global {
         "zane-splitter": HTMLZaneSplitterElement;
         "zane-splitter-bar": HTMLZaneSplitterBarElement;
         "zane-splitter-panel": HTMLZaneSplitterPanelElement;
-        "zane-sub-menu": HTMLZaneSubMenuElement;
         "zane-switch": HTMLZaneSwitchElement;
         "zane-tag": HTMLZaneTagElement;
         "zane-text": HTMLZaneTextElement;
@@ -6570,67 +6443,6 @@ declare namespace LocalJSX {
          */
         "options"?: MentionOption[];
     }
-    interface ZaneMenu {
-        /**
-          * @default ''
-         */
-        "activeTextColor"?: string;
-        /**
-          * @default ''
-         */
-        "backgroundColor"?: string;
-        /**
-          * @default false
-         */
-        "collapse"?: boolean;
-        /**
-          * @default ''
-         */
-        "defaultActive"?: string;
-        /**
-          * @default []
-         */
-        "defaultOpeneds"?: string[];
-        /**
-          * @default false
-         */
-        "ellipsis"?: boolean;
-        /**
-          * @default 'click'
-         */
-        "menuTrigger"?: MenuTrigger;
-        /**
-          * @default 'vertical'
-         */
-        "mode"?: MenuMode;
-        "onZClose"?: (event: ZaneMenuCustomEvent<{ index: string; indexPath: string[] }>) => void;
-        "onZOpen"?: (event: ZaneMenuCustomEvent<{ index: string; indexPath: string[] }>) => void;
-        "onZSelect"?: (event: ZaneMenuCustomEvent<{ index: string; indexPath: string[] }>) => void;
-        /**
-          * @default ''
-         */
-        "textColor"?: string;
-        /**
-          * @default false
-         */
-        "uniqueOpened"?: boolean;
-    }
-    interface ZaneMenuItem {
-        /**
-          * @default false
-         */
-        "disabled"?: boolean;
-        /**
-          * @default ''
-         */
-        "index"?: string;
-    }
-    interface ZaneMenuItemGroup {
-        /**
-          * @default ''
-         */
-        "groupTitle"?: string;
-    }
     interface ZaneOnlyChild {
         /**
           * 是否启用调试模式，启用后会输出警告信息
@@ -7534,28 +7346,6 @@ declare namespace LocalJSX {
         "resizable"?: boolean;
         "size"?: number | string;
         "uuid"?: string;
-    }
-    interface ZaneSubMenu {
-        /**
-          * @default false
-         */
-        "disabled"?: boolean;
-        /**
-          * @default 300
-         */
-        "hideTimeout"?: number;
-        /**
-          * @default ''
-         */
-        "index"?: string;
-        /**
-          * @default ''
-         */
-        "popperClass"?: string;
-        /**
-          * @default 300
-         */
-        "showTimeout"?: number;
     }
     interface ZaneSwitch {
         "activeActionIcon"?: string;
@@ -8635,9 +8425,6 @@ declare namespace LocalJSX {
         "zane-main": ZaneMain;
         "zane-mention": ZaneMention;
         "zane-mention-dropdown": ZaneMentionDropdown;
-        "zane-menu": ZaneMenu;
-        "zane-menu-item": ZaneMenuItem;
-        "zane-menu-item-group": ZaneMenuItemGroup;
         "zane-only-child": ZaneOnlyChild;
         "zane-pagination": ZanePagination;
         "zane-progress": ZaneProgress;
@@ -8663,7 +8450,6 @@ declare namespace LocalJSX {
         "zane-splitter": ZaneSplitter;
         "zane-splitter-bar": ZaneSplitterBar;
         "zane-splitter-panel": ZaneSplitterPanel;
-        "zane-sub-menu": ZaneSubMenu;
         "zane-switch": ZaneSwitch;
         "zane-tag": ZaneTag;
         "zane-text": ZaneText;
@@ -8738,9 +8524,6 @@ declare module "@stencil/core" {
             "zane-main": LocalJSX.ZaneMain & JSXBase.HTMLAttributes<HTMLZaneMainElement>;
             "zane-mention": LocalJSX.ZaneMention & JSXBase.HTMLAttributes<HTMLZaneMentionElement>;
             "zane-mention-dropdown": LocalJSX.ZaneMentionDropdown & JSXBase.HTMLAttributes<HTMLZaneMentionDropdownElement>;
-            "zane-menu": LocalJSX.ZaneMenu & JSXBase.HTMLAttributes<HTMLZaneMenuElement>;
-            "zane-menu-item": LocalJSX.ZaneMenuItem & JSXBase.HTMLAttributes<HTMLZaneMenuItemElement>;
-            "zane-menu-item-group": LocalJSX.ZaneMenuItemGroup & JSXBase.HTMLAttributes<HTMLZaneMenuItemGroupElement>;
             "zane-only-child": LocalJSX.ZaneOnlyChild & JSXBase.HTMLAttributes<HTMLZaneOnlyChildElement>;
             "zane-pagination": LocalJSX.ZanePagination & JSXBase.HTMLAttributes<HTMLZanePaginationElement>;
             "zane-progress": LocalJSX.ZaneProgress & JSXBase.HTMLAttributes<HTMLZaneProgressElement>;
@@ -8766,7 +8549,6 @@ declare module "@stencil/core" {
             "zane-splitter": LocalJSX.ZaneSplitter & JSXBase.HTMLAttributes<HTMLZaneSplitterElement>;
             "zane-splitter-bar": LocalJSX.ZaneSplitterBar & JSXBase.HTMLAttributes<HTMLZaneSplitterBarElement>;
             "zane-splitter-panel": LocalJSX.ZaneSplitterPanel & JSXBase.HTMLAttributes<HTMLZaneSplitterPanelElement>;
-            "zane-sub-menu": LocalJSX.ZaneSubMenu & JSXBase.HTMLAttributes<HTMLZaneSubMenuElement>;
             "zane-switch": LocalJSX.ZaneSwitch & JSXBase.HTMLAttributes<HTMLZaneSwitchElement>;
             "zane-tag": LocalJSX.ZaneTag & JSXBase.HTMLAttributes<HTMLZaneTagElement>;
             "zane-text": LocalJSX.ZaneText & JSXBase.HTMLAttributes<HTMLZaneTextElement>;

@@ -41,7 +41,6 @@
  - [zane-select](../select)
  - [zane-select-virtual](../select-virtual)
  - [zane-splitter-bar](../splitter)
- - [zane-sub-menu](../menu)
  - [zane-switch](../switch)
  - [zane-tag](../tag)
  - [zane-transfer](../transfer)
@@ -69,7 +68,6 @@ graph TD;
   zane-select --> zane-icon
   zane-select-virtual --> zane-icon
   zane-splitter-bar --> zane-icon
-  zane-sub-menu --> zane-icon
   zane-switch --> zane-icon
   zane-tag --> zane-icon
   zane-transfer --> zane-icon
