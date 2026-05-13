@@ -1545,6 +1545,60 @@ export namespace Components {
          */
         "strict": boolean;
     }
+    interface ZaneProgress {
+        /**
+          * @default ''
+         */
+        "color": string;
+        /**
+          * @default 3
+         */
+        "duration": number;
+        /**
+          * @default false
+         */
+        "indeterminate": boolean;
+        /**
+          * @default 0
+         */
+        "percentage": number;
+        /**
+          * @default true
+         */
+        "showText": boolean;
+        /**
+          * @default ''
+         */
+        "status": '' | 'success' | 'exception' | 'warning';
+        /**
+          * @default false
+         */
+        "striped": boolean;
+        /**
+          * @default false
+         */
+        "stripedFlow": boolean;
+        /**
+          * @default 'round'
+         */
+        "strokeLinecap": 'butt' | 'round' | 'square';
+        /**
+          * @default 6
+         */
+        "strokeWidth": number;
+        /**
+          * @default false
+         */
+        "textInside": boolean;
+        /**
+          * @default 'line'
+         */
+        "type": 'line' | 'circle' | 'dashboard';
+        /**
+          * @default 126
+         */
+        "width": number;
+    }
     interface ZaneRadio {
         /**
           * @default undefined
@@ -1945,7 +1999,7 @@ export namespace Components {
         "hoveringIndex": number;
         "isItemDisabled": (value: any, selected: any) => Promise<boolean>;
         "isItemHovering": (target: any) => Promise<boolean>;
-        "isItemSelected": (value: any, target: any) => Promise<boolean>;
+        "isItemSelected": (value: any, target: any) => Promise<any>;
         "loading": boolean;
         "resetScrollTop": () => Promise<void>;
         "width": number;
@@ -3885,6 +3939,12 @@ declare global {
         prototype: HTMLZaneOnlyChildElement;
         new (): HTMLZaneOnlyChildElement;
     };
+    interface HTMLZaneProgressElement extends Components.ZaneProgress, HTMLStencilElement {
+    }
+    var HTMLZaneProgressElement: {
+        prototype: HTMLZaneProgressElement;
+        new (): HTMLZaneProgressElement;
+    };
     interface HTMLZaneRadioElementEventMap {
         "zChange": string | number | boolean | undefined;
     }
@@ -4607,6 +4667,7 @@ declare global {
         "zane-mention": HTMLZaneMentionElement;
         "zane-mention-dropdown": HTMLZaneMentionDropdownElement;
         "zane-only-child": HTMLZaneOnlyChildElement;
+        "zane-progress": HTMLZaneProgressElement;
         "zane-radio": HTMLZaneRadioElement;
         "zane-radio-button": HTMLZaneRadioButtonElement;
         "zane-radio-group": HTMLZaneRadioGroupElement;
@@ -6157,6 +6218,60 @@ declare namespace LocalJSX {
           * @default false
          */
         "strict"?: boolean;
+    }
+    interface ZaneProgress {
+        /**
+          * @default ''
+         */
+        "color"?: string;
+        /**
+          * @default 3
+         */
+        "duration"?: number;
+        /**
+          * @default false
+         */
+        "indeterminate"?: boolean;
+        /**
+          * @default 0
+         */
+        "percentage"?: number;
+        /**
+          * @default true
+         */
+        "showText"?: boolean;
+        /**
+          * @default ''
+         */
+        "status"?: '' | 'success' | 'exception' | 'warning';
+        /**
+          * @default false
+         */
+        "striped"?: boolean;
+        /**
+          * @default false
+         */
+        "stripedFlow"?: boolean;
+        /**
+          * @default 'round'
+         */
+        "strokeLinecap"?: 'butt' | 'round' | 'square';
+        /**
+          * @default 6
+         */
+        "strokeWidth"?: number;
+        /**
+          * @default false
+         */
+        "textInside"?: boolean;
+        /**
+          * @default 'line'
+         */
+        "type"?: 'line' | 'circle' | 'dashboard';
+        /**
+          * @default 126
+         */
+        "width"?: number;
     }
     interface ZaneRadio {
         /**
@@ -7894,6 +8009,7 @@ declare namespace LocalJSX {
         "zane-mention": ZaneMention;
         "zane-mention-dropdown": ZaneMentionDropdown;
         "zane-only-child": ZaneOnlyChild;
+        "zane-progress": ZaneProgress;
         "zane-radio": ZaneRadio;
         "zane-radio-button": ZaneRadioButton;
         "zane-radio-group": ZaneRadioGroup;
@@ -7989,6 +8105,7 @@ declare module "@stencil/core" {
             "zane-mention": LocalJSX.ZaneMention & JSXBase.HTMLAttributes<HTMLZaneMentionElement>;
             "zane-mention-dropdown": LocalJSX.ZaneMentionDropdown & JSXBase.HTMLAttributes<HTMLZaneMentionDropdownElement>;
             "zane-only-child": LocalJSX.ZaneOnlyChild & JSXBase.HTMLAttributes<HTMLZaneOnlyChildElement>;
+            "zane-progress": LocalJSX.ZaneProgress & JSXBase.HTMLAttributes<HTMLZaneProgressElement>;
             "zane-radio": LocalJSX.ZaneRadio & JSXBase.HTMLAttributes<HTMLZaneRadioElement>;
             "zane-radio-button": LocalJSX.ZaneRadioButton & JSXBase.HTMLAttributes<HTMLZaneRadioButtonElement>;
             "zane-radio-group": LocalJSX.ZaneRadioGroup & JSXBase.HTMLAttributes<HTMLZaneRadioGroupElement>;

@@ -50,6 +50,21 @@
     </style>
   </head>
   <body>
+    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); display: flex; flex-direction: column; gap: 16px; max-width: 600px">
+      <zane-progress percentage="50" status="exception" ></zane-progress>
+      <zane-progress text-inside="true" stroke-width="22" percentage="80" status="warning"></zane-progress>
+      <zane-progress percentage="100" striped="true" ></zane-progress>
+      <zane-progress percentage="70" striped="true" striped-flow="true" color="#e6a23c" ></zane-progress>
+      <zane-progress percentage="100" status="success" indeterminate="true" duration="5"></zane-progress>
+    </div>
+    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); display: flex; gap: 40px; align-items: center">
+      <zane-progress type="circle" percentage="70" status="warning" ></zane-progress>
+      <zane-progress type="circle" percentage="25" ></zane-progress>
+      <zane-progress type="dashboard" id="dashboard1"></zane-progress>
+      <zane-progress type="circle" percentage="80" width="80">
+        <span slot="text" class="custom-value">80%</span>
+      </zane-progress>
+    </div>
     <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
       <zane-descriptions
         title="Width vertical list"
@@ -333,6 +348,24 @@
     </div>
 
     <script>
+
+      // ------ start progress ----------------------------------
+      var dashboardColors = [
+        { color: '#f56c6c', percentage: 20 },
+        { color: '#e6a23c', percentage: 40 },
+        { color: '#5cb87a', percentage: 60 },
+        { color: '#1989fa', percentage: 80 },
+        { color: '#6f7ad3', percentage: 100 },
+      ]
+
+      var dashboard1El = document.querySelector('#dashboard1')
+      if (dashboard1El) {
+        dashboard1El.percentage = 20
+        dashboard1El.color = dashboardColors
+        setInterval(() => {
+          dashboard1El.percentage = dashboard1El.percentage % 100 + 10
+        }, 500)
+      }
 
       // ------ start mention ----------------------------------
       var mentionEl = document.querySelector('zane-mention');
