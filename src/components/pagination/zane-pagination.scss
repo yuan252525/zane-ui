@@ -1,0 +1,468 @@
+@use 'sass:map';
+@use '../../styles/config' as *;
+@use '../../styles/mixins/var' as *;
+@use '../../styles/mixins/bem' as *;
+@use '../../styles/mixins/function' as *;
+@use '../../global/theme/vars/color/light' as *;
+@use '../../global/theme/vars/component' as *;
+
+// ===== CSS Variables (对齐 Element Plus 默认值) =====
+
+$pagination: () !default;
+$pagination: map.merge(
+  (
+    'font-size': 14px,
+    'bg-color': getCssVar('fill-color-blank'),
+    'text-color': getCssVar('text-color-primary'),
+    'border-radius': 2px,
+    'button-color': getCssVar('text-color-primary'),
+    'button-width': 32px,
+    'button-height': 32px,
+    'button-disabled-color': getCssVar('text-color-placeholder'),
+    'button-disabled-bg-color': getCssVar('fill-color-blank'),
+    'button-bg-color': getCssVar('fill-color'),
+    'hover-color': getCssVar('color-primary'),
+    'font-size-small': 12px,
+    'button-width-small': 24px,
+    'button-height-small': 24px,
+    'button-width-large': 40px,
+    'button-height-large': 40px,
+    'item-gap': 16px,
+  ),
+  $pagination
+);
+
+// ===== Shared Button Mixin (prev / next / pager-li / more 共用) =====
+
+@mixin pagination-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: getCssVar('pagination', 'font-size');
+  min-width: getCssVar('pagination', 'button-width');
+  height: getCssVar('pagination', 'button-height');
+  line-height: getCssVar('pagination', 'button-height');
+  color: getCssVar('pagination', 'button-color');
+  background: getCssVar('pagination', 'bg-color');
+  padding: 0 4px;
+  border: none;
+  border-radius: getCssVar('pagination', 'border-radius');
+  cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
+  user-select: none;
+  transition: border-color 0.15s ease-in-out;
+
+  * {
+    pointer-events: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    color: getCssVar('pagination', 'hover-color');
+  }
+
+  &.is-active {
+    color: getCssVar('pagination', 'hover-color');
+    cursor: default;
+    font-weight: bold;
+
+    &.is-disabled {
+      font-weight: bold;
+      color: getCssVar('text-color-secondary');
+    }
+  }
+
+  &:disabled,
+  &.is-disabled {
+    color: getCssVar('pagination', 'button-disabled-color');
+    background-color: getCssVar('pagination', 'button-disabled-bg-color');
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 1px solid getCssVar('pagination', 'hover-color');
+    outline-offset: -1px;
+  }
+}
+
+// ===== Main Component (全部样式都在 b(pagination) 内) =====
+
+@include b(pagination) {
+  @include set-component-css-var('pagination', $pagination);
+
+  white-space: nowrap;
+  color: getCssVar('pagination', 'text-color');
+  font-size: getCssVar('pagination', 'font-size');
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+
+  // ========== Prev / Next Buttons ==========
+  // TSX: <button class="btn-prev"> / <button class="btn-next">
+  .btn-prev,
+  .btn-next {
+    @include pagination-button;
+
+    zane-icon {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      width: inherit;
+    }
+  }
+
+  .btn-prev {
+    margin-left: getCssVar('pagination', 'item-gap');
+  }
+
+  // ========== Pager (<ul class="zane-pagination__pager">) ==========
+  // TSX: renderPager 返回 <ul class={ns.e('pager')}>
+  @include e(pager) {
+    user-select: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    display: flex;
+    align-items: center;
+
+    // 页码数字 <li> — 对齐 Element Plus 的 li 样式
+    li {
+      @include pagination-button;
+    }
+  }
+
+  // ========== More 省略号 (<li class="zane-pagination__more">) ==========
+  // TSX: ns.e('more') → zane-pagination__more
+  @include e(more) {
+    @include pagination-button;
+
+    zane-icon {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      width: inherit;
+    }
+  }
+
+  // ========== Sizes selector ==========
+  @include e(sizes) {
+    margin-left: getCssVar('pagination', 'item-gap');
+    font-weight: normal;
+    color: getCssVar('text-color-regular');
+
+    &[disabled='true'] {
+      color: getCssVar('text-color-placeholder');
+    }
+
+    .zane-pagination__size-select {
+      appearance: none; // 隐藏默认下拉箭头
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      box-sizing: border-box;
+      width: 128px;
+      height: 28px;
+      padding: 0 24px 0 12px; /* 右侧留空放自定义箭头 */
+      margin: 0;
+      font-size: 14px;
+      font-weight: normal;
+      color: var(--zane-text-color-regular, #606266);
+      line-height: 26px;
+      outline: none;
+      border: 1px solid var(--zane-border-color, #dcdfe6);
+      border-radius: var(--zane-border-radius-base, 4px);
+      background-color: var(--zane-fill-color-blank, #fff);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath fill='%23c0c4cc' d='M831.872 340.864L512 652.672 192.128 340.864a30.592 30.592 0 0 0-42.752 0 29.12 29.12 0 0 0 0 41.664L489.568 714.88a30.592 30.592 0 0 0 42.752 0l340.096-332.352a29.12 29.12 0 0 0 0-41.664 30.592 30.592 0 0 0-42.752 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+
+      &:hover:not(:disabled) {
+        border-color: var(--zane-hover-border-color, #c0c4cc);
+      }
+
+      &:focus {
+        border-color: var(--zane-color-primary, #409eff);
+        box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.15);
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        background-color: var(--zane-fill-color-light, #f5f7fa);
+        border-color: var(--zane-border-color-lighter, #e4e7ed);
+        color: var(--zane-text-color-placeholder, #c0c4cc);
+      }
+
+      option {
+        font-weight: normal;
+      }
+    }
+  }
+
+  // ========== Total ==========
+  @include e(total) {
+    margin-left: getCssVar('pagination', 'item-gap');
+    font-weight: normal;
+    color: getCssVar('text-color-regular');
+
+    &[disabled='true'] {
+      color: getCssVar('text-color-placeholder');
+    }
+  }
+
+  // ========== Jumper 跳转 ==========
+  @include e(jump) {
+    display: inline-flex;
+    align-items: center;
+    margin-left: getCssVar('pagination', 'item-gap');
+    font-size: getCssVar('pagination', 'font-size');
+    font-weight: normal;
+    color: getCssVar('text-color-regular');
+    line-height: 1;
+    user-select: none;
+
+    &[disabled='true'] {
+      color: getCssVar('text-color-placeholder');
+
+      .#{$namespace}-pagination__editor {
+        cursor: not-allowed;
+        background-color: var(--zane-fill-color-light, #f5f7fa);
+        border-color: var(--zane-border-color-lighter, #e4e7ed);
+        color: var(--zane-text-color-placeholder, #c0c4cc);
+
+      }
+    }
+
+    @include e(editor) {
+      display: inline-block;
+      box-sizing: border-box;
+      width: 50px;
+      height: 28px;
+      padding: 0;
+      margin: 0 8px;
+      font-size: 14px;
+      font-weight: normal;
+      color: var(--zane-text-color-regular, #606266);
+      text-align: center;
+      vertical-align: top;
+      outline: none;
+      border: 1px solid var(--zane-border-color, #dcdfe6);
+      border-radius: var(--zane-border-radius-base, 4px);
+      transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
+                  box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
+                  background-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+      background: var(--zane-fill-color-blank, #fff);
+      line-height: 26px; /* 28px height minus 2x1px border */
+      -moz-appearance: textfield;
+
+      &::-webkit-inner-spin-button,
+      &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      &::placeholder {
+        color: var(--zane-text-color-placeholder, #c0c4cc);
+      }
+
+      &:hover:not(:disabled):not(:focus) {
+        border-color: var(--zane-hover-border-color, #c0c4cc);
+      }
+
+      &:focus {
+        border-color: var(--zane-color-primary, #409eff);
+        box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.15);
+      }
+
+      &::-moz-focus-inner {
+        border: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  // ========== Right wrapper (-> 后的内容靠右) ==========
+  @include e(rightwrapper) {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  // ========== First / Last child spacing ==========
+  & > * {
+    @include when(first) {
+      margin-left: 0 !important;
+    }
+    @include when(last) {
+      margin-right: 0 !important;
+    }
+  }
+
+  // ========== Background modifier ==========
+  @include when(background) {
+    .btn-prev,
+    .btn-next,
+    .#{$namespace}-pagination__pager li,
+    .#{$namespace}-pagination__more {
+      margin: 0 4px;
+      background-color: getCssVar('pagination', 'button-bg-color');
+
+      &:hover:not(:disabled):not(.is-disabled) {
+        color: getCssVar('pagination', 'hover-color');
+      }
+
+      &.is-active {
+        background-color: getCssVar('color-primary');
+        color: #fff;
+        cursor: default;
+
+        &.is-disabled {
+          color: getCssVar('text-color-secondary');
+          background-color: getCssVar('fill-color-dark');
+        }
+      }
+
+      &:disabled,
+      &.is-disabled {
+        color: getCssVar('text-color-placeholder');
+        background-color: getCssVar('disabled-bg-color');
+
+        &.is-active {
+          color: getCssVar('text-color-secondary');
+          background-color: getCssVar('fill-color-dark');
+        }
+      }
+    }
+
+    .btn-prev {
+      margin-left: getCssVar('pagination', 'item-gap');
+    }
+
+    // 背景模式下输入框与按钮风格统一
+    .#{$namespace}-pagination__editor {
+      background-color: var(--zane-pagination-button-bg-color, #e9ecef);
+      border-color: transparent;
+      color: var(--zane-text-color-regular, #606266);
+      width: 27px;
+      border-radius: 2px;
+      height: 27px;
+      margin-left: 5px;
+      margin-right: 5px;
+      &:hover:not(:disabled):not(:focus) {
+        background-color: var(--zane-pagination-hover-bg-color, #d9dce1);
+        border-color: transparent;
+      }
+
+      &:focus {
+        background: var(--zane-fill-color-blank, #fff);
+        border-color: var(--zane-color-primary, #409eff);
+        box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.15);
+      }
+
+      &:disabled {
+        background-color: var(--zane-disabled-bg-color, #e4e7ed);
+        color: var(--zane-text-color-placeholder, #c0c4cc);
+      }
+    }
+
+    // 背景模式下原生 select 与按钮风格统一
+    .zane-pagination__size-select {
+      background-color: var(--zane-pagination-button-bg-color, #e9ecef);
+      border-color: transparent;
+      border-radius: 2px;
+      color: #fff;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      padding-left: 8px;
+      padding-right: 8px; /* 留出足够空间给下拉箭头 */
+      background-position: right 10px center;
+
+      &:hover:not(:disabled):not(:focus) {
+        background-color: var(--zane-pagination-hover-bg-color, #d9dce1);
+        border-color: transparent;
+      }
+
+      &:focus {
+        background: var(--zane-fill-color-blank, #fff);
+        border-color: var(--zane-color-primary, #409eff);
+        box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.15);
+      }
+
+      &:disabled {
+        background-color: var(--zane-disabled-bg-color, #e4e7ed);
+        color: var(--zane-text-color-placeholder, #c0c4cc);
+      }
+    }
+  }
+
+  // ========== Small size modifier ==========
+  @include m(small) {
+    .btn-prev,
+    .btn-next,
+    .#{$namespace}-pagination__pager li,
+    .#{$namespace}-pagination__more {
+      height: getCssVar('pagination', 'button-height-small');
+      line-height: getCssVar('pagination', 'button-height-small');
+      min-width: getCssVar('pagination', 'button-width-small');
+    }
+
+    // small 尺寸下 editor 也缩小
+    .#{$namespace}-pagination__editor {
+      height: 24px;
+      line-height: 22px;
+      width: 42px;
+      font-size: 12px;
+      margin: 0 6px;
+    }
+
+    span:not([class*='suffix']),
+    button {
+      font-size: getCssVar('pagination', 'font-size-small');
+    }
+
+    .zane-pagination__size-select {
+      width: 100px;
+      height: 24px;
+      font-size: 12px;
+      line-height: 22px;
+      padding: 0 20px 0 8px;
+    }
+  }
+
+  // ========== Large size modifier ==========
+  @include m(large) {
+    .btn-prev,
+    .btn-next,
+    .#{$namespace}-pagination__pager li,
+    .#{$namespace}-pagination__more {
+      height: getCssVar('pagination', 'button-height-large');
+      line-height: getCssVar('pagination', 'button-height-large');
+      min-width: getCssVar('pagination', 'button-width-large');
+    }
+
+    .#{$namespace}-pagination__sizes zane-select .zane-input {
+      width: 160px;
+    }
+  }
+
+  // ========== Disabled modifier ==========
+  @include when(disabled) {
+    .btn-prev,
+    .btn-next,
+    .#{$namespace}-pagination__pager li,
+    .#{$namespace}-pagination__more,
+    .#{$namespace}-pagination__editor {
+      cursor: not-allowed;
+    }
+  }
+}
+.zane-pagination-jump{
+  margin-left: 10px;
+}
