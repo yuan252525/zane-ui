@@ -5,6 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { ServerToClientMessage } from "./components/a2ui/types";
+import { A2UiActionEvent } from "./components/a2ui/zane-a2ui";
 import { AutocompleteData, AutocompleteFetchFunc, AutocompleteFetchSuggestions } from "./components/autocomplete/types";
 import { AnyNormalFunction, Arrayable, Awaitable, ComponentSize } from "./types";
 import { Instance, Props } from "tippy.js";
@@ -40,6 +42,8 @@ import { CheckedInfo, FilterMethod, TreeContext, TreeData, TreeKey, TreeNode, Tr
 import { FilterMethod as FilterMethod1, TagTooltipProps as TagTooltipProps1, TreeData as TreeData1, TreeKey as TreeKey1, TreeNode as TreeNode1, TreeNodeData as TreeNodeData1, TreeSelectOptionProps, TreeSelectOptionValue } from "./components/tree-select/types";
 import { UploadChangeOptions, UploadFile, UploadListType, UploadRequestOptions } from "./components/upload/types";
 import { Alignment, GridItemKeyGetter, Indices, ItemSize } from "./components/virtual-list/types";
+export { ServerToClientMessage } from "./components/a2ui/types";
+export { A2UiActionEvent } from "./components/a2ui/zane-a2ui";
 export { AutocompleteData, AutocompleteFetchFunc, AutocompleteFetchSuggestions } from "./components/autocomplete/types";
 export { AnyNormalFunction, Arrayable, Awaitable, ComponentSize } from "./types";
 export { Instance, Props } from "tippy.js";
@@ -78,6 +82,27 @@ export { Alignment, GridItemKeyGetter, Indices, ItemSize } from "./components/vi
 export namespace Components {
     interface ZaneA2ui {
         /**
+          * Clear all surfaces and reset state.
+         */
+        "clear": () => Promise<void>;
+        /**
+          * Read data from the data model at the given path relative to a node.
+         */
+        "getData": (nodeId: string, path: string) => Promise<any>;
+        /**
+          * Get all current surfaces (for debugging/inspection).
+         */
+        "getSurfaces": () => Promise<ReadonlyMap<string, any>>;
+        /**
+          * @default []
+         */
+        "messages": ServerToClientMessage[];
+        /**
+          * Write data to the data model at the given path relative to a node.
+         */
+        "setData": (nodeId: string, path: string, value: any) => Promise<void>;
+        /**
+          * Identifier for the surface this instance renders
           * @default null
          */
         "surfaceId": string | null;
@@ -2471,11 +2496,14 @@ export namespace Components {
         "type": 'danger' | 'info' | 'primary' | 'success' | 'warning';
     }
     interface ZaneText {
-        "lineClamp": string;
+        "lineClamp"?: string;
         /**
           * @default ''
          */
         "size": ComponentSize;
+        /**
+          * @default false
+         */
         "truncated": boolean;
         /**
           * @default ''
@@ -3369,6 +3397,10 @@ export namespace Components {
         "wrapperClass": string;
     }
 }
+export interface ZaneA2uiCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLZaneA2uiElement;
+}
 export interface ZaneAutocompleteCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLZaneAutocompleteElement;
@@ -3558,7 +3590,18 @@ export interface ZaneVirtualScrollbarCustomEvent<T> extends CustomEvent<T> {
     target: HTMLZaneVirtualScrollbarElement;
 }
 declare global {
+    interface HTMLZaneA2uiElementEventMap {
+        "zAction": A2UiActionEvent;
+    }
     interface HTMLZaneA2uiElement extends Components.ZaneA2ui, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLZaneA2uiElementEventMap>(type: K, listener: (this: HTMLZaneA2uiElement, ev: ZaneA2uiCustomEvent<HTMLZaneA2uiElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLZaneA2uiElementEventMap>(type: K, listener: (this: HTMLZaneA2uiElement, ev: ZaneA2uiCustomEvent<HTMLZaneA2uiElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLZaneA2uiElement: {
         prototype: HTMLZaneA2uiElement;
@@ -5021,6 +5064,15 @@ declare global {
 declare namespace LocalJSX {
     interface ZaneA2ui {
         /**
+          * @default []
+         */
+        "messages"?: ServerToClientMessage[];
+        /**
+          * Emitted when a user interaction event occurs in the rendered tree
+         */
+        "onZAction"?: (event: ZaneA2uiCustomEvent<A2UiActionEvent>) => void;
+        /**
+          * Identifier for the surface this instance renders
           * @default null
          */
         "surfaceId"?: string | null;
@@ -7497,6 +7549,9 @@ declare namespace LocalJSX {
           * @default ''
          */
         "size"?: ComponentSize;
+        /**
+          * @default false
+         */
         "truncated"?: boolean;
         /**
           * @default ''

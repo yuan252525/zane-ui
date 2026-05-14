@@ -7,9 +7,90 @@
 
 ## Properties
 
-| Property    | Attribute    | Description | Type     | Default |
-| ----------- | ------------ | ----------- | -------- | ------- |
-| `surfaceId` | `surface-id` |             | `string` | `null`  |
+| Property    | Attribute    | Description                                      | Type     | Default |
+| ----------- | ------------ | ------------------------------------------------ | -------- | ------- |
+| `surfaceId` | `surface-id` | Identifier for the surface this instance renders | `string` | `null`  |
+
+
+## Events
+
+| Event         | Description                                                       | Type                           |
+| ------------- | ----------------------------------------------------------------- | ------------------------------ |
+| `zA2uiAction` | Emitted when a user interaction event occurs in the rendered tree | `CustomEvent<A2UiActionEvent>` |
+
+
+## Methods
+
+### `clear() => Promise<void>`
+
+Clear all surfaces and reset state.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `getData(nodeId: string, path: string) => Promise<any>`
+
+Read data from the data model at the given path relative to a node.
+
+#### Parameters
+
+| Name     | Type     | Description |
+| -------- | -------- | ----------- |
+| `nodeId` | `string` |             |
+| `path`   | `string` |             |
+
+#### Returns
+
+Type: `Promise<any>`
+
+
+
+### `getSurfaces() => Promise<ReadonlyMap<string, any>>`
+
+Get all current surfaces (for debugging/inspection).
+
+#### Returns
+
+Type: `Promise<ReadonlyMap<string, any>>`
+
+
+
+### `processMessages(messages: ServerToClientMessage[]) => Promise<A2UiProcessResult>`
+
+Push server-to-client messages into the processor and trigger re-render.
+
+#### Parameters
+
+| Name       | Type                      | Description |
+| ---------- | ------------------------- | ----------- |
+| `messages` | `ServerToClientMessage[]` |             |
+
+#### Returns
+
+Type: `Promise<A2UiProcessResult>`
+
+
+
+### `setData(nodeId: string, path: string, value: any) => Promise<void>`
+
+Write data to the data model at the given path relative to a node.
+
+#### Parameters
+
+| Name     | Type     | Description |
+| -------- | -------- | ----------- |
+| `nodeId` | `string` |             |
+| `path`   | `string` |             |
+| `value`  | `any`    |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ----------------------------------------------

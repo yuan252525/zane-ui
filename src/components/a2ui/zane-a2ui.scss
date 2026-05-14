@@ -3,4 +3,10 @@
   flex-direction: column;
   gap: 8px;
   max-height: 80%;
+  overflow: auto;
+}
+
+.zane-a2ui__content {
+  width: 100%;
+  min-height: 0;
 }

@@ -54,6 +54,9 @@
 <body>
   <!-- Timeline 时间线 -->
   <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-a2ui id="myA2ui" surfaceId="@default"></zane-a2ui>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
     <h4 style="margin-bottom: 16px;">基础用法</h4>
     <zane-timeline>
       <zane-timeline-item timestamp="2018-04-15">Event start</zane-timeline-item>
@@ -861,6 +864,55 @@
     if (timelineReverseEl && reverseBtnEl) {
       reverseBtnEl.addEventListener('change', function (e) {
         timelineReverseEl.reverse = e.target.checked;
+      });
+    }
+
+    // ---- start a2ui component -----
+    var a2uiEl = document.querySelector('#myA2ui');
+    if (a2uiEl) {
+       console.log(a2uiEl.messages);
+
+      // 推送服务端消息驱动渲染
+      a2uiEl.messages = [
+        { beginRendering: { surfaceId: '@default', root: 'root1' } },
+        {
+          surfaceUpdate: {
+            surfaceId: '@default',
+            components: [{
+              id: 'root1',
+              component: {
+                "zane-container": {
+                  className: 'container',
+                  children: {
+                    explicitList: ['textNode1', 'btnNode1']
+                  }
+                }
+              }
+            }, {
+              id: 'textNode1',
+              component: { "zane-text": { child: 'textNode1Text'} }
+            }, {
+              id: 'textNode1Text',
+              component: {Text: { text: { literalString: 'Hello A2UI' } } }
+            }, {
+              id: 'btnNode1',
+              component: {
+                "zane-button": { 
+                  type: 'primary',
+                  child: 'btnNode1Text'
+                }
+              }
+            }, {
+              id: 'btnNode1Text',
+              component: { Text: { text: { literalString: 'Click Me' } } }
+            }]
+          }
+        }
+      ];
+
+      // 监听用户交互事件
+      a2uiEl.addEventListener('zAction', (e) => {
+        console.log('Event from node:', e.detail.nodeId, e.detail.eventName);
       });
     }
   </script>

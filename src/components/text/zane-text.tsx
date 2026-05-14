@@ -15,17 +15,17 @@ const ns = useNamespace('text');
   tag: 'zane-text',
 })
 export class ZaneText {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop() lineClamp: string;
+  @Prop() lineClamp?: string;
 
   @Prop() size: ComponentSize = '';
 
-  @Prop() truncated: boolean;
+  @Prop() truncated: boolean = false;
 
   @Prop() type: '' | 'danger' | 'info' | 'primary' | 'success' | 'warning' = '';
 
-  private formContext: ReactiveObject<FormContext>;
+  private formContext?: ReactiveObject<FormContext>;
 
   componentWillLoad() {
     this.formContext = getFormContext(this.el);
