@@ -27,6 +27,7 @@ import { MentionOption, MentionOptionProps } from "./components/mention/types";
 import { RadioGroupContext, RadioOption, RadioOptionProp } from "./components/radio/types";
 import { RowAlignType, RowContext, RowJustifyType } from "./components/row/types";
 import { ScrollbarDirection } from "./components/scrollbar/types";
+import { RenderItemFunction, SegmentedDirection, SegmentedOption, SegmentedOptionProps, SegmentedOptionValue } from "./components/segmented/types";
 import { Option, SelectContext, SelectGroupContext, SelectOptionProps, SelectOptionValue, TagTooltipProps } from "./components/select/types";
 import { Option as Option1, OptionType, SelectContext as SelectContext1, SelectProps } from "./components/select-virtual/types";
 import { Placement } from "@popperjs/core";
@@ -58,6 +59,7 @@ export { MentionOption, MentionOptionProps } from "./components/mention/types";
 export { RadioGroupContext, RadioOption, RadioOptionProp } from "./components/radio/types";
 export { RowAlignType, RowContext, RowJustifyType } from "./components/row/types";
 export { ScrollbarDirection } from "./components/scrollbar/types";
+export { RenderItemFunction, SegmentedDirection, SegmentedOption, SegmentedOptionProps, SegmentedOptionValue } from "./components/segmented/types";
 export { Option, SelectContext, SelectGroupContext, SelectOptionProps, SelectOptionValue, TagTooltipProps } from "./components/select/types";
 export { Option as Option1, OptionType, SelectContext as SelectContext1, SelectProps } from "./components/select-virtual/types";
 export { Placement } from "@popperjs/core";
@@ -1819,6 +1821,53 @@ export namespace Components {
          */
         "wrapStyle": Record<string, string>;
     }
+    interface ZaneSegmented {
+        /**
+          * @default undefined
+         */
+        "ariaLabel"?: string;
+        /**
+          * @default false
+         */
+        "block": boolean;
+        /**
+          * @default 'horizontal'
+         */
+        "direction": SegmentedDirection;
+        /**
+          * @default undefined
+         */
+        "disabled"?: boolean;
+        /**
+          * @default undefined
+         */
+        "name"?: string;
+        /**
+          * @default undefined
+         */
+        "options"?: SegmentedOption[];
+        /**
+          * @default { ...segmentedDefaultProps }
+         */
+        "props": SegmentedOptionProps;
+        "renderItem"?: RenderItemFunction;
+        /**
+          * @default ''
+         */
+        "size": ComponentSize;
+        /**
+          * @default true
+         */
+        "validateEvent": boolean;
+        /**
+          * @default undefined
+         */
+        "value"?: SegmentedOptionValue;
+        /**
+          * @default undefined
+         */
+        "zId"?: string;
+    }
     interface ZaneSelect {
         /**
           * @default false
@@ -1999,7 +2048,7 @@ export namespace Components {
         "hoveringIndex": number;
         "isItemDisabled": (value: any, selected: any) => Promise<boolean>;
         "isItemHovering": (target: any) => Promise<boolean>;
-        "isItemSelected": (value: any, target: any) => Promise<any>;
+        "isItemSelected": (value: any, target: any) => Promise<boolean>;
         "loading": boolean;
         "resetScrollTop": () => Promise<void>;
         "width": number;
@@ -3254,6 +3303,10 @@ export interface ZaneScrollbarCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLZaneScrollbarElement;
 }
+export interface ZaneSegmentedCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLZaneSegmentedElement;
+}
 export interface ZaneSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLZaneSelectElement;
@@ -4040,6 +4093,23 @@ declare global {
         prototype: HTMLZaneScrollbarElement;
         new (): HTMLZaneScrollbarElement;
     };
+    interface HTMLZaneSegmentedElementEventMap {
+        "zChange": SegmentedOptionValue;
+    }
+    interface HTMLZaneSegmentedElement extends Components.ZaneSegmented, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLZaneSegmentedElementEventMap>(type: K, listener: (this: HTMLZaneSegmentedElement, ev: ZaneSegmentedCustomEvent<HTMLZaneSegmentedElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLZaneSegmentedElementEventMap>(type: K, listener: (this: HTMLZaneSegmentedElement, ev: ZaneSegmentedCustomEvent<HTMLZaneSegmentedElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLZaneSegmentedElement: {
+        prototype: HTMLZaneSegmentedElement;
+        new (): HTMLZaneSegmentedElement;
+    };
     interface HTMLZaneSelectElementEventMap {
         "zChange": any;
         "zRemoveTag": any;
@@ -4674,6 +4744,7 @@ declare global {
         "zane-rate": HTMLZaneRateElement;
         "zane-row": HTMLZaneRowElement;
         "zane-scrollbar": HTMLZaneScrollbarElement;
+        "zane-segmented": HTMLZaneSegmentedElement;
         "zane-select": HTMLZaneSelectElement;
         "zane-select-dropdown": HTMLZaneSelectDropdownElement;
         "zane-select-group-item": HTMLZaneSelectGroupItemElement;
@@ -6495,6 +6566,54 @@ declare namespace LocalJSX {
          */
         "wrapStyle"?: Record<string, string>;
     }
+    interface ZaneSegmented {
+        /**
+          * @default undefined
+         */
+        "ariaLabel"?: string;
+        /**
+          * @default false
+         */
+        "block"?: boolean;
+        /**
+          * @default 'horizontal'
+         */
+        "direction"?: SegmentedDirection;
+        /**
+          * @default undefined
+         */
+        "disabled"?: boolean;
+        /**
+          * @default undefined
+         */
+        "name"?: string;
+        "onZChange"?: (event: ZaneSegmentedCustomEvent<SegmentedOptionValue>) => void;
+        /**
+          * @default undefined
+         */
+        "options"?: SegmentedOption[];
+        /**
+          * @default { ...segmentedDefaultProps }
+         */
+        "props"?: SegmentedOptionProps;
+        "renderItem"?: RenderItemFunction;
+        /**
+          * @default ''
+         */
+        "size"?: ComponentSize;
+        /**
+          * @default true
+         */
+        "validateEvent"?: boolean;
+        /**
+          * @default undefined
+         */
+        "value"?: SegmentedOptionValue;
+        /**
+          * @default undefined
+         */
+        "zId"?: string;
+    }
     interface ZaneSelect {
         /**
           * @default false
@@ -8016,6 +8135,7 @@ declare namespace LocalJSX {
         "zane-rate": ZaneRate;
         "zane-row": ZaneRow;
         "zane-scrollbar": ZaneScrollbar;
+        "zane-segmented": ZaneSegmented;
         "zane-select": ZaneSelect;
         "zane-select-dropdown": ZaneSelectDropdown;
         "zane-select-group-item": ZaneSelectGroupItem;
@@ -8112,6 +8232,7 @@ declare module "@stencil/core" {
             "zane-rate": LocalJSX.ZaneRate & JSXBase.HTMLAttributes<HTMLZaneRateElement>;
             "zane-row": LocalJSX.ZaneRow & JSXBase.HTMLAttributes<HTMLZaneRowElement>;
             "zane-scrollbar": LocalJSX.ZaneScrollbar & JSXBase.HTMLAttributes<HTMLZaneScrollbarElement>;
+            "zane-segmented": LocalJSX.ZaneSegmented & JSXBase.HTMLAttributes<HTMLZaneSegmentedElement>;
             "zane-select": LocalJSX.ZaneSelect & JSXBase.HTMLAttributes<HTMLZaneSelectElement>;
             "zane-select-dropdown": LocalJSX.ZaneSelectDropdown & JSXBase.HTMLAttributes<HTMLZaneSelectDropdownElement>;
             "zane-select-group-item": LocalJSX.ZaneSelectGroupItem & JSXBase.HTMLAttributes<HTMLZaneSelectGroupItemElement>;
