@@ -1,363 +1,423 @@
 <!doctype html>
 <html dir="ltr" lang="en" data-theme="dark">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
-    />
-    <title>Stencil Component Starter</title>
-    <script type="module" src="/build/zane-ui.esm.js"></script>
-    <script nomodule src="/build/zane-ui.js"></script>
-    <link href="/build/zane-ui.css" rel="stylesheet" />
 
-    <style>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Stencil Component Starter</title>
+  <script type="module" src="/build/zane-ui.esm.js"></script>
+  <script nomodule src="/build/zane-ui.js"></script>
+  <link href="/build/zane-ui.css" rel="stylesheet" />
 
-      html, body {
-        background-color: var(--zane-bg-color);
-        color: var(--zane-text-color-primary);
-      }
+  <style>
+    html,
+    body {
+      background-color: var(--zane-bg-color);
+      color: var(--zane-text-color-primary);
+    }
 
-      .demo-panel {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-      }
+    .demo-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
 
-      .slider-demo-block {
-        max-width: 600px;
-        display: flex;
-        align-items: center;
-      }
-      .slider-demo-block zane-slider {
-        margin-top: 0;
-        margin-left: 12px;
-      }
-      .slider-demo-block .demonstration {
-        font-size: 14px;
-        color: var(--zane-text-color-secondary);
-        line-height: 44px;
-        flex: 1;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        margin-bottom: 0;
-      }
-      .slider-demo-block .demonstration + zane-slider {
-        flex: 0 0 70%;
-      }
+    .slider-demo-block {
+      max-width: 600px;
+      display: flex;
+      align-items: center;
+    }
 
-      .custom-style .zane-segmented {
-        --zane-segmented-item-selected-color: var(--zane-text-color-primary);
-        --zane-segmented-item-selected-bg-color: #ffd100;
-        --zane-border-radius-base: 16px;
-      }
-    </style>
-  </head>
-  <body>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); display: flex;  flex-direction: column; gap: 12px; align-items: flex-start">
-      <zane-segmented id="segmented-custom-props" value="1" size="large"></zane-segmented>
-      <zane-segmented id="segmented-icons-vertical" value="list"></zane-segmented>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); display: flex; flex-direction: column; gap: 16px; max-width: 600px">
-      <zane-progress percentage="50" status="exception" ></zane-progress>
-      <zane-progress text-inside="true" stroke-width="22" percentage="80" status="warning"></zane-progress>
-      <zane-progress percentage="100" striped="true" ></zane-progress>
-      <zane-progress percentage="70" striped="true" striped-flow="true" color="#e6a23c" ></zane-progress>
-      <zane-progress percentage="100" status="success" indeterminate="true" duration="5"></zane-progress>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); display: flex; gap: 40px; align-items: center">
-      <zane-progress type="circle" percentage="70" status="warning" ></zane-progress>
-      <zane-progress type="circle" percentage="25" ></zane-progress>
-      <zane-progress type="dashboard" id="dashboard1"></zane-progress>
-      <zane-progress type="circle" percentage="80" width="80">
-        <span slot="text" class="custom-value">80%</span>
-      </zane-progress>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-descriptions
-        title="Width vertical list"
-        direction="vertical"
-        border
-        style="margin-top: 20px"
-      >
-        <zane-descriptions-item
-          rowspan="2"
-          width="140"
-          label="Photo"
-          align="center"
-        >
-          <img
-            style="width: 100px; height: 100px"
-            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-          />
-        </zane-descriptions-item>
-        <zane-descriptions-item label="Username">kooriookami</zane-descriptions-item>
-        <zane-descriptions-item label="Telephone">18100000000</zane-descriptions-item>
-        <zane-descriptions-item label="Place">Suzhou</zane-descriptions-item>
-        <zane-descriptions-item label="Remarks">
-          <zane-tag size="small">School</zane-tag>
-        </zane-descriptions-item>
-        <zane-descriptions-item label="Address">
-          No.1188, Wuzhong Avenue, Wuzhong District, Suzhou, Jiangsu Province
-        </zane-descriptions-item>
-      </zane-descriptions>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-carousel arrow-display motion-blur>
-        <zane-carouszane-item>
-          <div class="demo-panel" style="background-color: #f56c6c; color: #fff">1</div>
-        </zane-carouszane-item>
-        <zane-carouszane-item>
-          <div class="demo-panel" style="background-color: #67c23a; color: #fff">2</div>
-        </zane-carouszane-item>
-      </zane-carousel>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-empty>
-        <div slot="description" style="color: #909399; font-size: 14px">
-          <p>Line 1 of custom description</p>
-          <p>Line 2 of custom description</p>
-        </div>
-      </zane-empty>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-cascader></zane-cascader>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-avatar-group
-        shape="circle"
-        max-collapse-avatars="3"
-        collapse-avatars
-        collapse-avatars-tooltip></zane-avatar-group>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); display:flex;gap:40px">
-      <zane-badge is-dot type="primary">query</zane-badge>
-      <zane-badge type="primary" value="200" max="99">
-        <zane-button type="success" >测试</zane-button>
-      </zane-badge>
-      <zane-badge value="hot" max="10" type="success">
-        <zane-button>messages</zane-button>
-        <div slot="content" class="custom-content">
-          <zane-icon name="star-line"></zane-icon>
-          <span data-badge-value></span>
-        </div>
-      </zane-badge>
-      <zane-badge value="0" show-zero="false">
-        <zane-button>hide zero</zane-button>
-      </zane-badge>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); width: 400px">
-      <zane-space fill fill-ratio="70" direction="vertical" style="width: 100%">
-        <zane-button>按钮1</zane-button>
-        <zane-button>按钮2</zane-button>
-        <zane-button>按钮3</zane-button>
-      </zane-space>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-tree-select
-        id="treeSelect01"
-      ></zane-tree-select>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-select
-        id="select01"
-        placeholder="请选择"
-        style="width: 240px;"
-        multiple
-        clearable
-        filterable
-      >
-        <zane-select-option-group label="Popular cities">
-          <zane-select-option label="Shanghai" value="Shanghai"></zane-select-option>
-          <zane-select-option label="Beijing" value="Beijing"></zane-select-option>
-        </zane-select-option-group>
-        <zane-select-option-group label="City name">
-          <zane-select-option label="Chengdu" value="Chengdu"></zane-select-option>
-          <zane-select-option label="Shenzhen" value="Shenzhen"></zane-select-option>
-          <zane-select-option label="Guangzhou" value="Guangzhou"></zane-select-option>
-          <zane-select-option label="Dalian" value="Dalian"></zane-select-option>
-        </zane-select-option-group>
-      </zane-select>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-autocomplete
-        id="autocomplete01"
-        class="w-50"
-        placeholder="Please Input"
-        clearable
-      ></zane-autocomplete>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-tree
-        id="tree01"
-        style="max-width: 600px"
-        show-checkbox
-        height="200"
-      />
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-transfer
-        id="transfer01"
-        filterable
-        filter-placeholder="State Abbreviations"
-      ></zane-transfer>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-switch
-        class="mb-2"
-        active-text="Pay by month"
-        inactive-text="Pay by year"
-      ></zane-switch>
-      <br />
-      <zane-switch
-        class="mb-2"
-        style="--zane-switch-on-color: #13ce66; --zane-switch-off-color: #ff4949"
-        active-text="Pay by month"
-        inactive-text="Pay by year"
-      ></zane-switch>
-      <br />
-      <zane-switch
-        inline-prompt
-        active-text="是"
-        inactive-text="否"
-      ></zane-switch>
-      <zane-switch
-        class="ml-2"
-        inline-prompt
-        style="--zane-switch-on-color: #13ce66; --zane-switch-off-color: #ff4949"
-        active-text="Y"
-        inactive-text="N"
-      ></zane-switch>
-      <zane-switch
-        class="ml-2"
-        width="60"
-        inline-prompt
-        active-text="超出省略"
-        inactive-text="超出省略"
-      ></zane-switch>
-      <zane-switch
-        class="ml-2"
-        inline-prompt
-        style="--zane-switch-on-color: #13ce66; --zane-switch-off-color: #ff4949"
-        active-text="完整展示多个内容"
-        inactive-text="多个内容"
-      ></zane-switch>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <div class="slider-demo-block">
-        <span class="demonstration">Default value</span>
-        <zane-slider></zane-slider>
-      </div>
-      <div class="slider-demo-block">
-        <span class="demonstration">Customized initial value</span>
-        <zane-slider></zane-slider>
-      </div>
-      <div class="slider-demo-block">
-        <span class="demonstration">Hide Tooltip</span>
-        <zane-slider show-tooltip="false"></zane-slider>
-      </div>
-      <div class="slider-demo-block">
-        <span class="demonstration">Format Tooltip</span>
-        <zane-slider step="10" show-stops></zane-slider>
-      </div>
-      <div class="slider-demo-block">
-        <span class="demonstration">Disabled</span>
-        <zane-slider disabled></zane-slider>
-      </div>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-select-virtual
-        id="selectVirtual01"
-        multiple
-        collapse-tags
-        collapse-tags-tooltip
-        max-collapse-tags="3"
-        filterable
-        clearable
-        style="width: 240px"
-      ></zane-select-virtual>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-rate value="3" clearable allow-half show-score></zane-rate>
-      <zane-rate value="3" size="small" clearable allow-half show-score></zane-rate>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-mention
-        value="@"
-        style="width: 320px"
-        placeholder="Please input"
-      />
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-input
-        style="max-width: 600px"
-        placeholder="Please input"
-        class="input-with-select"
-      >
-        <div slot="prepend" style="margin: 0 -20px;">
-          <zane-select
-            placeholder="Select"
-            style="width: 115px; display: block;"
-          >
-            <zane-select-option label="Restaurant" value="1"></zane-select-option>
-            <zane-select-option label="Order No." value="2"></zane-select-option>
-            <zane-select-option label="Tel" value="3"></zane-select-option>
-          </zane-select>
-        </div>
-        <div slot="append">
-          <zane-button icon="search-line"></zane-button>
-        </div>
-      </zane-input>
-      <zane-input
-        style="max-width: 600px"
-        placeholder="Please input"
-        class="input-with-select"
-      >
-        <div slot="prepend">
-          <zane-button icon="search-line"></zane-button>
-        </div>
-        <div slot="append" style="margin: 0 -20px;">
-          <zane-select
-            placeholder="Select"
-            style="width: 115px; display: block;"
-          >
-            <zane-select-option label="Restaurant" value="1"></zane-select-option>
-            <zane-select-option label="Order No." value="2"></zane-select-option>
-            <zane-select-option label="Tel" value="3"></zane-select-option>
-          </zane-select>
-        </div>
-      </zane-input>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-input-tag
-        placeholder="Please input"
-        aria-label="Please click the Enter key after input"
-      ></zane-input-tag>
-    </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <div>
-        <zane-radio-group value="radio1">
-          <zane-radio value="1" size="large">Option 1</zane-radio>
-          <zane-radio value="2" size="large">Option 2</zane-radio>
-        </zane-radio-group>
-      </div>
+    .slider-demo-block zane-slider {
+      margin-top: 0;
+      margin-left: 12px;
+    }
 
-      <div>
-        <zane-radio-group value="radio" size="large" fill="#409eff">
-          <zane-radio-button label="New York" value="New York"></zane-radio-button>
-          <zane-radio-button label="Washington" value="Washington"></zane-radio-button>
-          <zane-radio-button label="Los Angeles" value="Los Angeles"></zane-radio-button>
-          <zane-radio-button label="Chicago" value="Chicago"></zane-radio-button>
-        </zane-radio-group>
+    .slider-demo-block .demonstration {
+      font-size: 14px;
+      color: var(--zane-text-color-secondary);
+      line-height: 44px;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-bottom: 0;
+    }
+
+    .slider-demo-block .demonstration+zane-slider {
+      flex: 0 0 70%;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); display: flex;  flex-direction: column; gap: 12px; align-items: flex-start">
+    <zane-segmented id="segmented-custom-props" value="1" size="large"></zane-segmented>
+    <zane-segmented id="segmented-icons-vertical" value="list"></zane-segmented>
+  </div>
+  <!-- Timeline 时间线 -->
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-a2ui id="myA2ui" surfaceId="@default"></zane-a2ui>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">基础用法</h4>
+    <zane-timeline>
+      <zane-timeline-item timestamp="2018-04-15">Event start</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-13">Approved</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-11">Success</zane-timeline-item>
+    </zane-timeline>
+  </div>
+
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">自定义节点样式</h4>
+    <zane-timeline>
+      <zane-timeline-item timestamp="2018-04-12 20:46" size="large" type="primary" icon="more-fill">Custom
+        icon</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-03 20:46" color="#0bbd87">Custom color</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-03 20:46" size="large">Custom size</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-03 20:46" type="primary" hollow>Custom hollow</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-03 20:46">Default node</zane-timeline-item>
+    </zane-timeline>
+  </div>
+
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">自定义时间戳 (placement="top")</h4>
+    <zane-timeline>
+      <zane-timeline-item timestamp="2018/4/12" placement="top">
+        <div
+          style="border: 1px solid var(--zane-border-color); padding: 12px; border-radius: 4px; background: var(--zane-bg-color-blank);">
+          <h4 style="margin: 0 0 8px 0; font-size: 14px;">Update Github template</h4>
+          <p style="margin: 0; font-size: 13px; color: var(--zane-text-color-secondary);">Tom committed 2018/4/12 20:46
+          </p>
+        </div>
+      </zane-timeline-item>
+      <zane-timeline-item timestamp="2018/4/3" placement="top">
+        <div
+          style="border: 1px solid var(--zane-border-color); padding: 12px; border-radius: 4px; background: var(--zane-bg-color-blank);">
+          <h4 style="margin: 0 0 8px 0; font-size: 14px;">Update Github template</h4>
+          <p style="margin: 0; font-size: 13px; color: var(--zane-text-color-secondary);">Tom committed 2018/4/3 20:46
+          </p>
+        </div>
+      </zane-timeline-item>
+      <zane-timeline-item timestamp="2018/4/2" placement="top">
+        <div
+          style="border: 1px solid var(--zane-border-color); padding: 12px; border-radius: 4px; background: var(--zane-bg-color-blank);">
+          <h4 style="margin: 0 0 8px 0; font-size: 14px;">Update Github template</h4>
+          <p style="margin: 0; font-size: 13px; color: var(--zane-text-color-secondary);">Tom committed 2018/4/2 20:46
+          </p>
+        </div>
+      </zane-timeline-item>
+    </zane-timeline>
+  </div>
+
+
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">反向排序 (reverse)</h4>
+    <div style="margin-bottom: 16px;">
+      <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+        <input type="checkbox" id="timelineReverseBtn" /> reverse
+      </label>
+    </div>
+    <zane-timeline id="timelineReverse">
+      <zane-timeline-item timestamp="2018-04-15">Event start</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-13">Approved</zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-11">Success</zane-timeline-item>
+    </zane-timeline>
+  </div>
+
+
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">自定义 dot 节点插槽</h4>
+    <zane-timeline>
+      <zane-timeline-item timestamp="2018-04-15">
+        <span slot="dot"
+          style="display:flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#409eff;color:#fff;font-size:10px;position:absolute;left:-2px;">
+          <zane-icon name="check-line" style="font-size:10px;"></zane-icon>
+        </span>
+        Custom dot with icon
+      </zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-13">
+        <span slot="dot"
+          style="display:flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#f56c6c;color:#fff;font-size:12px;position:absolute;left:-3px;">
+          <zane-icon name="close-line"></zane-icon>
+        </span>
+        Custom red dot
+      </zane-timeline-item>
+      <zane-timeline-item timestamp="2018-04-11">
+        <span slot="dot" style="display:flex;align-items:center;justify-content:center;position:absolute;left:-5px;">
+          <img src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+            style="width:22px;height:22px;border-radius:50%;" />
+        </span>
+        Custom image dot
+      </zane-timeline-item>
+    </zane-timeline>
+  </div>
+
+ 
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">所有类型节点 (type)</h4>
+    <zane-timeline>
+      <zane-timeline-item timestamp="Primary" type="primary">Primary</zane-timeline-item>
+      <zane-timeline-item timestamp="Success" type="success">Success</zane-timeline-item>
+      <zane-timeline-item timestamp="Warning" type="warning">Warning</zane-timeline-item>
+      <zane-timeline-item timestamp="Danger" type="danger">Danger</zane-timeline-item>
+      <zane-timeline-item timestamp="Info" type="info">Info</zane-timeline-item>
+      <zane-timeline-item timestamp="Default">Default</zane-timeline-item>
+    </zane-timeline>
+  </div>
+   
+
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">隐藏时间戳 (hideTimestamp)</h4>
+    <zane-timeline>
+      <zane-timeline-item hide-timestamp>No timestamp 1</zane-timeline-item>
+      <zane-timeline-item hide-timestamp>No timestamp 2</zane-timeline-item>
+      <zane-timeline-item hide-timestamp>No timestamp 3</zane-timeline-item>
+    </zane-timeline>
+  </div>
+
+  <!-- Pagination 分页 -->
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">完整分页布局</h4>
+    <zane-pagination id="pagination02" total="500" page-sizes="[10,20,50,100]"
+      layout="sizes, prev, pager, next, jumper, ->, total" background></zane-pagination>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">小型分页 + 自定义图标文字</h4>
+    <zane-pagination id="pagination03" total="50" size="small" prev-text="上一页" next-text="下一页"></zane-pagination>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">事件监听分页</h4>
+    <p id="pagination-log" style="font-size: 13px; color: var(--zane-text-color-secondary); min-height: 40px;">
+      当前页: 1, 每页条数: 10
+    </p>
+    <zane-pagination id="pagination04" total="200" layout="prev, pager, next, sizes, jumper"
+      background></zane-pagination>
+  </div>
+
+  <!-- upload 上传 -->
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+      <h4>上传组件</h4>
+      <zane-upload action="https://jsonplaceholder.typicode.com/posts" drag>
+        <zane-icon name="upload-line"></zane-icon>
+        <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+      </zane-upload>
+      <div slot="tip" class="el-upload__tip"
+        style="color: var(--zane-text-color-secondary); font-size: 12px; margin-top: 8px;">
+        jpg/png files with a size less than 500KB.
       </div>
     </div>
-    <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-      <zane-input-number value="1" min="1" max="10" precision="2" step="0.1" controls-position="right"></zane-input-number>
+  </div>
+  <div
+    style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); display: flex; flex-direction: column; gap: 16px; max-width: 600px">
+    <zane-progress percentage="50" status="exception"></zane-progress>
+    <zane-progress text-inside="true" stroke-width="22" percentage="80" status="warning"></zane-progress>
+    <zane-progress percentage="100" striped="true"></zane-progress>
+    <zane-progress percentage="70" striped="true" striped-flow="true" color="#e6a23c"></zane-progress>
+    <zane-progress percentage="100" status="success" indeterminate="true" duration="5"></zane-progress>
+  </div>
+  <div
+    style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); display: flex; gap: 40px; align-items: center">
+    <zane-progress type="circle" percentage="70" status="warning"></zane-progress>
+    <zane-progress type="circle" percentage="25"></zane-progress>
+    <zane-progress type="dashboard" id="dashboard1"></zane-progress>
+    <zane-progress type="circle" percentage="80" width="80">
+      <span slot="text" class="custom-value">80%</span>
+    </zane-progress>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-descriptions title="Width vertical list" direction="vertical" border style="margin-top: 20px">
+      <zane-descriptions-item rowspan="2" width="140" label="Photo" align="center">
+        <img style="width: 100px; height: 100px"
+          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+      </zane-descriptions-item>
+      <zane-descriptions-item label="Username">kooriookami</zane-descriptions-item>
+      <zane-descriptions-item label="Telephone">18100000000</zane-descriptions-item>
+      <zane-descriptions-item label="Place">Suzhou</zane-descriptions-item>
+      <zane-descriptions-item label="Remarks">
+        <zane-tag size="small">School</zane-tag>
+      </zane-descriptions-item>
+      <zane-descriptions-item label="Address">
+        No.1188, Wuzhong Avenue, Wuzhong District, Suzhou, Jiangsu Province
+      </zane-descriptions-item>
+    </zane-descriptions>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-carousel arrow-display>
+      <zane-carousel-item>
+        <div class="demo-panel" style="background-color: #f56c6c; color: #fff">1</div>
+      </zane-carousel-item>
+      <zane-carousel-item>
+        <div class="demo-panel" style="background-color: #67c23a; color: #fff">2</div>
+      </zane-carousel-item>
+    </zane-carousel>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-empty>
+      <div slot="description" style="color: #909399; font-size: 14px">
+        <p>Line 1 of custom description</p>
+        <p>Line 2 of custom description</p>
+      </div>
+    </zane-empty>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-cascader></zane-cascader>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-avatar-group shape="circle" max-collapse-avatars="3" collapse-avatars
+      collapse-avatars-tooltip></zane-avatar-group>
+  </div>
+  <div
+    style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); display:flex;gap:40px">
+    <zane-badge is-dot type="primary">query</zane-badge>
+    <zane-badge type="primary" value="200" max="99">
+      <zane-button type="success">测试</zane-button>
+    </zane-badge>
+    <zane-badge value="hot" max="10" type="success">
+      <zane-button>messages</zane-button>
+      <div slot="content" class="custom-content">
+        <zane-icon name="star-line"></zane-icon>
+        <span data-badge-value></span>
+      </div>
+    </zane-badge>
+    <zane-badge value="0" show-zero="false">
+      <zane-button>hide zero</zane-button>
+    </zane-badge>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); width: 400px">
+    <zane-space fill fill-ratio="70" direction="vertical" style="width: 100%">
+      <zane-button>按钮1</zane-button>
+      <zane-button>按钮2</zane-button>
+      <zane-button>按钮3</zane-button>
+    </zane-space>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-tree-select id="treeSelect01"></zane-tree-select>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-select id="select01" placeholder="请选择" style="width: 240px;" multiple clearable filterable>
+      <zane-select-option-group label="Popular cities">
+        <zane-select-option label="Shanghai" value="Shanghai"></zane-select-option>
+        <zane-select-option label="Beijing" value="Beijing"></zane-select-option>
+      </zane-select-option-group>
+      <zane-select-option-group label="City name">
+        <zane-select-option label="Chengdu" value="Chengdu"></zane-select-option>
+        <zane-select-option label="Shenzhen" value="Shenzhen"></zane-select-option>
+        <zane-select-option label="Guangzhou" value="Guangzhou"></zane-select-option>
+        <zane-select-option label="Dalian" value="Dalian"></zane-select-option>
+      </zane-select-option-group>
+    </zane-select>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-autocomplete id="autocomplete01" class="w-50" placeholder="Please Input" clearable></zane-autocomplete>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-tree id="tree01" style="max-width: 600px" show-checkbox height="200" />
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-transfer id="transfer01" filterable filter-placeholder="State Abbreviations"></zane-transfer>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-switch class="mb-2" active-text="Pay by month" inactive-text="Pay by year"></zane-switch>
+    <br />
+    <zane-switch class="mb-2" style="--zane-switch-on-color: #13ce66; --zane-switch-off-color: #ff4949"
+      active-text="Pay by month" inactive-text="Pay by year"></zane-switch>
+    <br />
+    <zane-switch inline-prompt active-text="是" inactive-text="否"></zane-switch>
+    <zane-switch class="ml-2" inline-prompt style="--zane-switch-on-color: #13ce66; --zane-switch-off-color: #ff4949"
+      active-text="Y" inactive-text="N"></zane-switch>
+    <zane-switch class="ml-2" width="60" inline-prompt active-text="超出省略" inactive-text="超出省略"></zane-switch>
+    <zane-switch class="ml-2" inline-prompt style="--zane-switch-on-color: #13ce66; --zane-switch-off-color: #ff4949"
+      active-text="完整展示多个内容" inactive-text="多个内容"></zane-switch>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <div class="slider-demo-block">
+      <span class="demonstration">Default value</span>
+      <zane-slider></zane-slider>
     </div>
-    <script>
-      // ------ start segmented ----------------------------------
+    <div class="slider-demo-block">
+      <span class="demonstration">Customized initial value</span>
+      <zane-slider></zane-slider>
+    </div>
+    <div class="slider-demo-block">
+      <span class="demonstration">Hide Tooltip</span>
+      <zane-slider show-tooltip="false"></zane-slider>
+    </div>
+    <div class="slider-demo-block">
+      <span class="demonstration">Format Tooltip</span>
+      <zane-slider step="10" show-stops></zane-slider>
+    </div>
+    <div class="slider-demo-block">
+      <span class="demonstration">Disabled</span>
+      <zane-slider disabled></zane-slider>
+    </div>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-select-virtual id="selectVirtual01" multiple collapse-tags collapse-tags-tooltip max-collapse-tags="3"
+      filterable clearable style="width: 240px"></zane-select-virtual>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-rate value="3" clearable allow-half show-score></zane-rate>
+    <zane-rate value="3" size="small" clearable allow-half show-score></zane-rate>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-mention value="@" style="width: 320px" placeholder="Please input" />
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-input style="max-width: 600px" placeholder="Please input" class="input-with-select">
+      <div slot="prepend" style="margin: 0 -20px;">
+        <zane-select placeholder="Select" style="width: 115px; display: block;">
+          <zane-select-option label="Restaurant" value="1"></zane-select-option>
+          <zane-select-option label="Order No." value="2"></zane-select-option>
+          <zane-select-option label="Tel" value="3"></zane-select-option>
+        </zane-select>
+      </div>
+      <div slot="append">
+        <zane-button icon="search-line"></zane-button>
+      </div>
+    </zane-input>
+    <zane-input style="max-width: 600px" placeholder="Please input" class="input-with-select">
+      <div slot="prepend">
+        <zane-button icon="search-line"></zane-button>
+      </div>
+      <div slot="append" style="margin: 0 -20px;">
+        <zane-select placeholder="Select" style="width: 115px; display: block;">
+          <zane-select-option label="Restaurant" value="1"></zane-select-option>
+          <zane-select-option label="Order No." value="2"></zane-select-option>
+          <zane-select-option label="Tel" value="3"></zane-select-option>
+        </zane-select>
+      </div>
+    </zane-input>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-input-tag placeholder="Please input" aria-label="Please click the Enter key after input"></zane-input-tag>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <div>
+      <zane-radio-group value="radio1">
+        <zane-radio value="1" size="large">Option 1</zane-radio>
+        <zane-radio value="2" size="large">Option 2</zane-radio>
+      </zane-radio-group>
+    </div>
+
+    <div>
+      <zane-radio-group value="radio" size="large" fill="#409eff">
+        <zane-radio-button label="New York" value="New York"></zane-radio-button>
+        <zane-radio-button label="Washington" value="Washington"></zane-radio-button>
+        <zane-radio-button label="Los Angeles" value="Los Angeles"></zane-radio-button>
+        <zane-radio-button label="Chicago" value="Chicago"></zane-radio-button>
+      </zane-radio-group>
+    </div>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <zane-input-number value="1" min="1" max="10" precision="2" step="0.1"
+      controls-position="right"></zane-input-number>
+  </div>
+
+  <script>
+    // ------ start segmented ----------------------------------
       var segmentedCustomProps = document.querySelector('#segmented-custom-props')
       if (segmentedCustomProps) {
         segmentedCustomProps.props = { label: 'name', value: 'id', disabled: 'isDisabled' }
@@ -396,436 +456,509 @@
         }
       }
 
-      // ------ start progress ----------------------------------
-      var dashboardColors = [
-        { color: '#f56c6c', percentage: 20 },
-        { color: '#e6a23c', percentage: 40 },
-        { color: '#5cb87a', percentage: 60 },
-        { color: '#1989fa', percentage: 80 },
-        { color: '#6f7ad3', percentage: 100 },
+    // ------ start progress ----------------------------------
+    var dashboardColors = [
+      { color: '#f56c6c', percentage: 20 },
+      { color: '#e6a23c', percentage: 40 },
+      { color: '#5cb87a', percentage: 60 },
+      { color: '#1989fa', percentage: 80 },
+      { color: '#6f7ad3', percentage: 100 },
+    ]
+
+    var dashboard1El = document.querySelector('#dashboard1')
+    if (dashboard1El) {
+      dashboard1El.percentage = 20
+      dashboard1El.color = dashboardColors
+      setInterval(() => {
+        dashboard1El.percentage = dashboard1El.percentage % 100 + 10
+      }, 500)
+    }
+
+    // ------ start mention ----------------------------------
+    var mentionEl = document.querySelector('zane-mention');
+    if (mentionEl) {
+      mentionEl.options = [
+        {
+          label: 'Fuphoenixes',
+          value: 'Fuphoenixes',
+        },
+        {
+          label: 'kooriookami',
+          value: 'kooriookami',
+        },
+        {
+          label: 'Jeremy',
+          value: 'Jeremy',
+        },
+        {
+          label: 'btea',
+          value: 'btea',
+        },
+      ];
+    }
+
+    // ------ start select ----------------------------------
+    var selectEl = document.querySelector('#selectVirtual01');
+    if (selectEl) {
+      const initials = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
+      const options = Array.from({ length: 1000 }).map((_, idx) => ({
+        value: `Option ${idx + 1}`,
+        label: `${initials[idx % 10]}${idx}`,
+      }));
+      selectEl.options = options;
+    }
+
+    // ------ start transfer ----------------------------------
+    var transfer01El = document.querySelector('#transfer01');
+    if (transfer01El) {
+      const data = []
+      for (let i = 1; i <= 15; i++) {
+        data.push({
+          key: i,
+          label: `Option ${i}`,
+          disabled: i % 4 === 0,
+        })
+      }
+      transfer01El.data = data;
+    }
+    // ------ start tree ----------------------------------
+
+    const props = {
+      value: 'id',
+      label: 'label',
+      children: 'children',
+    };
+
+    const getKey = (prefix, id) => {
+      return `${prefix}-${id}`
+    };
+
+    function createData(
+      maxDeep,
+      maxChildren,
+      minNodesNumber,
+      deep = 1,
+      key = 'node'
+    ) {
+      let id = 0
+      return Array.from({ length: minNodesNumber })
+        .fill(deep)
+        .map(() => {
+          const childrenNumber =
+            deep === maxDeep ? 0 : Math.round(Math.random() * maxChildren)
+          const nodeKey = getKey(key, ++id)
+          return {
+            id: nodeKey,
+            label: nodeKey,
+            children: childrenNumber
+              ? createData(maxDeep, maxChildren, childrenNumber, deep + 1, nodeKey)
+              : undefined,
+          }
+        })
+    }
+
+    var tree01El = document.querySelector('#tree01');
+    if (tree01El) {
+      tree01El.data = createData(4, 30, 40);
+      tree01El.props = props;
+    }
+
+    // ---  start autocomplete ---------------------
+    var autocomplete01 = document.querySelector('#autocomplete01')
+    if (autocomplete01) {
+      const restaurants = [
+        { value: 'vue', link: 'https://github.com/vuejs/vue' },
+        { value: 'element', link: 'https://github.com/ElemeFE/element' },
+        { value: 'cooking', link: 'https://github.com/ElemeFE/cooking' },
+        { value: 'mint-ui', link: 'https://github.com/ElemeFE/mint-ui' },
+        { value: 'vuex', link: 'https://github.com/vuejs/vuex' },
+        { value: 'vue-router', link: 'https://github.com/vuejs/vue-router' },
+        { value: 'babel', link: 'https://github.com/babel/babel' },
+      ];
+
+      const createFilter = (queryString) => {
+        return (restaurant) => {
+          return (
+            restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+          )
+        }
+      }
+
+      const querySearch = (queryString, cb) => {
+        const results = queryString
+          ? restaurants.filter(createFilter(queryString))
+          : restaurants
+        // call callback function to return suggestions
+        cb(results)
+      }
+
+      autocomplete01.fetchSuggestions = querySearch;
+    }
+
+    // --- start select -------------------------
+    var treeSelect01 = document.querySelector('#treeSelect01')
+    if (treeSelect01) {
+      treeSelect01.data = createData(4, 30, 40);
+      treeSelect01.props = props;
+    }
+
+    // ---- start avatar group ------------------
+    var avatarGroupEl = document.querySelector('zane-avatar-group');
+    if (avatarGroupEl) {
+      avatarGroupEl.avatars = [
+        'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png|img',
+        'account-circle-line|icon',
+        'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png|img',
+        'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png|img',
+      ];
+    }
+
+    // ---- start cascader ------------------
+    var cascaderEl = document.querySelector('zane-cascader');
+    if (cascaderEl) {
+      cascaderEl.options = [
+        {
+          value: 'guide',
+          label: 'Guide',
+          children: [
+            {
+              value: 'disciplines',
+              label: 'Disciplines',
+              children: [
+                {
+                  value: 'consistency',
+                  label: 'Consistency',
+                },
+                {
+                  value: 'feedback',
+                  label: 'Feedback',
+                },
+                {
+                  value: 'efficiency',
+                  label: 'Efficiency',
+                },
+                {
+                  value: 'controllability',
+                  label: 'Controllability',
+                },
+              ],
+            },
+            {
+              value: 'navigation',
+              label: 'Navigation',
+              children: [
+                {
+                  value: 'side nav',
+                  label: 'Side Navigation',
+                },
+                {
+                  value: 'top nav',
+                  label: 'Top Navigation',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          value: 'component',
+          label: 'Component',
+          children: [
+            {
+              value: 'basic',
+              label: 'Basic',
+              children: [
+                {
+                  value: 'layout',
+                  label: 'Layout',
+                },
+                {
+                  value: 'color',
+                  label: 'Color',
+                },
+                {
+                  value: 'typography',
+                  label: 'Typography',
+                },
+                {
+                  value: 'icon',
+                  label: 'Icon',
+                },
+                {
+                  value: 'button',
+                  label: 'Button',
+                },
+              ],
+            },
+            {
+              value: 'form',
+              label: 'Form',
+              children: [
+                {
+                  value: 'radio',
+                  label: 'Radio',
+                },
+                {
+                  value: 'checkbox',
+                  label: 'Checkbox',
+                },
+                {
+                  value: 'input',
+                  label: 'Input',
+                },
+                {
+                  value: 'input-number',
+                  label: 'InputNumber',
+                },
+                {
+                  value: 'select',
+                  label: 'Select',
+                },
+                {
+                  value: 'cascader',
+                  label: 'Cascader',
+                },
+                {
+                  value: 'switch',
+                  label: 'Switch',
+                },
+                {
+                  value: 'slider',
+                  label: 'Slider',
+                },
+                {
+                  value: 'time-picker',
+                  label: 'TimePicker',
+                },
+                {
+                  value: 'date-picker',
+                  label: 'DatePicker',
+                },
+                {
+                  value: 'datetime-picker',
+                  label: 'DateTimePicker',
+                },
+                {
+                  value: 'upload',
+                  label: 'Upload',
+                },
+                {
+                  value: 'rate',
+                  label: 'Rate',
+                },
+                {
+                  value: 'form',
+                  label: 'Form',
+                },
+              ],
+            },
+            {
+              value: 'data',
+              label: 'Data',
+              children: [
+                {
+                  value: 'table',
+                  label: 'Table',
+                },
+                {
+                  value: 'tag',
+                  label: 'Tag',
+                },
+                {
+                  value: 'progress',
+                  label: 'Progress',
+                },
+                {
+                  value: 'tree',
+                  label: 'Tree',
+                },
+                {
+                  value: 'pagination',
+                  label: 'Pagination',
+                },
+                {
+                  value: 'badge',
+                  label: 'Badge',
+                },
+              ],
+            },
+            {
+              value: 'notice',
+              label: 'Notice',
+              children: [
+                {
+                  value: 'alert',
+                  label: 'Alert',
+                },
+                {
+                  value: 'loading',
+                  label: 'Loading',
+                },
+                {
+                  value: 'message',
+                  label: 'Message',
+                },
+                {
+                  value: 'message-box',
+                  label: 'MessageBox',
+                },
+                {
+                  value: 'notification',
+                  label: 'Notification',
+                },
+              ],
+            },
+            {
+              value: 'navigation',
+              label: 'Navigation',
+              children: [
+                {
+                  value: 'menu',
+                  label: 'Menu',
+                },
+                {
+                  value: 'tabs',
+                  label: 'Tabs',
+                },
+                {
+                  value: 'breadcrumb',
+                  label: 'Breadcrumb',
+                },
+                {
+                  value: 'dropdown',
+                  label: 'Dropdown',
+                },
+                {
+                  value: 'steps',
+                  label: 'Steps',
+                },
+              ],
+            },
+            {
+              value: 'others',
+              label: 'Others',
+              children: [
+                {
+                  value: 'dialog',
+                  label: 'Dialog',
+                },
+                {
+                  value: 'tooltip',
+                  label: 'Tooltip',
+                },
+                {
+                  value: 'popover',
+                  label: 'Popover',
+                },
+                {
+                  value: 'card',
+                  label: 'Card',
+                },
+                {
+                  value: 'carousel',
+                  label: 'Carousel',
+                },
+                {
+                  value: 'collapse',
+                  label: 'Collapse',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          value: 'resource',
+          label: 'Resource',
+          children: [
+            {
+              value: 'axure',
+              label: 'Axure Components',
+            },
+            {
+              value: 'sketch',
+              label: 'Sketch Templates',
+            },
+            {
+              value: 'docs',
+              label: 'Design Documentation',
+            },
+          ],
+        },
       ]
 
-      var dashboard1El = document.querySelector('#dashboard1')
-      if (dashboard1El) {
-        dashboard1El.percentage = 20
-        dashboard1El.color = dashboardColors
-        setInterval(() => {
-          dashboard1El.percentage = dashboard1El.percentage % 100 + 10
-        }, 500)
-      }
+    }
 
-      // ------ start mention ----------------------------------
-      var mentionEl = document.querySelector('zane-mention');
-      if (mentionEl) {
-        mentionEl.options = [
-          {
-            label: 'Fuphoenixes',
-            value: 'Fuphoenixes',
-          },
-          {
-            label: 'kooriookami',
-            value: 'kooriookami',
-          },
-          {
-            label: 'Jeremy',
-            value: 'Jeremy',
-          },
-          {
-            label: 'btea',
-            value: 'btea',
-          },
-        ];
-      }
 
-      // ------ start select ----------------------------------
-      var selectEl = document.querySelector('#selectVirtual01');
-      if (selectEl) {
-        const initials = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
-        const options = Array.from({ length: 1000 }).map((_, idx) => ({
-          value: `Option ${idx + 1}`,
-          label: `${initials[idx % 10]}${idx}`,
-        }));
-        selectEl.options = options;
-      }
+    // ---- start pagination ------------------
+    var pagination04El = document.querySelector('#pagination04');
+    var paginationLog = document.querySelector('#pagination-log');
+    if (pagination04El && paginationLog) {
+      pagination04El.addEventListener('zCurrentChange', (e) => {
+        paginationLog.textContent = `当前页: ${e.detail}, 每页条数: ${pagination04El.getAttribute('page-size') || 10}`;
+      });
+      pagination04El.addEventListener('zSizeChange', (e) => {
+        paginationLog.textContent = `当前页: 1, 每页条数: ${e.detail}`;
+      });
+    }
 
-      // ------ start transfer ----------------------------------
-      var transfer01El = document.querySelector('#transfer01');
-      if (transfer01El) {
-        const data = []
-        for (let i = 1; i <= 15; i++) {
-          data.push({
-            key: i,
-            label: `Option ${i}`,
-            disabled: i % 4 === 0,
-          })
-        }
-        transfer01El.data = data;
-      }
-      // ------ start tree ----------------------------------
+    // ---- start timeline reverse demo ----
+    var timelineReverseEl = document.querySelector('#timelineReverse');
+    var reverseBtnEl = document.querySelector('#timelineReverseBtn');
+    if (timelineReverseEl && reverseBtnEl) {
+      reverseBtnEl.addEventListener('change', function (e) {
+        timelineReverseEl.reverse = e.target.checked;
+      });
+    }
 
-      const props = {
-        value: 'id',
-        label: 'label',
-        children: 'children',
-      };
+    // ---- start a2ui component -----
+    var a2uiEl = document.querySelector('#myA2ui');
+    if (a2uiEl) {
+       console.log(a2uiEl.messages);
 
-      const getKey = (prefix, id) => {
-        return `${prefix}-${id}`
-      };
-
-      function createData(
-        maxDeep,
-        maxChildren,
-        minNodesNumber,
-        deep = 1,
-        key = 'node'
-      ) {
-        let id = 0
-        return Array.from({ length: minNodesNumber })
-          .fill(deep)
-          .map(() => {
-            const childrenNumber =
-              deep === maxDeep ? 0 : Math.round(Math.random() * maxChildren)
-            const nodeKey = getKey(key, ++id)
-            return {
-              id: nodeKey,
-              label: nodeKey,
-              children: childrenNumber
-                ? createData(maxDeep, maxChildren, childrenNumber, deep + 1, nodeKey)
-                : undefined,
-            }
-          })
-      }
-
-      var tree01El = document.querySelector('#tree01');
-      if (tree01El) {
-        tree01El.data = createData(4, 30, 40);
-        tree01El.props = props;
-      }
-
-      // ---  start autocomplete ---------------------
-      var autocomplete01 = document.querySelector('#autocomplete01')
-      if (autocomplete01) {
-        const restaurants = [
-          { value: 'vue', link: 'https://github.com/vuejs/vue' },
-          { value: 'element', link: 'https://github.com/ElemeFE/element' },
-          { value: 'cooking', link: 'https://github.com/ElemeFE/cooking' },
-          { value: 'mint-ui', link: 'https://github.com/ElemeFE/mint-ui' },
-          { value: 'vuex', link: 'https://github.com/vuejs/vuex' },
-          { value: 'vue-router', link: 'https://github.com/vuejs/vue-router' },
-          { value: 'babel', link: 'https://github.com/babel/babel' },
-        ];
-
-        const createFilter = (queryString) => {
-          return (restaurant) => {
-            return (
-              restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
-            )
+      // 推送服务端消息驱动渲染
+      a2uiEl.messages = [
+        { beginRendering: { surfaceId: '@default', root: 'root1' } },
+        {
+          surfaceUpdate: {
+            surfaceId: '@default',
+            components: [{
+              id: 'root1',
+              component: {
+                "zane-container": {
+                  className: 'container',
+                  children: {
+                    explicitList: ['textNode1', 'btnNode1']
+                  }
+                }
+              }
+            }, {
+              id: 'textNode1',
+              component: { "zane-text": { child: 'textNode1Text'} }
+            }, {
+              id: 'textNode1Text',
+              component: {Text: { text: { literalString: 'Hello A2UI' } } }
+            }, {
+              id: 'btnNode1',
+              component: {
+                "zane-button": { 
+                  type: 'primary',
+                  child: 'btnNode1Text'
+                }
+              }
+            }, {
+              id: 'btnNode1Text',
+              component: { Text: { text: { literalString: 'Click Me' } } }
+            }]
           }
         }
+      ];
 
-        const querySearch = (queryString, cb) => {
-          const results = queryString
-            ? restaurants.filter(createFilter(queryString))
-            : restaurants
-          // call callback function to return suggestions
-          cb(results)
-        }
+      // 监听用户交互事件
+      a2uiEl.addEventListener('zAction', (e) => {
+        console.log('Event from node:', e.detail.nodeId, e.detail.eventName);
+      });
+    }
+  </script>
 
-        autocomplete01.fetchSuggestions = querySearch;
-      }
+</body>
 
-      // --- start select -------------------------
-      var treeSelect01 = document.querySelector('#treeSelect01')
-      if (treeSelect01) {
-        treeSelect01.data = createData(4, 30, 40);
-        treeSelect01.props = props;
-      }
-
-      // ---- start avatar group ------------------
-      var avatarGroupEl = document.querySelector('zane-avatar-group');
-      if (avatarGroupEl) {
-        avatarGroupEl.avatars = [
-          'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png|img',
-          'account-circle-line|icon',
-          'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png|img',
-          'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png|img',
-        ];
-      }
-
-      // ---- start cascader ------------------
-      var cascaderEl = document.querySelector('zane-cascader');
-      if (cascaderEl) {
-        cascaderEl.options = [
-          {
-            value: 'guide',
-            label: 'Guide',
-            children: [
-              {
-                value: 'disciplines',
-                label: 'Disciplines',
-                children: [
-                  {
-                    value: 'consistency',
-                    label: 'Consistency',
-                  },
-                  {
-                    value: 'feedback',
-                    label: 'Feedback',
-                  },
-                  {
-                    value: 'efficiency',
-                    label: 'Efficiency',
-                  },
-                  {
-                    value: 'controllability',
-                    label: 'Controllability',
-                  },
-                ],
-              },
-              {
-                value: 'navigation',
-                label: 'Navigation',
-                children: [
-                  {
-                    value: 'side nav',
-                    label: 'Side Navigation',
-                  },
-                  {
-                    value: 'top nav',
-                    label: 'Top Navigation',
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            value: 'component',
-            label: 'Component',
-            children: [
-              {
-                value: 'basic',
-                label: 'Basic',
-                children: [
-                  {
-                    value: 'layout',
-                    label: 'Layout',
-                  },
-                  {
-                    value: 'color',
-                    label: 'Color',
-                  },
-                  {
-                    value: 'typography',
-                    label: 'Typography',
-                  },
-                  {
-                    value: 'icon',
-                    label: 'Icon',
-                  },
-                  {
-                    value: 'button',
-                    label: 'Button',
-                  },
-                ],
-              },
-              {
-                value: 'form',
-                label: 'Form',
-                children: [
-                  {
-                    value: 'radio',
-                    label: 'Radio',
-                  },
-                  {
-                    value: 'checkbox',
-                    label: 'Checkbox',
-                  },
-                  {
-                    value: 'input',
-                    label: 'Input',
-                  },
-                  {
-                    value: 'input-number',
-                    label: 'InputNumber',
-                  },
-                  {
-                    value: 'select',
-                    label: 'Select',
-                  },
-                  {
-                    value: 'cascader',
-                    label: 'Cascader',
-                  },
-                  {
-                    value: 'switch',
-                    label: 'Switch',
-                  },
-                  {
-                    value: 'slider',
-                    label: 'Slider',
-                  },
-                  {
-                    value: 'time-picker',
-                    label: 'TimePicker',
-                  },
-                  {
-                    value: 'date-picker',
-                    label: 'DatePicker',
-                  },
-                  {
-                    value: 'datetime-picker',
-                    label: 'DateTimePicker',
-                  },
-                  {
-                    value: 'upload',
-                    label: 'Upload',
-                  },
-                  {
-                    value: 'rate',
-                    label: 'Rate',
-                  },
-                  {
-                    value: 'form',
-                    label: 'Form',
-                  },
-                ],
-              },
-              {
-                value: 'data',
-                label: 'Data',
-                children: [
-                  {
-                    value: 'table',
-                    label: 'Table',
-                  },
-                  {
-                    value: 'tag',
-                    label: 'Tag',
-                  },
-                  {
-                    value: 'progress',
-                    label: 'Progress',
-                  },
-                  {
-                    value: 'tree',
-                    label: 'Tree',
-                  },
-                  {
-                    value: 'pagination',
-                    label: 'Pagination',
-                  },
-                  {
-                    value: 'badge',
-                    label: 'Badge',
-                  },
-                ],
-              },
-              {
-                value: 'notice',
-                label: 'Notice',
-                children: [
-                  {
-                    value: 'alert',
-                    label: 'Alert',
-                  },
-                  {
-                    value: 'loading',
-                    label: 'Loading',
-                  },
-                  {
-                    value: 'message',
-                    label: 'Message',
-                  },
-                  {
-                    value: 'message-box',
-                    label: 'MessageBox',
-                  },
-                  {
-                    value: 'notification',
-                    label: 'Notification',
-                  },
-                ],
-              },
-              {
-                value: 'navigation',
-                label: 'Navigation',
-                children: [
-                  {
-                    value: 'menu',
-                    label: 'Menu',
-                  },
-                  {
-                    value: 'tabs',
-                    label: 'Tabs',
-                  },
-                  {
-                    value: 'breadcrumb',
-                    label: 'Breadcrumb',
-                  },
-                  {
-                    value: 'dropdown',
-                    label: 'Dropdown',
-                  },
-                  {
-                    value: 'steps',
-                    label: 'Steps',
-                  },
-                ],
-              },
-              {
-                value: 'others',
-                label: 'Others',
-                children: [
-                  {
-                    value: 'dialog',
-                    label: 'Dialog',
-                  },
-                  {
-                    value: 'tooltip',
-                    label: 'Tooltip',
-                  },
-                  {
-                    value: 'popover',
-                    label: 'Popover',
-                  },
-                  {
-                    value: 'card',
-                    label: 'Card',
-                  },
-                  {
-                    value: 'carousel',
-                    label: 'Carousel',
-                  },
-                  {
-                    value: 'collapse',
-                    label: 'Collapse',
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            value: 'resource',
-            label: 'Resource',
-            children: [
-              {
-                value: 'axure',
-                label: 'Axure Components',
-              },
-              {
-                value: 'sketch',
-                label: 'Sketch Templates',
-              },
-              {
-                value: 'docs',
-                label: 'Design Documentation',
-              },
-            ],
-          },
-        ]
-
-      }
-    </script>
-  </body>
 </html>

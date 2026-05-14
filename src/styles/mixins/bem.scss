@@ -53,6 +53,29 @@ $E: null;
   }
 }
 
+// BEM 块元素-元素混合宏
+// 使用示例：@include be(sub, title) { ... }
+// 生成 .zane-menu__sub-title
+@mixin be($element, $subElement) {
+  $selector: '.' + $B + $element-separator + $element + '-' + $subElement;
+
+  @if hitAllSpecialNestRule(&) {
+    @at-root {
+      #{$selector} {
+        #{$selector} {
+          @content;
+        }
+      }
+    }
+  } @else {
+    @at-root {
+      #{$selector} {
+        @content;
+      }
+    }
+  }
+}
+
 // BEM 修饰符混合宏
 // 使用示例：@include m(disabled) { ... }
 @mixin m($modifier) {

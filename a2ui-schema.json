@@ -1,0 +1,3334 @@
+{
+  "title": "A2UI Message Schema",
+  "description": "Describes a JSON payload for an A2UI (Agent to UI) message, which is used to dynamically construct and update user interfaces using zane-ui web components. A message MUST contain exactly ONE of the action properties: 'beginRendering', 'surfaceUpdate', 'dataModelUpdate', or 'deleteSurface'.",
+  "type": "object",
+  "properties": {
+    "beginRendering": {
+      "type": "object",
+      "description": "Signals the client to begin rendering a surface with a root component and specific styles.",
+      "properties": {
+        "surfaceId": {
+          "type": "string",
+          "description": "The unique identifier for the UI surface to be rendered."
+        },
+        "root": {
+          "type": "string",
+          "description": "The ID of the root component to render."
+        },
+        "styles": {
+          "type": "object",
+          "description": "CSS styling information for the UI surface. Keys are CSS selectors, values are style declarations.",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "examples": [
+            {
+              ".container": "padding: 16px;"
+            },
+            {
+              ".header": "background-color: #00BFFF; color: white;"
+            }
+          ]
+        }
+      },
+      "required": [
+        "root",
+        "surfaceId"
+      ]
+    },
+    "surfaceUpdate": {
+      "type": "object",
+      "description": "Updates a surface with a new set of components.",
+      "properties": {
+        "surfaceId": {
+          "type": "string",
+          "description": "The unique identifier for the UI surface to be updated. If you are adding a new surface this *must* be a new, unique identifier that has never been used for any existing surfaces shown."
+        },
+        "components": {
+          "type": "array",
+          "description": "A list containing all UI component instances for the surface.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "description": "Represents a single component instance in a UI widget tree. Each instance has a unique ID and defines one component type with its properties.",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The unique identifier for this component instance."
+              },
+              "weight": {
+                "type": "number",
+                "description": "The relative weight of this component within a flex container. This corresponds to the CSS 'flex-grow' property."
+              },
+              "component": {
+                "type": "object",
+                "description": "A wrapper object that MUST contain exactly one key, which is the component tag name (e.g., 'zane-button', 'zane-text', 'zane-input'). The value is an object containing the properties for that specific component.",
+                "properties": {
+                  "zane-aside": {
+                    "type": "object",
+                    "description": "zane-aside component properties.",
+                    "properties": {
+                      "width": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "zane-autocomplete": {
+                    "type": "object",
+                    "description": "zane-autocomplete component properties.",
+                    "properties": {
+                      "aria-label": {
+                        "type": "string"
+                      },
+                      "clearable": {
+                        "type": "boolean"
+                      },
+                      "clear-icon": {
+                        "type": "string",
+                        "default": "close-circle-line"
+                      },
+                      "debounce": {
+                        "type": "number",
+                        "default": 300
+                      },
+                      "disabled": {
+                        "type": "boolean"
+                      },
+                      "fetch-suggestions": {
+                        "type": "string"
+                      },
+                      "fit-input-width": {
+                        "type": "boolean"
+                      },
+                      "form": {
+                        "type": "string"
+                      },
+                      "formatter": {
+                        "type": "string"
+                      },
+                      "hide-loading": {
+                        "type": "boolean"
+                      },
+                      "highlight-first-item": {
+                        "type": "boolean"
+                      },
+                      "input-style": {
+                        "type": "string"
+                      },
+                      "loop-navigation": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "max": {
+                        "type": "number"
+                      },
+                      "max-length": {
+                        "oneOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "min": {
+                        "type": "number"
+                      },
+                      "min-length": {
+                        "oneOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "parser": {
+                        "type": "string"
+                      },
+                      "placeholder": {
+                        "type": "string"
+                      },
+                      "placement": {
+                        "type": "string",
+                        "default": "bottom-start"
+                      },
+                      "popper-theme": {
+                        "type": "string",
+                        "default": "autocomplete"
+                      },
+                      "prefix-icon": {
+                        "type": "string"
+                      },
+                      "resize": {
+                        "type": "string"
+                      },
+                      "rows": {
+                        "type": "number",
+                        "default": 2
+                      },
+                      "select-when-unmatched": {
+                        "type": "boolean"
+                      },
+                      "show-password": {
+                        "type": "boolean"
+                      },
+                      "show-word-limit": {
+                        "type": "boolean"
+                      },
+                      "size": {
+                        "type": "string"
+                      },
+                      "step": {
+                        "type": "number"
+                      },
+                      "suffix-icon": {
+                        "type": "string"
+                      },
+                      "trigger-on-focus": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "type": {
+                        "type": "string",
+                        "default": "text"
+                      },
+                      "validate-event": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "value": {
+                        "oneOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": ""
+                      },
+                      "value-key": {
+                        "type": "string",
+                        "default": "value"
+                      },
+                      "word-limit-position": {
+                        "type": "string",
+                        "default": "inside"
+                      },
+                      "z-tabindex": {
+                        "oneOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "default": 0
+                      }
+                    },
+                    "required": [
+                      "fetch-suggestions"
+                    ]
+                  },
+                  "zane-avatar": {
+                    "type": "object",
+                    "description": "zane-avatar component properties.",
+                    "properties": {
+                      "alt": {
+                        "type": "string"
+                      },
+                      "fit": {
+                        "type": "string",
+                        "default": "cover"
+                      },
+                      "icon": {
+                        "type": "string"
+                      },
+                      "shape": {
+                        "type": "string",
+                        "default": "circle"
+                      },
+                      "size": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ],
+                        "default": "default"
+                      },
+                      "src": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "src-set": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "zane-badge": {
+                    "type": "object",
+                    "description": "zane-badge component properties.",
+                    "properties": {
+                      "value": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ],
+                        "default": ""
+                      },
+                      "max": {
+                        "type": "number",
+                        "default": 99
+                      },
+                      "is-dot": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "hidden": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "show-zero": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "color": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "offset": {
+                        "type": "string",
+                        "default": [
+                          0,
+                          0
+                        ]
+                      },
+                      "badge-style": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "default": {}
+                      },
+                      "badge-class": {
+                        "type": "string",
+                        "default": ""
+                      }
+                    }
+                  },
+                  "zane-button": {
+                    "type": "object",
+                    "description": "zane-button component properties.",
+                    "properties": {
+                      "autofocus": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "auto-insert-space": {
+                        "type": "boolean"
+                      },
+                      "bg": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "circle": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "color": {
+                        "type": "string"
+                      },
+                      "dark": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "disabled": {
+                        "type": "boolean"
+                      },
+                      "icon": {
+                        "type": "string"
+                      },
+                      "link": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "loading": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "native-type": {
+                        "type": "string",
+                        "default": "button"
+                      },
+                      "plain": {
+                        "type": "boolean"
+                      },
+                      "round": {
+                        "type": "boolean"
+                      },
+                      "size": {
+                        "type": "string"
+                      },
+                      "text": {
+                        "type": "boolean"
+                      },
+                      "type": {
+                        "type": "string",
+                        "default": ""
+                      }
+                    }
+                  },
+                  "zane-card": {
+                    "type": "object",
+                    "description": "zane-card component properties.",
+                    "properties": {
+                      "body-class": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "body-style": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "default": {}
+                      },
+                      "footer": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "footer-class": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "header": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "header-class": {
+                        "type": "string",
+                        "default": ""
+                      }
+                    }
+                  },
+                  "zane-carousel": {
+                    "type": "object",
+                    "description": "zane-carousel component properties.",
+                    "properties": {
+                      "initial-index": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "height": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "trigger": {
+                        "type": "string",
+                        "default": "hover"
+                      },
+                      "autoplay": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "interval": {
+                        "type": "number",
+                        "default": 3000
+                      },
+                      "indicator-position": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "arrow": {
+                        "type": "string",
+                        "default": "hover"
+                      },
+                      "type": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "card-scale": {
+                        "type": "number",
+                        "default": 0.83
+                      },
+                      "loop": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "direction": {
+                        "type": "string",
+                        "default": "horizontal"
+                      },
+                      "pause-on-hover": {
+                        "type": "boolean",
+                        "default": true
+                      }
+                    }
+                  },
+                  "zane-cascader": {
+                    "type": "object",
+                    "description": "zane-cascader component properties.",
+                    "properties": {
+                      "check-on-click-node": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "clearable": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "clear-icon": {
+                        "type": "string",
+                        "default": "close-circle-line"
+                      },
+                      "collapse-tags": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "collapse-tags-tooltip": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "debounce": {
+                        "type": "number",
+                        "default": 300
+                      },
+                      "filterable": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "max-collapse-tags": {
+                        "type": "number",
+                        "default": 1
+                      },
+                      "options": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "default": []
+                      },
+                      "props": {
+                        "type": "string",
+                        "default": {}
+                      },
+                      "placeholder": {
+                        "type": "string",
+                        "default": "Select"
+                      },
+                      "popper-theme": {
+                        "type": "string",
+                        "default": "cascader"
+                      },
+                      "popper-options": {
+                        "type": "string",
+                        "default": {}
+                      },
+                      "separator": {
+                        "type": "string",
+                        "default": " / "
+                      },
+                      "show-all-levels": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "show-checked-strategy": {
+                        "type": "string",
+                        "default": "child"
+                      },
+                      "show-prefix": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "tag-effect": {
+                        "type": "string",
+                        "default": "light"
+                      },
+                      "validate-event": {
+                        "type": "boolean",
+                        "default": true
+                      }
+                    }
+                  },
+                  "zane-chat": {
+                    "type": "object",
+                    "description": "zane-chat component properties.",
+                    "properties": {
+                      "theme": {
+                        "type": "string",
+                        "default": {}
+                      }
+                    }
+                  },
+                  "zane-checkbox": {
+                    "type": "object",
+                    "description": "zane-checkbox component properties.",
+                    "properties": {
+                      "label": {
+                        "type": "string"
+                      },
+                      "validate-event": {
+                        "type": "boolean",
+                        "default": true
+                      }
+                    },
+                    "required": [
+                      "label"
+                    ]
+                  },
+                  "zane-col": {
+                    "type": "object",
+                    "description": "zane-col component properties.",
+                    "properties": {
+                      "lg": {
+                        "type": "string"
+                      },
+                      "md": {
+                        "type": "string"
+                      },
+                      "offset": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "pull": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "push": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "sm": {
+                        "type": "string"
+                      },
+                      "span": {
+                        "type": "number",
+                        "default": 24
+                      },
+                      "xl": {
+                        "type": "string"
+                      },
+                      "xs": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "lg",
+                      "md",
+                      "sm",
+                      "xl",
+                      "xs"
+                    ]
+                  },
+                  "zane-collapse": {
+                    "type": "object",
+                    "description": "zane-collapse component properties.",
+                    "properties": {
+                      "accordion": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "expand-icon-position": {
+                        "type": "string",
+                        "default": "right"
+                      },
+                      "value": {
+                        "type": "string",
+                        "default": []
+                      }
+                    }
+                  },
+                  "zane-config-provider": {
+                    "type": "object",
+                    "description": "zane-config-provider component properties.",
+                    "properties": {
+                      "button": {
+                        "type": "string"
+                      },
+                      "card": {
+                        "type": "string"
+                      },
+                      "locale": {
+                        "type": "string"
+                      },
+                      "size": {
+                        "type": "string"
+                      },
+                      "value-on-clear": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "zane-container": {
+                    "type": "object",
+                    "description": "zane-container component properties.",
+                    "properties": {
+                      "direction": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "direction"
+                    ]
+                  },
+                  "zane-descriptions": {
+                    "type": "object",
+                    "description": "zane-descriptions component properties.",
+                    "properties": {
+                      "border": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "column": {
+                        "type": "number",
+                        "default": 3
+                      },
+                      "direction": {
+                        "type": "string",
+                        "default": "horizontal"
+                      },
+                      "z-title": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "extra": {
+                        "type": "string",
+                        "default": ""
+                      }
+                    }
+                  },
+                  "zane-divider": {
+                    "type": "object",
+                    "description": "zane-divider component properties.",
+                    "properties": {
+                      "border-style": {
+                        "type": "string",
+                        "default": "solid"
+                      },
+                      "content-position": {
+                        "type": "string",
+                        "default": "center"
+                      },
+                      "direction": {
+                        "type": "string",
+                        "default": "horizontal"
+                      }
+                    }
+                  },
+                  "zane-empty": {
+                    "type": "object",
+                    "description": "zane-empty component properties.",
+                    "properties": {
+                      "image": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "image-size": {
+                        "type": "number"
+                      },
+                      "description": {
+                        "type": "string",
+                        "default": ""
+                      }
+                    },
+                    "required": [
+                      "image-size"
+                    ]
+                  },
+                  "zane-focus-trap": {
+                    "type": "object",
+                    "description": "zane-focus-trap component properties.",
+                    "properties": {
+                      "focus-start-el": {
+                        "type": "string",
+                        "default": "first"
+                      },
+                      "focus-trap-el": {
+                        "type": "string"
+                      },
+                      "loop": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "trap-on-focus-in": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "trapped": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    },
+                    "required": [
+                      "focus-trap-el"
+                    ]
+                  },
+                  "zane-footer": {
+                    "type": "object",
+                    "description": "zane-footer component properties.",
+                    "properties": {
+                      "height": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "height"
+                    ]
+                  },
+                  "zane-form": {
+                    "type": "object",
+                    "description": "zane-form component properties.",
+                    "properties": {
+                      "disabled": {
+                        "type": "boolean"
+                      },
+                      "hide-required-asterisk": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "inline": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "inline-message": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "label-position": {
+                        "type": "string",
+                        "default": "right"
+                      },
+                      "label-suffix": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "label-width": {
+                        "oneOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "default": ""
+                      },
+                      "model": {
+                        "type": "string"
+                      },
+                      "require-asterisk-position": {
+                        "type": "string",
+                        "default": "left"
+                      },
+                      "rules": {
+                        "type": "string"
+                      },
+                      "scroll-into-view-options": {
+                        "oneOf": [
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "default": true
+                      },
+                      "scroll-to-error": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "show-message": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "size": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "status-icon": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "validate-on-rule-change": {
+                        "type": "boolean",
+                        "default": true
+                      }
+                    }
+                  },
+                  "zane-header": {
+                    "type": "object",
+                    "description": "zane-header component properties.",
+                    "properties": {
+                      "height": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "height"
+                    ]
+                  },
+                  "zane-icon": {
+                    "type": "object",
+                    "description": "zane-icon component properties.",
+                    "properties": {
+                      "icon-class": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "spin": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "zane-input": {
+                    "type": "object",
+                    "description": "zane-input component properties.",
+                    "properties": {
+                      "aria-label": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "autocomplete": {
+                        "type": "string",
+                        "default": "off"
+                      },
+                      "autofocus": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "autosize": {
+                        "type": "string",
+                        "default": false
+                      },
+                      "clearable": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "clear-icon": {
+                        "type": "string",
+                        "default": "close-circle-line"
+                      },
+                      "input-style": {
+                        "type": "string"
+                      },
+                      "is-composing": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "readonly": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "resize": {
+                        "type": "string",
+                        "default": "none"
+                      },
+                      "rows": {
+                        "type": "number",
+                        "default": 2
+                      },
+                      "show-password": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "show-word-limit": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "step": {
+                        "type": "number",
+                        "default": 1
+                      },
+                      "type": {
+                        "type": "string",
+                        "default": "text"
+                      },
+                      "validate-event": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "value": {
+                        "oneOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": ""
+                      },
+                      "word-limit-position": {
+                        "type": "string",
+                        "default": "inside"
+                      },
+                      "z-tabindex": {
+                        "oneOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "default": 0
+                      }
+                    }
+                  },
+                  "zane-input-number": {
+                    "type": "object",
+                    "description": "zane-input-number component properties.",
+                    "properties": {
+                      "z-id": {
+                        "type": "string"
+                      },
+                      "step": {
+                        "type": "number",
+                        "default": 1
+                      },
+                      "step-strictly": {
+                        "type": "boolean"
+                      },
+                      "max": {
+                        "type": "number"
+                      },
+                      "min": {
+                        "type": "number"
+                      },
+                      "value": {
+                        "type": "number",
+                        "default": null
+                      },
+                      "readonly": {
+                        "type": "boolean"
+                      },
+                      "disabled": {
+                        "type": "boolean"
+                      },
+                      "size": {
+                        "type": "string"
+                      },
+                      "controls": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "controls-position": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "value-on-clear": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "placeholder": {
+                        "type": "string"
+                      },
+                      "precision": {
+                        "type": "number"
+                      },
+                      "validate-event": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "aria-label": {
+                        "type": "string"
+                      },
+                      "align": {
+                        "type": "string",
+                        "default": "center"
+                      },
+                      "disabled-scientific": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "step-strictly",
+                      "max",
+                      "min",
+                      "readonly",
+                      "disabled",
+                      "size",
+                      "name",
+                      "placeholder",
+                      "precision",
+                      "aria-label",
+                      "disabled-scientific"
+                    ]
+                  },
+                  "zane-input-tag": {
+                    "type": "object",
+                    "description": "zane-input-tag component properties.",
+                    "properties": {
+                      "max": {
+                        "type": "number"
+                      },
+                      "wrapper-class": {
+                        "type": "string"
+                      },
+                      "wrapper-style": {
+                        "type": "object",
+                        "additionalProperties": true
+                      },
+                      "tag-type": {
+                        "type": "string",
+                        "default": "info"
+                      },
+                      "tag-effect": {
+                        "type": "string",
+                        "default": "light"
+                      },
+                      "trigger": {
+                        "type": "string",
+                        "default": "Enter"
+                      },
+                      "z-draggable": {
+                        "type": "boolean"
+                      },
+                      "value": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "delimiter": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "size": {
+                        "type": "string"
+                      },
+                      "clearable": {
+                        "type": "boolean"
+                      },
+                      "clear-icon": {
+                        "type": "string",
+                        "default": "close-circle-line"
+                      },
+                      "disabled": {
+                        "type": "boolean"
+                      },
+                      "validate-event": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "readonly": {
+                        "type": "boolean"
+                      },
+                      "autofocus": {
+                        "type": "boolean"
+                      },
+                      "z-id": {
+                        "type": "string"
+                      },
+                      "z-tabindex": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "max-length": {
+                        "oneOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "min-length": {
+                        "oneOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "placeholder": {
+                        "type": "string"
+                      },
+                      "tooltip-theme": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "autocomplete": {
+                        "type": "string",
+                        "default": "off"
+                      },
+                      "save-on-blur": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "collapse-tags": {
+                        "type": "boolean"
+                      },
+                      "collapse-tags-tooltip": {
+                        "type": "boolean"
+                      },
+                      "max-collapse-tags": {
+                        "type": "number",
+                        "default": 1
+                      },
+                      "aria-label": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "max",
+                      "wrapper-class",
+                      "wrapper-style",
+                      "value",
+                      "size",
+                      "clearable",
+                      "disabled",
+                      "readonly",
+                      "autofocus",
+                      "placeholder",
+                      "collapse-tags",
+                      "collapse-tags-tooltip",
+                      "aria-label"
+                    ]
+                  },
+                  "zane-link": {
+                    "type": "object",
+                    "description": "zane-link component properties.",
+                    "properties": {
+                      "disabled": {
+                        "type": "boolean"
+                      },
+                      "href": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "icon": {
+                        "type": "string"
+                      },
+                      "target": {
+                        "type": "string",
+                        "default": "_self"
+                      },
+                      "underline": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "disabled",
+                      "icon"
+                    ]
+                  },
+                  "zane-mention": {
+                    "type": "object",
+                    "description": "zane-mention component properties.",
+                    "properties": {
+                      "z-id": {
+                        "type": "string"
+                      },
+                      "size": {
+                        "type": "string"
+                      },
+                      "disabled": {
+                        "type": "boolean"
+                      },
+                      "value": {
+                        "type": "string"
+                      },
+                      "model-modifiers": {
+                        "type": "string",
+                        "default": {}
+                      },
+                      "max-length": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "min-length": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "type": {
+                        "type": "string",
+                        "default": "text"
+                      },
+                      "resize": {
+                        "type": "string"
+                      },
+                      "autosize": {
+                        "type": "string",
+                        "default": false
+                      },
+                      "autocomplete": {
+                        "type": "string",
+                        "default": "off"
+                      },
+                      "formatter": {
+                        "type": "string"
+                      },
+                      "parser": {
+                        "type": "string"
+                      },
+                      "placeholder": {
+                        "type": "string"
+                      },
+                      "form": {
+                        "type": "string"
+                      },
+                      "readonly": {
+                        "type": "boolean"
+                      },
+                      "clearable": {
+                        "type": "boolean"
+                      },
+                      "clear-icon": {
+                        "type": "string",
+                        "default": "close-circle-line"
+                      },
+                      "show-password": {
+                        "type": "boolean"
+                      },
+                      "show-word-limit": {
+                        "type": "boolean"
+                      },
+                      "word-limit-position": {
+                        "type": "string",
+                        "default": "inside"
+                      },
+                      "suffix-icon": {
+                        "type": "string"
+                      },
+                      "prefix-icon": {
+                        "type": "string"
+                      },
+                      "container-role": {
+                        "type": "string"
+                      },
+                      "z-tabindex": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ],
+                        "default": 0
+                      },
+                      "validate-event": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "input-style": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "default": {}
+                      },
+                      "autofocus": {
+                        "type": "boolean"
+                      },
+                      "rows": {
+                        "type": "number",
+                        "default": 2
+                      },
+                      "aria-label": {
+                        "type": "string"
+                      },
+                      "z-inputmode": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "options": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "default": []
+                      },
+                      "z-prefix": {
+                        "type": "string",
+                        "default": "@"
+                      },
+                      "split": {
+                        "type": "string",
+                        "default": " "
+                      },
+                      "placement": {
+                        "type": "string",
+                        "default": "bottom"
+                      },
+                      "show-arrow": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "offset": {
+                        "type": "string",
+                        "default": "tippy.defaultProps.offset"
+                      },
+                      "whole": {
+                        "type": "boolean"
+                      },
+                      "loading": {
+                        "type": "boolean"
+                      },
+                      "popper-theme": {
+                        "type": "string"
+                      },
+                      "popper-options": {
+                        "type": "string",
+                        "default": "tippy.defaultProps.popperOptions"
+                      },
+                      "props": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "size",
+                      "disabled",
+                      "value",
+                      "formatter",
+                      "parser",
+                      "placeholder",
+                      "form",
+                      "readonly",
+                      "clearable",
+                      "show-password",
+                      "show-word-limit",
+                      "suffix-icon",
+                      "prefix-icon",
+                      "container-role",
+                      "autofocus",
+                      "aria-label",
+                      "name",
+                      "whole",
+                      "loading",
+                      "popper-theme",
+                      "props"
+                    ]
+                  },
+                  "zane-only-child": {
+                    "type": "object",
+                    "description": "zane-only-child component properties.",
+                    "properties": {
+                      "debug": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "strict": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "zane-pagination": {
+                    "type": "object",
+                    "description": "zane-pagination component properties.",
+                    "properties": {
+                      "default-page-size": {
+                        "type": "number",
+                        "default": 10
+                      },
+                      "default-current-page": {
+                        "type": "number",
+                        "default": 1
+                      },
+                      "pager-count": {
+                        "type": "number"
+                      },
+                      "layout": {
+                        "type": "string"
+                      },
+                      "page-sizes": {
+                        "type": "string"
+                      },
+                      "background": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "disabled": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "hide-on-single-page": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "prev-text": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "next-text": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "prev-icon": {
+                        "type": "string",
+                        "default": "arrow-left-s-line"
+                      },
+                      "next-icon": {
+                        "type": "string",
+                        "default": "arrow-right-s-line"
+                      }
+                    },
+                    "required": [
+                      "pager-count",
+                      "layout"
+                    ]
+                  },
+                  "zane-progress": {
+                    "type": "object",
+                    "description": "zane-progress component properties.",
+                    "properties": {
+                      "percentage": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "type": {
+                        "type": "string",
+                        "default": "line"
+                      },
+                      "status": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "indeterminate": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "duration": {
+                        "type": "number",
+                        "default": 3
+                      },
+                      "stroke-width": {
+                        "type": "number",
+                        "default": 6
+                      },
+                      "stroke-linecap": {
+                        "type": "string",
+                        "default": "round"
+                      },
+                      "text-inside": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "width": {
+                        "type": "number",
+                        "default": 126
+                      },
+                      "show-text": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "color": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "striped": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "striped-flow": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "zane-radio": {
+                    "type": "object",
+                    "description": "zane-radio component properties.",
+                    "properties": {
+                      "value": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
+                      },
+                      "size": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "disabled": {
+                        "type": "boolean"
+                      },
+                      "label": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "border": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "disabled",
+                      "name",
+                      "border"
+                    ]
+                  },
+                  "zane-rate": {
+                    "type": "object",
+                    "description": "zane-rate component properties.",
+                    "properties": {
+                      "z-id": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "low-threshold": {
+                        "type": "number",
+                        "default": 2
+                      },
+                      "high-threshold": {
+                        "type": "number",
+                        "default": 4
+                      },
+                      "max": {
+                        "type": "number",
+                        "default": 5
+                      },
+                      "colors": {
+                        "type": "string"
+                      },
+                      "void-color": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "disabled-void-color": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "icons": {
+                        "type": "string"
+                      },
+                      "void-icon": {
+                        "type": "string",
+                        "default": "star-line"
+                      },
+                      "disabled-void-icon": {
+                        "type": "string",
+                        "default": "star-fill"
+                      },
+                      "disabled": {
+                        "type": "boolean"
+                      },
+                      "allow-half": {
+                        "type": "boolean"
+                      },
+                      "show-text": {
+                        "type": "boolean"
+                      },
+                      "show-score": {
+                        "type": "boolean"
+                      },
+                      "text-color": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "texts": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "score-template": {
+                        "type": "string",
+                        "default": "{value}"
+                      },
+                      "size": {
+                        "type": "string"
+                      },
+                      "clearable": {
+                        "type": "boolean"
+                      },
+                      "label": {
+                        "type": "string"
+                      },
+                      "aria-label": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "disabled",
+                      "allow-half",
+                      "show-text",
+                      "show-score",
+                      "texts",
+                      "size",
+                      "clearable",
+                      "label",
+                      "aria-label"
+                    ]
+                  },
+                  "zane-row": {
+                    "type": "object",
+                    "description": "zane-row component properties.",
+                    "properties": {
+                      "gutter": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "justify": {
+                        "type": "string",
+                        "default": "start"
+                      }
+                    }
+                  },
+                  "zane-scrollbar": {
+                    "type": "object",
+                    "description": "zane-scrollbar component properties.",
+                    "properties": {
+                      "always": {
+                        "type": "boolean"
+                      },
+                      "distance": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "height": {
+                        "oneOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "default": ""
+                      },
+                      "max-height": {
+                        "oneOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "default": ""
+                      },
+                      "min-size": {
+                        "type": "number",
+                        "default": 20
+                      },
+                      "native": {
+                        "type": "boolean"
+                      },
+                      "noresize": {
+                        "type": "boolean"
+                      },
+                      "role": {
+                        "type": "string"
+                      },
+                      "tag": {
+                        "type": "string",
+                        "default": "div"
+                      },
+                      "view-class": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "view-style": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "default": {}
+                      },
+                      "wrap-class": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "wrap-style": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "default": {}
+                      }
+                    },
+                    "required": [
+                      "always",
+                      "native",
+                      "noresize",
+                      "role"
+                    ]
+                  },
+                  "zane-select": {
+                    "type": "object",
+                    "description": "zane-select component properties.",
+                    "properties": {
+                      "value": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "autocomplete": {
+                        "type": "string",
+                        "default": "off"
+                      },
+                      "automatic-dropdown": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "clearable": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "clear-icon": {
+                        "type": "string",
+                        "default": "close-circle-line"
+                      },
+                      "allow-create": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "loading": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "popper-options": {
+                        "type": "string",
+                        "default": {}
+                      },
+                      "debounce": {
+                        "type": "number",
+                        "default": 300
+                      },
+                      "remote": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "filterable": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "multiple": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "multiple-limit": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "default-first-option": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "reserve-keyword": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "value-key": {
+                        "type": "string",
+                        "default": "value"
+                      },
+                      "collapse-tags": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "collapse-tags-tooltip": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "tag-tooltip": {
+                        "type": "string",
+                        "default": {}
+                      },
+                      "max-collapse-tags": {
+                        "type": "number",
+                        "default": 1
+                      },
+                      "fit-input-width": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "suffix-icon": {
+                        "type": "string",
+                        "default": "arrow-down-s-line"
+                      },
+                      "tag-type": {
+                        "type": "string",
+                        "default": "info"
+                      },
+                      "tag-effect": {
+                        "type": "string",
+                        "default": "light"
+                      },
+                      "validate-event": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "remote-show-suffix": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "show-arrow": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "offset": {
+                        "type": "string",
+                        "default": "tippy.defaultProps.offset"
+                      },
+                      "placement": {
+                        "type": "string",
+                        "default": "bottom-start"
+                      },
+                      "z-tab-index": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "append-to": {
+                        "type": "string",
+                        "default": "tippy.defaultProps.appendTo"
+                      },
+                      "options": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": true
+                        },
+                        "default": []
+                      },
+                      "props": {
+                        "type": "string"
+                      },
+                      "value-on-clear": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "props",
+                      "value-on-clear"
+                    ]
+                  },
+                  "zane-select-virtual": {
+                    "type": "object",
+                    "description": "zane-select-virtual component properties.",
+                    "properties": {
+                      "allow-create": {
+                        "type": "boolean"
+                      },
+                      "autocomplete": {
+                        "type": "string",
+                        "default": "none"
+                      },
+                      "automatic-dropdown": {
+                        "type": "boolean"
+                      },
+                      "clearable": {
+                        "type": "boolean"
+                      },
+                      "clear-icon": {
+                        "type": "string",
+                        "default": "close-circle-line"
+                      },
+                      "collapse-tags": {
+                        "type": "boolean"
+                      },
+                      "collapse-tags-tooltip": {
+                        "type": "boolean"
+                      },
+                      "max-collapse-tags": {
+                        "type": "number",
+                        "default": 1
+                      },
+                      "default-first-option": {
+                        "type": "boolean"
+                      },
+                      "disabled": {
+                        "type": "boolean"
+                      },
+                      "estimated-option-height": {
+                        "type": "number"
+                      },
+                      "filterable": {
+                        "type": "boolean"
+                      },
+                      "height": {
+                        "type": "number",
+                        "default": 274
+                      },
+                      "item-height": {
+                        "type": "number",
+                        "default": 34
+                      },
+                      "z-id": {
+                        "type": "string"
+                      },
+                      "loading": {
+                        "type": "boolean"
+                      },
+                      "loading-text": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "multiple": {
+                        "type": "boolean"
+                      },
+                      "multiple-limit": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "no-data-text": {
+                        "type": "string"
+                      },
+                      "no-match-text": {
+                        "type": "string"
+                      },
+                      "reserve-keyword": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "options": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "placeholder": {
+                        "type": "string"
+                      },
+                      "popper-theme": {
+                        "type": "string"
+                      },
+                      "popper-options": {
+                        "type": "string",
+                        "default": {}
+                      },
+                      "remote": {
+                        "type": "boolean"
+                      },
+                      "debounce": {
+                        "type": "number",
+                        "default": 300
+                      },
+                      "size": {
+                        "type": "string"
+                      },
+                      "props": {
+                        "type": "string"
+                      },
+                      "value-key": {
+                        "type": "string",
+                        "default": "value"
+                      },
+                      "scrollbar-always-on": {
+                        "type": "boolean"
+                      },
+                      "validate-event": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "offset": {
+                        "type": "string",
+                        "default": "tippy.defaultProps.offset"
+                      },
+                      "remote-show-suffix": {
+                        "type": "boolean"
+                      },
+                      "show-arrow": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "placement": {
+                        "type": "string",
+                        "default": "bottom-start"
+                      },
+                      "tag-type": {
+                        "type": "string",
+                        "default": "info"
+                      },
+                      "tag-effect": {
+                        "type": "string",
+                        "default": "light"
+                      },
+                      "z-tabindex": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "fit-input-width": {
+                        "oneOf": [
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ],
+                        "default": true
+                      },
+                      "suffix-icon": {
+                        "type": "string",
+                        "default": "arrow-down-s-line"
+                      },
+                      "empty-values": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "value-on-clear": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
+                      },
+                      "aria-label": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "allow-create",
+                      "automatic-dropdown",
+                      "clearable",
+                      "collapse-tags",
+                      "collapse-tags-tooltip",
+                      "default-first-option",
+                      "disabled",
+                      "estimated-option-height",
+                      "filterable",
+                      "loading",
+                      "loading-text",
+                      "multiple",
+                      "name",
+                      "no-data-text",
+                      "no-match-text",
+                      "options",
+                      "placeholder",
+                      "popper-theme",
+                      "remote",
+                      "size",
+                      "props",
+                      "scrollbar-always-on",
+                      "remote-show-suffix",
+                      "empty-values",
+                      "value-on-clear",
+                      "label",
+                      "aria-label"
+                    ]
+                  },
+                  "zane-slider": {
+                    "type": "object",
+                    "description": "zane-slider component properties.",
+                    "properties": {
+                      "z-id": {
+                        "type": "string"
+                      },
+                      "min": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "max": {
+                        "type": "number",
+                        "default": 100
+                      },
+                      "step": {
+                        "type": "number",
+                        "default": 1
+                      },
+                      "value": {
+                        "oneOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "default": 0
+                      },
+                      "show-input": {
+                        "type": "boolean"
+                      },
+                      "show-input-controls": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "size": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "input-size": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "show-stops": {
+                        "type": "boolean"
+                      },
+                      "show-tooltip": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "disabled": {
+                        "type": "boolean"
+                      },
+                      "range": {
+                        "type": "boolean"
+                      },
+                      "vertical": {
+                        "type": "boolean"
+                      },
+                      "height": {
+                        "type": "string"
+                      },
+                      "range-start-label": {
+                        "type": "string"
+                      },
+                      "range-end-label": {
+                        "type": "string"
+                      },
+                      "tooltip-class": {
+                        "type": "string"
+                      },
+                      "placement": {
+                        "type": "string",
+                        "default": "top"
+                      },
+                      "validate-event": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "label": {
+                        "type": "string"
+                      },
+                      "aria-label": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "show-input",
+                      "show-stops",
+                      "disabled",
+                      "range",
+                      "vertical",
+                      "height",
+                      "range-start-label",
+                      "range-end-label",
+                      "tooltip-class",
+                      "label",
+                      "aria-label"
+                    ]
+                  },
+                  "zane-space": {
+                    "type": "object",
+                    "description": "zane-space component properties.",
+                    "properties": {
+                      "alignment": {
+                        "type": "string",
+                        "default": "center"
+                      },
+                      "direction": {
+                        "type": "string",
+                        "default": "horizontal"
+                      },
+                      "fill": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "fill-ratio": {
+                        "type": "number",
+                        "default": 100
+                      },
+                      "size": {
+                        "type": "string",
+                        "default": "small"
+                      },
+                      "spacer": {
+                        "type": "string"
+                      },
+                      "wrap": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "zane-splitter": {
+                    "type": "object",
+                    "description": "zane-splitter component properties.",
+                    "properties": {
+                      "layout": {
+                        "type": "string",
+                        "default": "horizontal"
+                      },
+                      "lazy": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "zane-switch": {
+                    "type": "object",
+                    "description": "zane-switch component properties.",
+                    "properties": {
+                      "z-id": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "oneOf": [
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ],
+                        "default": false
+                      },
+                      "disabled": {
+                        "type": "boolean"
+                      },
+                      "loading": {
+                        "type": "boolean"
+                      },
+                      "inline-prompt": {
+                        "type": "boolean"
+                      },
+                      "size": {
+                        "type": "string"
+                      },
+                      "active-text": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "active-value": {
+                        "oneOf": [
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ],
+                        "default": true
+                      },
+                      "active-icon": {
+                        "type": "string"
+                      },
+                      "active-action-icon": {
+                        "type": "string"
+                      },
+                      "inactive-text": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "inactive-icon": {
+                        "type": "string"
+                      },
+                      "inactive-action-icon": {
+                        "type": "string"
+                      },
+                      "inactive-value": {
+                        "oneOf": [
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ],
+                        "default": false
+                      },
+                      "name": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "validate-event": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "width": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ],
+                        "default": ""
+                      },
+                      "z-tabindex": {
+                        "type": "number"
+                      },
+                      "aria-label": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "disabled",
+                      "loading",
+                      "inline-prompt",
+                      "size",
+                      "active-icon",
+                      "active-action-icon",
+                      "inactive-icon",
+                      "inactive-action-icon",
+                      "aria-label"
+                    ]
+                  },
+                  "zane-tag": {
+                    "type": "object",
+                    "description": "zane-tag component properties.",
+                    "properties": {
+                      "closeable": {
+                        "type": "boolean"
+                      },
+                      "color": {
+                        "type": "string"
+                      },
+                      "effect": {
+                        "type": "string",
+                        "default": "light"
+                      },
+                      "hit": {
+                        "type": "boolean"
+                      },
+                      "round": {
+                        "type": "boolean"
+                      },
+                      "size": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "closeable",
+                      "color",
+                      "hit",
+                      "round",
+                      "size"
+                    ]
+                  },
+                  "zane-text": {
+                    "type": "object",
+                    "description": "zane-text component properties.",
+                    "properties": {
+                      "size": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "truncated": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "type": {
+                        "type": "string",
+                        "default": ""
+                      }
+                    }
+                  },
+                  "zane-timeline": {
+                    "type": "object",
+                    "description": "zane-timeline component properties.",
+                    "properties": {
+                      "mode": {
+                        "type": "string",
+                        "default": "start"
+                      },
+                      "reverse": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "zane-tippy": {
+                    "type": "object",
+                    "description": "zane-tippy component properties.",
+                    "properties": {
+                      "tag": {
+                        "type": "string",
+                        "default": "span"
+                      },
+                      "content-tag": {
+                        "type": "string",
+                        "default": "span"
+                      },
+                      "box-class": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "content-class": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "disabled": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "zane-transfer": {
+                    "type": "object",
+                    "description": "zane-transfer component properties.",
+                    "properties": {
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "default": []
+                      },
+                      "titles": {
+                        "type": "string"
+                      },
+                      "button-texts": {
+                        "type": "string"
+                      },
+                      "filter-placeholder": {
+                        "type": "string"
+                      },
+                      "left-default-checked": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "default": []
+                      },
+                      "right-default-checked": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "default": []
+                      },
+                      "render-content": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "default": []
+                      },
+                      "format": {
+                        "type": "string",
+                        "default": {}
+                      },
+                      "filterable": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "props": {
+                        "type": "string"
+                      },
+                      "target-order": {
+                        "type": "string",
+                        "default": "original"
+                      },
+                      "validate-event": {
+                        "type": "boolean",
+                        "default": true
+                      }
+                    },
+                    "required": [
+                      "titles",
+                      "button-texts",
+                      "filter-placeholder",
+                      "render-content",
+                      "props"
+                    ]
+                  },
+                  "zane-tree": {
+                    "type": "object",
+                    "description": "zane-tree component properties.",
+                    "properties": {
+                      "data": {
+                        "type": "string",
+                        "default": []
+                      },
+                      "empty-text": {
+                        "type": "string"
+                      },
+                      "height": {
+                        "type": "number",
+                        "default": 200
+                      },
+                      "props": {
+                        "type": "string"
+                      },
+                      "highlight-current": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "show-checkbox": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "default-checked-keys": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "default": []
+                      },
+                      "default-expanded-keys": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "default": []
+                      },
+                      "check-strictly": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "indent": {
+                        "type": "number",
+                        "default": 16
+                      },
+                      "item-size": {
+                        "type": "number",
+                        "default": 26
+                      },
+                      "icon": {
+                        "type": "string"
+                      },
+                      "expand-on-click-node": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "check-on-click-node": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "check-on-click-leaf": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "current-node-key": {
+                        "type": "string"
+                      },
+                      "accordion": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "filter-method": {
+                        "type": "string"
+                      },
+                      "perf-mode": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "scrollbar-always-on": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    },
+                    "required": [
+                      "empty-text",
+                      "props",
+                      "icon",
+                      "current-node-key",
+                      "filter-method"
+                    ]
+                  },
+                  "zane-tree-select": {
+                    "type": "object",
+                    "description": "zane-tree-select component properties.",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "z-id": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      },
+                      "autocomplete": {
+                        "type": "string",
+                        "default": "off"
+                      },
+                      "automatic-dropdown": {
+                        "type": "boolean"
+                      },
+                      "size": {
+                        "type": "string"
+                      },
+                      "disabled": {
+                        "type": "boolean"
+                      },
+                      "clearable": {
+                        "type": "boolean"
+                      },
+                      "clear-icon": {
+                        "type": "string",
+                        "default": "close-circle-line"
+                      },
+                      "allow-create": {
+                        "type": "boolean"
+                      },
+                      "loading": {
+                        "type": "boolean"
+                      },
+                      "popper-theme": {
+                        "type": "string"
+                      },
+                      "popper-options": {
+                        "type": "string",
+                        "default": {}
+                      },
+                      "debounce": {
+                        "type": "number",
+                        "default": 300
+                      },
+                      "loading-text": {
+                        "type": "string"
+                      },
+                      "no-match-text": {
+                        "type": "string"
+                      },
+                      "no-data-text": {
+                        "type": "string"
+                      },
+                      "remote": {
+                        "type": "boolean"
+                      },
+                      "filterable": {
+                        "type": "boolean"
+                      },
+                      "multiple": {
+                        "type": "boolean"
+                      },
+                      "multiple-limit": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "placeholder": {
+                        "type": "string"
+                      },
+                      "default-first-option": {
+                        "type": "boolean"
+                      },
+                      "reserve-keyword": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "value-key": {
+                        "type": "string",
+                        "default": "value"
+                      },
+                      "collapse-tags": {
+                        "type": "boolean"
+                      },
+                      "collapse-tags-tooltip": {
+                        "type": "boolean"
+                      },
+                      "tag-tooltip": {
+                        "type": "string",
+                        "default": {}
+                      },
+                      "max-collapse-tags": {
+                        "type": "number",
+                        "default": 1
+                      },
+                      "fit-input-width": {
+                        "type": "boolean"
+                      },
+                      "suffix-icon": {
+                        "type": "string",
+                        "default": "arrow-down-s-line"
+                      },
+                      "tag-type": {
+                        "type": "string",
+                        "default": "info"
+                      },
+                      "tag-effect": {
+                        "type": "string",
+                        "default": "light"
+                      },
+                      "validate-event": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "remote-show-suffix": {
+                        "type": "boolean"
+                      },
+                      "show-arrow": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "offset": {
+                        "type": "string",
+                        "default": "tippy.defaultProps.offset"
+                      },
+                      "placement": {
+                        "type": "string",
+                        "default": "bottom-start"
+                      },
+                      "z-tab-index": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "append-to": {
+                        "type": "string",
+                        "default": "tippy.defaultProps.appendTo"
+                      },
+                      "options": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": true
+                        }
+                      },
+                      "props": {
+                        "type": "string"
+                      },
+                      "empty-values": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "value-on-clear": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
+                      },
+                      "aria-label": {
+                        "type": "string"
+                      },
+                      "data": {
+                        "type": "string",
+                        "default": []
+                      },
+                      "cache-data": {
+                        "type": "string",
+                        "default": []
+                      },
+                      "empty-text": {
+                        "type": "string"
+                      },
+                      "height": {
+                        "type": "number"
+                      },
+                      "highlight-current": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "show-checkbox": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "default-checked-keys": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "default": []
+                      },
+                      "default-expanded-keys": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "default": []
+                      },
+                      "check-strictly": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "indent": {
+                        "type": "number",
+                        "default": 16
+                      },
+                      "item-size": {
+                        "type": "number",
+                        "default": 26
+                      },
+                      "icon": {
+                        "type": "string"
+                      },
+                      "expand-on-click-node": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "check-on-click-node": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "check-on-click-leaf": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "current-node-key": {
+                        "type": "string"
+                      },
+                      "accordion": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "perf-mode": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "scrollbar-always-on": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "filter-node-method": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "automatic-dropdown",
+                      "size",
+                      "disabled",
+                      "clearable",
+                      "allow-create",
+                      "loading",
+                      "popper-theme",
+                      "loading-text",
+                      "no-match-text",
+                      "no-data-text",
+                      "remote",
+                      "filterable",
+                      "multiple",
+                      "placeholder",
+                      "default-first-option",
+                      "collapse-tags",
+                      "collapse-tags-tooltip",
+                      "fit-input-width",
+                      "remote-show-suffix",
+                      "options",
+                      "props",
+                      "empty-values",
+                      "value-on-clear",
+                      "label",
+                      "aria-label",
+                      "empty-text",
+                      "height",
+                      "icon",
+                      "current-node-key",
+                      "filter-node-method"
+                    ]
+                  },
+                  "zane-upload": {
+                    "type": "object",
+                    "description": "zane-upload component properties.",
+                    "properties": {
+                      "action": {
+                        "type": "string",
+                        "default": "#"
+                      },
+                      "headers": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "default": {}
+                      },
+                      "method": {
+                        "type": "string",
+                        "default": "post"
+                      },
+                      "multiple": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "data": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "default": {}
+                      },
+                      "name": {
+                        "type": "string",
+                        "default": "file"
+                      },
+                      "with-credentials": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "show-file-list": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "drag": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "accept": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "auto-upload": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "disabled": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "limit": {
+                        "type": "number"
+                      },
+                      "list-type": {
+                        "type": "string",
+                        "default": "text"
+                      }
+                    },
+                    "required": [
+                      "limit"
+                    ]
+                  },
+                  "zane-virtual-list": {
+                    "type": "object",
+                    "description": "zane-virtual-list component properties.",
+                    "properties": {
+                      "cache": {
+                        "type": "number",
+                        "default": 2
+                      },
+                      "estimated-item-size": {
+                        "type": "number"
+                      },
+                      "layout": {
+                        "type": "string",
+                        "default": "vertical"
+                      },
+                      "init-scroll-offset": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "total": {
+                        "type": "number"
+                      },
+                      "item-size": {
+                        "oneOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "wrapper-class": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "container-element": {
+                        "type": "string",
+                        "default": "div"
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "default": []
+                      },
+                      "direction": {
+                        "type": "string",
+                        "default": "ltr"
+                      },
+                      "height": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "inner-element": {
+                        "type": "string",
+                        "default": "div"
+                      },
+                      "inner-props": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "default": {}
+                      },
+                      "wrapper-style": {
+                        "type": "object",
+                        "additionalProperties": true
+                      },
+                      "use-is-scrolling": {
+                        "type": "boolean"
+                      },
+                      "width": {
+                        "oneOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "perf-mode": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "scrollbar-always-on": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "is-sized": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "estimated-item-size",
+                      "total",
+                      "wrapper-style",
+                      "use-is-scrolling",
+                      "is-sized"
+                    ]
+                  }
+                }
+              }
+            },
+            "required": [
+              "id",
+              "component"
+            ]
+          }
+        }
+      },
+      "required": [
+        "surfaceId",
+        "components"
+      ]
+    },
+    "dataModelUpdate": {
+      "type": "object",
+      "description": "Updates the data model for a surface.",
+      "properties": {
+        "surfaceId": {
+          "type": "string",
+          "description": "The unique identifier for the UI surface this data model update applies to."
+        },
+        "path": {
+          "type": "string",
+          "description": "An optional path to a location within the data model (e.g., '/user/name'). If omitted, or set to '/', the entire data model will be replaced at the root level."
+        },
+        "contents": {
+          "type": "array",
+          "description": "An array of data entries. Each entry must contain a 'key' and exactly one corresponding typed 'value*' property representing the value to store.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "description": "A single data entry.",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "The key for this data entry."
+              },
+              "valueString": {
+                "type": "string",
+                "description": "A string value for this entry."
+              },
+              "valueNumber": {
+                "type": "number",
+                "description": "A numeric value for this entry."
+              },
+              "valueBoolean": {
+                "type": "boolean",
+                "description": "A boolean value for this entry."
+              },
+              "valueMap": {
+                "description": "Represents a nested map structure as an adjacency list (array of key-value entries).",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "valueString": {
+                      "type": "string"
+                    },
+                    "valueNumber": {
+                      "type": "number"
+                    },
+                    "valueBoolean": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "key"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "key"
+            ]
+          }
+        }
+      },
+      "required": [
+        "contents",
+        "surfaceId"
+      ]
+    },
+    "deleteSurface": {
+      "type": "object",
+      "description": "Signals the client to delete the surface identified by 'surfaceId'.",
+      "properties": {
+        "surfaceId": {
+          "type": "string",
+          "description": "The unique identifier for the UI surface to be deleted."
+        }
+      },
+      "required": [
+        "surfaceId"
+      ]
+    }
+  }
+}

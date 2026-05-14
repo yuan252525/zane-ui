@@ -9,7 +9,7 @@
 
 | Property   | Attribute  | Description | Type               | Default         |
 | ---------- | ---------- | ----------- | ------------------ | --------------- |
-| `disabled` | `disabled` |             | `boolean`          | `undefined`     |
+| `disabled` | `disabled` |             | `boolean`          | `false`         |
 | `icon`     | `icon`     |             | `string`           | `'arrow-right'` |
 | `label`    | `title`    |             | `string`           | `''`            |
 | `name`     | `name`     |             | `number \| string` | `undefined`     |

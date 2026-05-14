@@ -5,14 +5,18 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
+## Dependencies
 
-| Property      | Attribute     | Description | Type     | Default     |
-| ------------- | ------------- | ----------- | -------- | ----------- |
-| `description` | `description` |             | `string` | `''`        |
-| `image`       | `image`       |             | `string` | `''`        |
-| `imageSize`   | `image-size`  |             | `number` | `undefined` |
+### Used by
 
+ - [zane-empty](.)
+
+### Graph
+```mermaid
+graph TD;
+  zane-empty --> zane-img-empty
+  style zane-img-empty fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

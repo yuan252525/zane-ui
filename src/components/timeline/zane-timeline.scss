@@ -1,0 +1,255 @@
+@use 'sass:map';
+@use '../../styles/config' as *;
+@use '../../styles/mixins/var' as *;
+@use '../../styles/mixins/bem' as *;
+@use '../../styles/mixins/function' as *;
+@use '../../global/theme/vars/color/light' as *;
+@use '../../global/theme/vars/component' as *;
+
+// ===== CSS Variables =====
+
+$timeline: () !default;
+$timeline: map.merge(
+  (
+    'node-size-normal': 12px,
+    'node-size-large': 14px,
+    'node-color': getCssVar('border-color-light'),
+  ),
+  $timeline
+);
+
+// ===== Private Mixins =====
+
+@mixin alternate-padding {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+// ===== zane-timeline (主组件) =====
+
+@include b(timeline) {
+  @include set-component-css-var('timeline', $timeline);
+
+  margin: 0;
+  font-size: getCssVar('font-size', 'base');
+  list-style: none;
+
+  // 最后子项隐藏尾部线条
+  .#{$namespace}-timeline-item:last-child {
+    .#{$namespace}-timeline-item__tail {
+      display: none;
+    }
+  }
+
+  // 反向排序
+  @include when(reverse) {
+    display: flex;
+    flex-direction: column-reverse;
+
+    .#{$namespace}-timeline-item:last-child .#{$namespace}-timeline-item__tail {
+      display: block;
+    }
+    .#{$namespace}-timeline-item:first-child .#{$namespace}-timeline-item__tail {
+      display: none;
+    }
+  }
+
+  // 居中模式
+  .#{$namespace}-timeline-item__center {
+    display: flex;
+    align-items: center;
+
+    .#{$namespace}-timeline-item__wrapper { width: 100%; }
+    .#{$namespace}-timeline-item__tail { top: 0; }
+  }
+  .#{$namespace}-timeline-item__center:first-child .#{$namespace}-timeline-item__tail {
+    height: calc(50% + 10px);
+    top: calc(50% - 10px);
+  }
+  .#{$namespace}-timeline-item__center:last-child .#{$namespace}-timeline-item__tail {
+    display: block;
+    height: calc(50% - 10px);
+  }
+
+  // Mode: start (默认，无需额外 padding)
+  @include when(start) {
+    // 无额外样式，由 timeline-item 自行处理定位
+  }
+
+  // Mode: end
+  @include when(end) {
+    padding-right: 40px;
+
+    .#{$namespace}-timeline-item {
+      text-align: right;
+    }
+  }
+
+  // Mode: alternate
+  @include when(alternate) {
+    @include alternate-padding;
+
+    .#{$namespace}-timeline-item:nth-child(2n + 1) .#{$namespace}-timeline-item__wrapper {
+      width: calc(50% - 28px);
+      left: calc(50% - getCssVar('timeline-node-size-large') / 2);
+      padding-left: 28px;
+    }
+    .#{$namespace}-timeline-item:nth-child(2n) .#{$namespace}-timeline-item__wrapper {
+      width: calc(50% - 28px + getCssVar('timeline-node-size-large') / 2);
+      text-align: right;
+      padding-right: 28px;
+      padding-left: 0;
+    }
+    .#{$namespace}-timeline-item .#{$namespace}-timeline-item__tail,
+    .#{$namespace}-timeline-item .#{$namespace}-timeline-item__node,
+    .#{$namespace}-timeline-item .#{$namespace}-timeline-item__dot {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  // Mode: alternate-reverse
+  @include when(alternate-reverse) {
+    @include alternate-padding;
+
+    .#{$namespace}-timeline-item:nth-child(2n + 1) .#{$namespace}-timeline-item__wrapper {
+      width: calc(50% - 28px + getCssVar('timeline-node-size-large') / 2);
+      text-align: right;
+      padding-right: 28px;
+      padding-left: 0;
+    }
+    .#{$namespace}-timeline-item:nth-child(2n) .#{$namespace}-timeline-item__wrapper {
+      width: calc(50% - 28px);
+      left: calc(50% - getCssVar('timeline-node-size-large') / 2);
+      padding-left: 28px;
+    }
+    .#{$namespace}-timeline-item .#{$namespace}-timeline-item__tail,
+    .#{$namespace}-timeline-item .#{$namespace}-timeline-item__node,
+    .#{$namespace}-timeline-item .#{$namespace}-timeline-item__dot {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+// ===== zane-timeline-item (子项) =====
+
+@include b(timeline-item) {
+  position: relative;
+  padding-bottom: 36px;
+
+  // --- 尾部竖线 ---
+  @include e(tail) {
+    position: absolute;
+    left: 4px;
+    top: 2px;
+    bottom: -23px;
+    border-left: 2px solid getCssVar('timeline-node-color');
+  }
+
+  // --- 图标 ---
+  & .#{$namespace}-timeline-item__icon {
+    color: getCssVar('color-white');
+    font-size: getCssVar('font-size-small');
+  }
+
+  // --- 圆形节点 ---
+  @include e(node) {
+    position: absolute;
+    background-color: getCssVar('timeline-node-color');
+    border-color: getCssVar('timeline-node-color');
+    border-radius: 50%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: -1px;
+    top: 0px;
+
+    @include m(normal) {
+      width: getCssVar('timeline-node-size-normal');
+      height: getCssVar('timeline-node-size-normal');
+    }
+
+    @include m(large) {
+      width: getCssVar('timeline-node-size-large');
+      height: getCssVar('timeline-node-size-large');
+    }
+
+    @include when(hollow) {
+      background: getCssVar('color-white');
+      border-style: solid;
+      border-width: 2px;
+    }
+
+    @each $type in (primary, success, warning, danger, info) {
+      @include m($type) {
+        background-color: getCssVar('color', $type);
+        border-color: getCssVar('color', $type);
+      }
+    }
+  }
+
+  // --- 自定义 dot 插槽容器 ---
+  @include e(dot) {
+    position: absolute;
+    left: -2px;
+    top: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  // --- 内容包裹层 ---
+  @include e(wrapper) {
+    position: relative;
+    padding-left: 20px;
+    top: -4px;
+    margin-bottom: 12px;
+  }
+
+  // --- 文字内容 ---
+  @include e(content) {
+    color: getCssVar('text-color', 'primary');
+    font-size: getCssVar('font-size', 'base');
+  }
+
+  // --- 时间戳 ---
+  @include e(timestamp) {
+    color: getCssVar('text-color', 'secondary');
+    line-height: 1;
+    font-size: getCssVar('font-size-small');
+
+    @include when(top) {
+      margin-bottom: 8px;
+      padding-top: 4px;
+    }
+
+    @include when(bottom) {
+      margin-top: 8px;
+    }
+  }
+
+  // === end 模式：右侧对齐 ===
+  :host(.is-end) & {
+    @include e(wrapper) {
+      padding-left: 0;
+      padding-right: 20px;
+    }
+
+    @include e(tail) {
+      left: auto;
+      right: 4px;
+    }
+
+    @include e(node) {
+      left: auto;
+      right: 0;
+    }
+
+    @include e(dot) {
+      left: auto;
+      right: -2px;
+    }
+  }
+}
