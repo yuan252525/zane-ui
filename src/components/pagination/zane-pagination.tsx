@@ -179,6 +179,7 @@ export class ZanePagination {
   componentWillLoad() {
     this._innerCurrentPage = this.defaultCurrentPage ?? 1;
     this._innerPageSize = this.defaultPageSize ?? 10;
+    this._jumperValue = String(this.defaultCurrentPage ?? 1);
   }
 
   // ===== Watchers =====
@@ -187,6 +188,14 @@ export class ZanePagination {
   onDefaultCurrentPageChange() {
     if (this.currentPage == null) {
       this._innerCurrentPage = this.defaultCurrentPage ?? 1;
+      this._jumperValue = String(this._innerCurrentPage);
+    }
+  }
+
+  @Watch('currentPage')
+  onCurrentPageChange() {
+    if (this.currentPage != null) {
+      this._jumperValue = String(this.currentPage);
     }
   }
 
@@ -208,6 +217,7 @@ export class ZanePagination {
     if (this.currentPage == null) {
       this.internalCurrentPage = newPage;
     }
+    this._jumperValue = String(newPage);
     this.currentChangeEvent.emit(newPage);
     this.changeEvent.emit({
       currentPage: newPage,
@@ -491,28 +501,24 @@ export class ZanePagination {
   }
 
   private renderJumper() {
-    const pCount = this._computedPageCount;
     return (
       <span class={ns.b('jump')}>
         前往
-        <input
+        <zane-input
           class={ns.e('editor')}
           type="text"
-          min={1}
-          max={pCount}
           value={this._jumperValue || ''}
           disabled={this.disabled}
-          onInput={(e: Event) => {
-            const target = e.target as HTMLInputElement;
-            this._jumperValue = target.value.replace(/[^\d]/g, '');
+          onZInput={(e: any) => {
+            this._jumperValue = (e.detail || '').replace(/[^\d]/g, '');
           }}
-          onKeyDown={(e: KeyboardEvent) => {
-            if (e.key === 'Enter') {
+          onZKeyDown={(e: any) => {
+            if ((e.detail || e)?.key === 'Enter') {
               const val = parseInt(this._jumperValue, 10);
               if (!Number.isNaN(val)) {
                 this.handleCurrentChange(val);
               }
-              this._jumperValue = '';
+              // this._jumperValue = '';
             }
           }}
         />
@@ -529,27 +535,28 @@ export class ZanePagination {
     );
   }
 
+  private sizesContainerRef!: HTMLElement;
+
   private renderSizes() {
     return (
-      <span class={ns.b('sizes')}>
-        <select
+      <span class={ns.b('sizes')} ref={(el) => (this.sizesContainerRef = el!)}>
+        <zane-select
           class="zane-pagination__size-select"
-          // @ts-ignore Stencil JSX 原生 select 支持 value 属性
           value={this.internalPageSize}
           disabled={this.disabled}
-          onChange={(e: Event) => {
-            const val = parseInt((e.target as HTMLSelectElement).value, 10);
+          size={this.size}
+          appendTo={() => this.sizesContainerRef || document.body}
+          onZChange={(e: any) => {
+            const val = e.detail;
             if (!Number.isNaN(val)) {
-              this.handleSizeChange(val);
+              this.handleSizeChange(Number(val));
             }
           }}
-        >
-          {this._resolvedPageSizes.map((size) => (
-            <option key={String(size)} value={size}>
-              {size} 条/页
-            </option>
-          ))}
-        </select>
+          options={this._resolvedPageSizes.map((size) => ({
+            label: `${size} 条/页`,
+            value: size,
+          }))}
+        />
       </span>
     );
   }

@@ -159,50 +159,42 @@ $pagination: map.merge(
       color: getCssVar('text-color-placeholder');
     }
 
-    .zane-pagination__size-select {
-      appearance: none; // 隐藏默认下拉箭头
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      box-sizing: border-box;
-      width: 128px;
-      height: 28px;
-      padding: 0 24px 0 12px; /* 右侧留空放自定义箭头 */
-      margin: 0;
-      font-size: 14px;
-      font-weight: normal;
-      color: var(--zane-text-color-regular, #606266);
-      line-height: 26px;
-      outline: none;
-      border: 1px solid var(--zane-border-color, #dcdfe6);
-      border-radius: var(--zane-border-radius-base, 4px);
-      background-color: var(--zane-fill-color-blank, #fff);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath fill='%23c0c4cc' d='M831.872 340.864L512 652.672 192.128 340.864a30.592 30.592 0 0 0-42.752 0 29.12 29.12 0 0 0 0 41.664L489.568 714.88a30.592 30.592 0 0 0 42.752 0l340.096-332.352a29.12 29.12 0 0 0 0-41.664 30.592 30.592 0 0 0-42.752 0z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 16px center;
-      background-size: 10px;
-      cursor: pointer;
-      transition: all 0.15s ease-in-out;
+    // zane-select 容器尺寸控制
+    // .zane-pagination__size-select {
+    //   width: 128px;
 
-      &:hover:not(:disabled) {
-        border-color: var(--zane-hover-border-color, #c0c4cc);
-      }
+    //   // 穿透到内部 input wrapper，统一风格
+    //   .#{$namespace}-select {
+    //     width: 100%;
+    //   }
 
-      &:focus {
-        border-color: var(--zane-color-primary, #409eff);
-        box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.15);
-      }
+    //   .#{$namespace}-input__wrapper {
+    //     border-radius: var(--zane-border-radius-base, 4px);
+    //     transition: all 0.15s ease-in-out;
+    //   }
 
-      &:disabled {
-        cursor: not-allowed;
-        background-color: var(--zane-fill-color-light, #f5f7fa);
-        border-color: var(--zane-border-color-lighter, #e4e7ed);
-        color: var(--zane-text-color-placeholder, #c0c4cc);
-      }
+    //   &:focus,
+    //   &.is-focus {
+    //     .#{$namespace}-input__wrapper {
+    //       box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.15);
+    //       border-color: var(--zane-color-primary, #409eff);
+    //     }
+    //   }
 
-      option {
-        font-weight: normal;
-      }
-    }
+    //   &[disabled='true'],
+    //   &.is-disabled {
+    //     cursor: not-allowed;
+
+    //     .#{$namespace}-input__wrapper {
+    //       background-color: var(--zane-fill-color-light, #f5f7fa);
+    //       border-color: var(--zane-border-color-lighter, #e4e7ed);
+    //     }
+
+    //     .#{$namespace}-input__inner {
+    //       color: var(--zane-text-color-placeholder, #c0c4cc);
+    //     }
+    //   }
+    // }
   }
 
   // ========== Total ==========
@@ -232,10 +224,15 @@ $pagination: map.merge(
 
       .#{$namespace}-pagination__editor {
         cursor: not-allowed;
-        background-color: var(--zane-fill-color-light, #f5f7fa);
-        border-color: var(--zane-border-color-lighter, #e4e7ed);
-        color: var(--zane-text-color-placeholder, #c0c4cc);
 
+        .#{$namespace}-input__wrapper {
+          background-color: var(--zane-fill-color-light, #f5f7fa);
+          border-color: var(--zane-border-color-lighter, #e4e7ed);
+        }
+
+        .#{$namespace}-input__inner {
+          color: var(--zane-text-color-placeholder, #c0c4cc);
+        }
       }
     }
 
@@ -244,45 +241,39 @@ $pagination: map.merge(
       box-sizing: border-box;
       width: 50px;
       height: 28px;
-      padding: 0;
       margin: 0 8px;
-      font-size: 14px;
-      font-weight: normal;
-      color: var(--zane-text-color-regular, #606266);
-      text-align: center;
       vertical-align: top;
-      outline: none;
-      border: 1px solid var(--zane-border-color, #dcdfe6);
-      border-radius: var(--zane-border-radius-base, 4px);
-      transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
-                  box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
-                  background-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-      background: var(--zane-fill-color-blank, #fff);
-      line-height: 26px; /* 28px height minus 2x1px border */
-      -moz-appearance: textfield;
+      line-height: 1;
 
-      &::-webkit-inner-spin-button,
-      &::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+      // 穿透 zane-input 内部
+      .#{$namespace}-input__wrapper {
+        padding: 0;
+        background-color: var(--zane-fill-color-blank, #fff);
+        border-radius: var(--zane-border-radius-base, 4px);
+        transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
+                    box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
+                    background-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
       }
 
-      &::placeholder {
-        color: var(--zane-text-color-placeholder, #c0c4cc);
+      .#{$namespace}-input__inner {
+        font-size: 14px;
+        font-weight: normal;
+        color: var(--zane-text-color-regular, #606266);
+        text-align: center;
       }
 
       &:hover:not(:disabled):not(:focus) {
-        border-color: var(--zane-hover-border-color, #c0c4cc);
+        .#{$namespace}-input__wrapper {
+          border-color: var(--zane-hover-border-color, #c0c4cc);
+        }
       }
 
-      &:focus {
-        border-color: var(--zane-color-primary, #409eff);
-        box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.15);
-      }
-
-      &::-moz-focus-inner {
-        border: 0;
-        padding: 0;
+      &:focus,
+      &.is-focus {
+        .#{$namespace}-input__wrapper {
+          border-color: var(--zane-color-primary, #409eff);
+          box-shadow: 0 0 0 1px var(--zane-color-primary, #409eff) inset;
+        }
       }
     }
   }
@@ -347,59 +338,22 @@ $pagination: map.merge(
 
     // 背景模式下输入框与按钮风格统一
     .#{$namespace}-pagination__editor {
-      background-color: var(--zane-pagination-button-bg-color, #e9ecef);
-      border-color: transparent;
-      color: var(--zane-text-color-regular, #606266);
-      width: 27px;
+      width: 32px;
       border-radius: 2px;
-      height: 27px;
+      height: 32px;
       margin-left: 5px;
       margin-right: 5px;
-      &:hover:not(:disabled):not(:focus) {
-        background-color: var(--zane-pagination-hover-bg-color, #d9dce1);
-        border-color: transparent;
+
+      // 穿透 zane-input 内部 wrapper，覆盖白色背景
+      .#{$namespace}-input__wrapper {
+        padding: 0px 3px 0px 3px;
       }
 
-      &:focus {
-        background: var(--zane-fill-color-blank, #fff);
-        border-color: var(--zane-color-primary, #409eff);
-        box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.15);
-      }
-
-      &:disabled {
-        background-color: var(--zane-disabled-bg-color, #e4e7ed);
-        color: var(--zane-text-color-placeholder, #c0c4cc);
+      .#{$namespace}-input__inner {
+        text-align: center;
       }
     }
 
-    // 背景模式下原生 select 与按钮风格统一
-    .zane-pagination__size-select {
-      background-color: var(--zane-pagination-button-bg-color, #e9ecef);
-      border-color: transparent;
-      border-radius: 2px;
-      color: #fff;
-      padding-top: 6px;
-      padding-bottom: 6px;
-      padding-left: 8px;
-      padding-right: 8px; /* 留出足够空间给下拉箭头 */
-      background-position: right 10px center;
-
-      &:hover:not(:disabled):not(:focus) {
-        background-color: var(--zane-pagination-hover-bg-color, #d9dce1);
-        border-color: transparent;
-      }
-
-      &:focus {
-        background: var(--zane-fill-color-blank, #fff);
-        border-color: var(--zane-color-primary, #409eff);
-        box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.15);
-      }
-
-      &:disabled {
-        background-color: var(--zane-disabled-bg-color, #e4e7ed);
-        color: var(--zane-text-color-placeholder, #c0c4cc);
-      }
-    }
   }
 
   // ========== Small size modifier ==========
@@ -416,10 +370,12 @@ $pagination: map.merge(
     // small 尺寸下 editor 也缩小
     .#{$namespace}-pagination__editor {
       height: 24px;
-      line-height: 22px;
       width: 42px;
-      font-size: 12px;
       margin: 0 6px;
+
+      .#{$namespace}-input__inner {
+        font-size: 12px;
+      }
     }
 
     span:not([class*='suffix']),
@@ -427,13 +383,9 @@ $pagination: map.merge(
       font-size: getCssVar('pagination', 'font-size-small');
     }
 
-    .zane-pagination__size-select {
-      width: 100px;
-      height: 24px;
-      font-size: 12px;
-      line-height: 22px;
-      padding: 0 20px 0 8px;
-    }
+    // .zane-pagination__size-select {
+    //   width: 100px;
+    // }
   }
 
   // ========== Large size modifier ==========
@@ -465,4 +417,17 @@ $pagination: map.merge(
 }
 .zane-pagination-jump{
   margin-left: 10px;
+  margin-right: 10px;
+}
+.zane-pagination-rightwrapper{
+  margin-bottom: 3px;
+}
+.is-background{
+  .btn-prev,.btn-next{
+    padding-top: 4px;
+  }
+}
+.zane-select__wrapper{
+  width: 110px ;
+  margin-left: 5px;
 }

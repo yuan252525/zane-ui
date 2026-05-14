@@ -52,6 +52,25 @@
 </head>
 
 <body>
+<!-- Pagination 分页 -->
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">完整分页布局</h4>
+    <zane-pagination id="pagination02" total="500" page-sizes="[10,20,50,100]"
+      layout="sizes, prev, pager, next, jumper, ->, total" background></zane-pagination>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">小型分页 + 自定义图标文字</h4>
+    <zane-pagination id="pagination03" total="50" size="small" prev-text="上一页" next-text="下一页"></zane-pagination>
+  </div>
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h4 style="margin-bottom: 16px;">事件监听分页</h4>
+    <p id="pagination-log" style="font-size: 13px; color: var(--zane-text-color-secondary); min-height: 40px;">
+      当前页: 1, 每页条数: 10
+    </p>
+    <zane-pagination id="pagination04" total="200" layout="prev, pager, next, sizes, jumper"
+      background></zane-pagination>
+  </div>
+
   <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light); display: flex;  flex-direction: column; gap: 12px; align-items: flex-start">
     <zane-segmented id="segmented-custom-props" value="1" size="large"></zane-segmented>
     <zane-segmented id="segmented-icons-vertical" value="list"></zane-segmented>
@@ -175,25 +194,6 @@
       <zane-timeline-item hide-timestamp>No timestamp 2</zane-timeline-item>
       <zane-timeline-item hide-timestamp>No timestamp 3</zane-timeline-item>
     </zane-timeline>
-  </div>
-
-  <!-- Pagination 分页 -->
-  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-    <h4 style="margin-bottom: 16px;">完整分页布局</h4>
-    <zane-pagination id="pagination02" total="500" page-sizes="[10,20,50,100]"
-      layout="sizes, prev, pager, next, jumper, ->, total" background></zane-pagination>
-  </div>
-  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-    <h4 style="margin-bottom: 16px;">小型分页 + 自定义图标文字</h4>
-    <zane-pagination id="pagination03" total="50" size="small" prev-text="上一页" next-text="下一页"></zane-pagination>
-  </div>
-  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
-    <h4 style="margin-bottom: 16px;">事件监听分页</h4>
-    <p id="pagination-log" style="font-size: 13px; color: var(--zane-text-color-secondary); min-height: 40px;">
-      当前页: 1, 每页条数: 10
-    </p>
-    <zane-pagination id="pagination04" total="200" layout="prev, pager, next, sizes, jumper"
-      background></zane-pagination>
   </div>
 
   <!-- upload 上传 -->

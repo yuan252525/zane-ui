@@ -728,8 +728,8 @@ export class ZaneSelect {
       }
     } else {
       if (!isEqual(this.value, option.value)) {
-        this.value = option.value;
         this.emitChange(option.value);
+        this.value = option.value;
       }
       this.expanded = false;
     }

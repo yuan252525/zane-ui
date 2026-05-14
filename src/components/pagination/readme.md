@@ -44,11 +44,27 @@
 ### Depends on
 
 - [zane-icon](../icon)
+- [zane-input](../input)
+- [zane-select](../select)
 
 ### Graph
 ```mermaid
 graph TD;
   zane-pagination --> zane-icon
+  zane-pagination --> zane-input
+  zane-pagination --> zane-select
+  zane-input --> zane-icon
+  zane-select --> zane-tippy
+  zane-select --> zane-tag
+  zane-select --> zane-icon
+  zane-select --> zane-select-dropdown
+  zane-select --> zane-scrollbar
+  zane-select --> zane-select-option
+  zane-select --> zane-select-options
+  zane-select --> zane-select-option-group
+  zane-tag --> zane-icon
+  zane-scrollbar --> zane-bar
+  zane-bar --> zane-thumb
   style zane-pagination fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

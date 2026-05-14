@@ -11,7 +11,7 @@
 | ----------- | ------------ | ----------- | ----------------------------------------------------------------- | ----------- |
 | `lineClamp` | `line-clamp` |             | `string`                                                          | `undefined` |
 | `size`      | `size`       |             | `"" \| "default" \| "large" \| "small"`                           | `''`        |
-| `truncated` | `truncated`  |             | `boolean`                                                         | `undefined` |
+| `truncated` | `truncated`  |             | `boolean`                                                         | `false`     |
 | `type`      | `type`       |             | `"" \| "danger" \| "info" \| "primary" \| "success" \| "warning"` | `''`        |
 
 

@@ -135,6 +135,7 @@ Type: `Promise<void>`
  - [zane-cascader](../cascader)
  - [zane-input-number](../input-number)
  - [zane-mention](../mention)
+ - [zane-pagination](../pagination)
  - [zane-transfer-panel](../transfer)
 
 ### Depends on
@@ -149,6 +150,7 @@ graph TD;
   zane-cascader --> zane-input
   zane-input-number --> zane-input
   zane-mention --> zane-input
+  zane-pagination --> zane-input
   zane-transfer-panel --> zane-input
   style zane-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
